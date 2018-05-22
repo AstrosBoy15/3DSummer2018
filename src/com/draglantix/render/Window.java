@@ -1,9 +1,11 @@
-package com.draglantix.main;
+package com.draglantix.render;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.*;
+
+import com.draglantix.tools.Input;
 
 public class Window {
 	

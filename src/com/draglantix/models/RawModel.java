@@ -1,4 +1,4 @@
-package com.draglantix.main;
+package com.draglantix.models;
 
 public class RawModel {
 	

@@ -4,6 +4,15 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import com.draglantix.models.RawModel;
+import com.draglantix.models.TexturedModel;
+import com.draglantix.render.Loader;
+import com.draglantix.render.Renderer;
+import com.draglantix.render.Window;
+import com.draglantix.shaders.StaticShader;
+import com.draglantix.textures.ModelTexture;
+import com.draglantix.tools.Timer;
+
 public class Main {
 	
 	public Main() {
@@ -16,10 +25,12 @@ public class Main {
 		Window window = new Window();
 		window.createWindow("DRAGLANTIX SUMMER 2018!");
 		
+		GL.createCapabilities();
+		
 		Loader loader = new Loader();
 		Renderer renderer = new Renderer();
 		
-		GL.createCapabilities();
+		StaticShader shader = new StaticShader();
 	
 		double frame_cap = 1.0/60.0;
 		
@@ -39,9 +50,21 @@ public class Main {
 			
 			time = time_2;
 			
-			float[] vertices = { -0.5f, 0.5f, 0f, -0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f, 0.5f, 0.5f, 0f, -0.5f, 0.5f, 0f };
+			float[] vertices = {
+					-.5f, .5f, 0f,
+					-.5f, -.5f, 0f,
+					.5f, -.5f, 0f,
+					.5f, .5f, 0f
+			};
 			
-			RawModel model = loader.loadToVAO(vertices);
+			int[] indices = {
+				0, 1, 3,
+				3, 1, 2
+			};
+			
+			RawModel model = loader.loadToVAO(vertices, indices);
+			ModelTexture texture = new ModelTexture(loader.loadTexture("Dragon"));
+			TexturedModel texturedModel = new TexturedModel(model, texture);
 			
 			while(unprocessed >= frame_cap) {
 				if(window.hasResized()){
@@ -61,13 +84,15 @@ public class Main {
 			
 			if(can_render) {
 				renderer.prepare();
-				//render here
-				renderer.render(model);
+				shader.start();
+				renderer.render(texturedModel);
+				shader.stop();
 				window.swapBuffers();
 				frames++;
 			}
 		}
 		
+		shader.cleanUp();
 		loader.cleanUp();
 		GLFW.glfwTerminate();
 	}

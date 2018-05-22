@@ -1,4 +1,4 @@
-package com.draglantix.main;
+package com.draglantix.tools;
 
 import static org.lwjgl.glfw.GLFW.*;
 

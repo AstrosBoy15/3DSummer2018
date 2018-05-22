@@ -1,4 +1,4 @@
-package com.draglantix.main;
+package com.draglantix.tools;
 
 public class Timer {
 	public static double getTime() {
