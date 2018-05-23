@@ -9,14 +9,16 @@ import com.draglantix.tools.Input;
 
 public class Window {
 	
-	private long window;
+	private static long window;
 	
-	private int width, height;
-	private boolean fullscreen;
-	private boolean hasResized;
+	private static int width;
+
+	private static int height;
+	private static boolean fullscreen;
+	private static boolean hasResized;
 	private GLFWWindowSizeCallback windowSizeCallback;
 	
-	private Input input;
+	private static Input input;
 	
 	public static void setCallbacks() {
 		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
@@ -97,10 +99,10 @@ public class Window {
 		glfwPollEvents();
 	}
 	
-	public int getWidth() {return width;}
-	public int getHeight() {return height;}
-	public boolean hasResized() { return hasResized; }
-	public boolean isFullscreen() { return fullscreen; }
-	public long getWindow() { return window; }
-	public Input getInput() { return input; }
+	public static int getWidth() {return width;}
+	public static int getHeight() {return height;}
+	public static boolean hasResized() { return hasResized; }
+	public static boolean isFullscreen() { return fullscreen; }
+	public static long getWindow() { return window; }
+	public static Input getInput() { return input; }
 }
