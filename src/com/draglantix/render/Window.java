@@ -12,8 +12,8 @@ public class Window {
 	private static long window;
 	
 	private static int width;
-
 	private static int height;
+	
 	private static boolean fullscreen;
 	private static boolean hasResized;
 	private GLFWWindowSizeCallback windowSizeCallback;
@@ -41,8 +41,8 @@ public class Window {
 	
 	public Window() {
 		GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		setSize(vid.width(), vid.height());
-		setFullscreen(true);
+		setSize(1000, 800);
+		setFullscreen(false);
 		hasResized = false;
 	}
 	

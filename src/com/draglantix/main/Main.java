@@ -1,5 +1,9 @@
 package com.draglantix.main;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
@@ -7,12 +11,13 @@ import org.lwjgl.opengl.GL11;
 
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
+import com.draglantix.entities.Light;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.render.Loader;
-import com.draglantix.render.Renderer;
+import com.draglantix.render.MasterRenderer;
+import com.draglantix.render.OBJLoader;
 import com.draglantix.render.Window;
-import com.draglantix.shaders.StaticShader;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.tools.Timer;
 
@@ -32,10 +37,6 @@ public class Main {
 		
 		Loader loader = new Loader();
 		
-		StaticShader shader = new StaticShader();
-		
-		Renderer renderer = new Renderer(shader);
-	
 		double frame_cap = 1.0/60.0;
 		
 		double frame_time = 0;
@@ -44,93 +45,30 @@ public class Main {
 		double time = Timer.getTime();
 		double unprocessed = 0;
 		
-
-		float[] vertices = {			
-				-0.5f,0.5f,-0.5f,	
-				-0.5f,-0.5f,-0.5f,	
-				0.5f,-0.5f,-0.5f,	
-				0.5f,0.5f,-0.5f,		
-				
-				-0.5f,0.5f,0.5f,	
-				-0.5f,-0.5f,0.5f,	
-				0.5f,-0.5f,0.5f,	
-				0.5f,0.5f,0.5f,
-				
-				0.5f,0.5f,-0.5f,	
-				0.5f,-0.5f,-0.5f,	
-				0.5f,-0.5f,0.5f,	
-				0.5f,0.5f,0.5f,
-				
-				-0.5f,0.5f,-0.5f,	
-				-0.5f,-0.5f,-0.5f,	
-				-0.5f,-0.5f,0.5f,	
-				-0.5f,0.5f,0.5f,
-				
-				-0.5f,0.5f,0.5f,
-				-0.5f,0.5f,-0.5f,
-				0.5f,0.5f,-0.5f,
-				0.5f,0.5f,0.5f,
-				
-				-0.5f,-0.5f,0.5f,
-				-0.5f,-0.5f,-0.5f,
-				0.5f,-0.5f,-0.5f,
-				0.5f,-0.5f,0.5f
-				
-		};
+		RawModel model = OBJLoader.loadOBJModel("dragon", loader);
 		
-		float[] textureCoords = {
-				
-				0,0,
-				0,1,
-				1,1,
-				1,0,			
-				0,0,
-				0,1,
-				1,1,
-				1,0,			
-				0,0,
-				0,1,
-				1,1,
-				1,0,
-				0,0,
-				0,1,
-				1,1,
-				1,0,
-				0,0,
-				0,1,
-				1,1,
-				1,0,
-				0,0,
-				0,1,
-				1,1,
-				1,0
-
-				
-		};
+		TexturedModel dragonmodel = new TexturedModel(model,  
+				new ModelTexture(loader.loadTexture("dragonTexture")));
+		ModelTexture texture = dragonmodel.getTexture();
+		texture.setShineDamper(10);
+		texture.setReflectivity(1);
 		
-		int[] indices = {
-				0,1,3,	
-				3,1,2,	
-				4,5,7,
-				7,5,6,
-				8,9,11,
-				11,9,10,
-				12,13,15,
-				15,13,14,	
-				16,17,19,
-				19,17,18,
-				20,21,23,
-				23,21,22
-
-		};
+		Light light = new Light(new Vector3f(0, 0, -40), new Vector3f(1, 1, 1));
 		
-		RawModel model = loader.loadToVAO(vertices, textureCoords, indices);
-		TexturedModel staticModel = new TexturedModel(model,  
-				new ModelTexture(loader.loadTexture("Dragon")));
+		List<Entity> dragons = new ArrayList<Entity>();
+		Random random = new Random();
 		
-		Entity entity = new Entity(staticModel, new Vector3f(0, 0, -5), 0, 0, 0, 1);
+		for(int i = 0; i < 20; i++) {
+			float x = random.nextFloat() * 100 - 50;
+			float y = random.nextFloat() * 100 - 50;
+			float z = random.nextFloat() * -300;
+			dragons.add(new Entity(dragonmodel, new Vector3f(x, y , z), random.nextFloat() * 180f,
+					random.nextFloat() * 180f, 0f, 1f));
+		}
 		
 		Camera camera = new Camera();
+		
+		MasterRenderer renderer = new MasterRenderer();
 		
 		while(!window.shouldClose()) {
 			boolean can_render = false;
@@ -140,7 +78,8 @@ public class Main {
 			unprocessed += passed;
 			frame_time += passed;
 			
-			time = time_2;while(unprocessed >= frame_cap) {
+			time = time_2;
+			while(unprocessed >= frame_cap) {
 				if(window.hasResized()){
 					GL11.glViewport(0, 0, window.getWidth(), window.getHeight());
 				}
@@ -157,19 +96,19 @@ public class Main {
 			}
 			
 			if(can_render) {
-				entity.increaseRotation(1, 1, 0);
-				renderer.prepare();
-				shader.start();
-				shader.loadViewMatrix(camera);
+				
+				for(Entity dragon : dragons) {
+					dragon.increaseRotation(0, 1.5f, 0);
+					renderer.processEntity(dragon);
+				}
 				camera.move();
-				renderer.render(entity, shader);
-				shader.stop();
+				renderer.renderer(light, camera);
 				window.swapBuffers();
 				frames++;
 			}
 		}
 		
-		shader.cleanUp();
+		renderer.cleanUp();
 		loader.cleanUp();
 		GLFW.glfwTerminate();
 	}

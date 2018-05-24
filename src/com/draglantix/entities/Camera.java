@@ -16,16 +16,22 @@ public class Camera {
 	
 	public void move() {
 		if(Window.getInput().isKeyDown(GLFW.GLFW_KEY_W)) {
-			position.z-=0.02f;
+			position.z-=0.5f;
 		}
 		if(Window.getInput().isKeyDown(GLFW.GLFW_KEY_S)) {
-			position.z+=0.02f;
+			position.z+=0.5f;
 		}
 		if(Window.getInput().isKeyDown(GLFW.GLFW_KEY_A)) {
-			position.x-=0.02f;
+			position.x-=0.5f;
 		}
 		if(Window.getInput().isKeyDown(GLFW.GLFW_KEY_D)) {
-			position.x+=0.02f;
+			position.x+=0.5f;
+		}
+		if(Window.getInput().isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+			position.y+=0.2f;
+		}
+		if(Window.getInput().isKeyDown(GLFW.GLFW_KEY_LEFT_CONTROL)) {
+			position.y-=0.2f;
 		}
 	}
 	
