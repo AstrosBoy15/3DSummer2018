@@ -41,7 +41,7 @@ public class Window {
 	
 	public Window() {
 		GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		setSize(1000, 800);
+		setSize(800, 600);
 		setFullscreen(false);
 		hasResized = false;
 	}
