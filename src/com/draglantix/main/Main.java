@@ -25,6 +25,8 @@ import com.draglantix.tools.Timer;
 
 public class Main {
 	
+	private boolean pause = false;
+	
 	public Main() {
 		Window.setCallbacks();
 	
@@ -53,6 +55,7 @@ public class Main {
 		//Models///
 		
 		ModelData treeData = OBJFileLoader.loadOBJ("tree");
+		ModelData mushroomTestData = OBJFileLoader.loadOBJ("mushroomTest");
 		ModelData rock1Data = OBJFileLoader.loadOBJ("rock1");
 		ModelData rock2Data = OBJFileLoader.loadOBJ("rock2");
 		ModelData rock3Data = OBJFileLoader.loadOBJ("rock3");
@@ -64,10 +67,14 @@ public class Main {
 		ModelData snowRock2Data = OBJFileLoader.loadOBJ("snowRock2");
 		ModelData snowRock3Data = OBJFileLoader.loadOBJ("snowRock3");
 		ModelData snowPineTreeData = OBJFileLoader.loadOBJ("snowPineTree");
+		ModelData snowmanData = OBJFileLoader.loadOBJ("snowman");
 		
 		RawModel treeModel = loader.loadToVAO(
 			treeData.getVertices(), treeData.getTextureCoords(),
 			treeData.getNormals(), treeData.getIndices());
+		RawModel mushroomTestModel = loader.loadToVAO(
+				mushroomTestData.getVertices(), mushroomTestData.getTextureCoords(),
+				mushroomTestData.getNormals(), mushroomTestData.getIndices());
 		RawModel rock1Model = loader.loadToVAO(
 			rock1Data.getVertices(), rock1Data.getTextureCoords(),
 			rock1Data.getNormals(), rock1Data.getIndices());
@@ -102,8 +109,12 @@ public class Main {
 		RawModel snowPineTreeModel = loader.loadToVAO(
 				snowPineTreeData.getVertices(), snowPineTreeData.getTextureCoords(),
 				snowPineTreeData.getNormals(), snowPineTreeData.getIndices());
+		RawModel snowmanModel = loader.loadToVAO(
+				snowmanData.getVertices(), snowmanData.getTextureCoords(),
+				snowmanData.getNormals(), snowmanData.getIndices());
 		
 		TexturedModel tree = new TexturedModel(treeModel, new ModelTexture(loader.loadTexture("treeTexture")));
+		TexturedModel mushroomTest = new TexturedModel(mushroomTestModel, new ModelTexture(loader.loadTexture("mushroomTextureTest")));
 		TexturedModel rock1 = new TexturedModel(rock1Model, new ModelTexture(loader.loadTexture("rockTexture")));
 		TexturedModel rock2 = new TexturedModel(rock2Model, new ModelTexture(loader.loadTexture("rockTexture")));
 		TexturedModel rock3 = new TexturedModel(rock3Model, new ModelTexture(loader.loadTexture("rockTexture")));
@@ -114,7 +125,8 @@ public class Main {
 		TexturedModel snowRock1 = new TexturedModel(snowRock1Model, new ModelTexture(loader.loadTexture("rockTexture")));
 		TexturedModel snowRock2 = new TexturedModel(snowRock2Model, new ModelTexture(loader.loadTexture("rockTexture")));
 		TexturedModel snowRock3 = new TexturedModel(snowRock3Model, new ModelTexture(loader.loadTexture("rockTexture")));
-		TexturedModel snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("snowPineTreeTexture")));	
+		TexturedModel snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("snowPineTreeTexture")));
+		TexturedModel snowman = new TexturedModel(snowmanModel, new ModelTexture(loader.loadTexture("snowmanTexture")));		
 		
 		List<Entity> entities = new ArrayList<Entity>();
 		
@@ -127,6 +139,9 @@ public class Main {
 			x = rand.nextFloat() * range;
 			z = rand.nextFloat() * -range;
 			entities.add(new Entity(tree, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(mushroomTest, new Vector3f(x, 0, z), 0, 0, 0, .5f));
 			x = rand.nextFloat() * range;
 			z = rand.nextFloat() * -range;
 			entities.add(new Entity(rock1, new Vector3f(x, 0, z), 0, 0, 0, 1));
@@ -162,6 +177,9 @@ public class Main {
 			x = rand.nextFloat() * -range;
 			z = rand.nextFloat() * -range;
 			entities.add(new Entity(snowPineTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			x = rand.nextFloat() * -range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(snowman, new Vector3f(x, 0, z), 0, 0, 0, 3));
 		}
 		
 		///////////Game Loop///////////////////
@@ -176,10 +194,23 @@ public class Main {
 			
 			time = time_2;
 			while(unprocessed >= frame_cap) {
-				if(window.hasResized()){
-					GL11.glViewport(0, 0, window.getWidth(), window.getHeight());
+				if(Window.hasResized()){
+					GL11.glViewport(0, 0, Window.getWidth(), Window.getHeight());
 				}
 				
+				if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_P)) {
+					pause = !pause;
+					Window.getInput().setMousePos(Window.getWidth()/2, Window.getHeight()/2);
+				}
+				
+				if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
+					GLFW.glfwSetWindowShouldClose(Window.getWindow(), true);
+				}
+				if(pause) {
+					GLFW.glfwSetInputMode(Window.getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+				} else {
+					GLFW.glfwSetInputMode(Window.getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
+				}
 				unprocessed-=frame_cap;
 				can_render = true;
 				
@@ -192,7 +223,10 @@ public class Main {
 			
 			if(can_render) {/////////////RENDER HERE///////////
 				
-				camera.move();
+				if(!pause) {
+					//game logic goes inside loop
+					camera.move();
+				}
 				
 				renderer.processTerrain(terrain);
 				renderer.processTerrain(terrain2);
@@ -201,6 +235,7 @@ public class Main {
 				for(Entity e : entities) {
 					renderer.processEntity(e);
 				}
+				
 				
 				window.swapBuffers();
 			}

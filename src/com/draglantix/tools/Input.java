@@ -45,6 +45,10 @@ public class Input {
 		return new Vector2f((float)x, (float)y);
 	}
 	
+	public void setMousePos(double xpos, double ypos) {
+		GLFW.glfwSetCursorPos(window, xpos, ypos);
+	}
+	
 	public void update() {
 		for(int i = 32; i < GLFW_KEY_LAST; i++)
 			keys[i]= isKeyDown(i);
