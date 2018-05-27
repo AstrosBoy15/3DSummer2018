@@ -14,9 +14,10 @@ import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
+import com.draglantix.objConverter.ModelData;
+import com.draglantix.objConverter.OBJFileLoader;
 import com.draglantix.render.Loader;
 import com.draglantix.render.MasterRenderer;
-import com.draglantix.render.OBJLoader;
 import com.draglantix.render.Window;
 import com.draglantix.terrains.Terrain;
 import com.draglantix.textures.ModelTexture;
@@ -46,139 +47,121 @@ public class Main {
 		MasterRenderer renderer = new MasterRenderer();
 	
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
-		Terrain terrain = new Terrain(-1, -1,loader,new ModelTexture(loader.loadTexture("terrainTexture")));
+		Terrain terrain = new Terrain(-1, -1,loader,new ModelTexture(loader.loadTexture("snowTerrainTexture")));
 		Terrain terrain2 = new Terrain(0, -1,loader,new ModelTexture(loader.loadTexture("terrainTexture")));
 
+		//Models///
 		
-		///////Models Init///////// 
+		ModelData treeData = OBJFileLoader.loadOBJ("tree");
+		ModelData rock1Data = OBJFileLoader.loadOBJ("rock1");
+		ModelData rock2Data = OBJFileLoader.loadOBJ("rock2");
+		ModelData rock3Data = OBJFileLoader.loadOBJ("rock3");
+		ModelData grassData = OBJFileLoader.loadOBJ("grass");	
+		ModelData pineTreeData = OBJFileLoader.loadOBJ("pineTree");	
+		ModelData fallTreeData = OBJFileLoader.loadOBJ("fallTree");	
+		ModelData snowTreeData = OBJFileLoader.loadOBJ("snowTree");		
+		ModelData snowRock1Data = OBJFileLoader.loadOBJ("snowRock1");
+		ModelData snowRock2Data = OBJFileLoader.loadOBJ("snowRock2");
+		ModelData snowRock3Data = OBJFileLoader.loadOBJ("snowRock3");
+		ModelData snowPineTreeData = OBJFileLoader.loadOBJ("snowPineTree");
 		
-		RawModel tallGrass = OBJLoader.loadOBJModel("grass", loader);		
-		TexturedModel tallGrassModel = new TexturedModel(tallGrass,  
-				new ModelTexture(loader.loadTexture("tallGrassTexture")));
-		ModelTexture tallGrassTexture = tallGrassModel.getTexture();
-		//tallGrassTexture.setShineDamper(10);
-		//tallGrassTexture.setReflectivity(1);
+		RawModel treeModel = loader.loadToVAO(
+			treeData.getVertices(), treeData.getTextureCoords(),
+			treeData.getNormals(), treeData.getIndices());
+		RawModel rock1Model = loader.loadToVAO(
+			rock1Data.getVertices(), rock1Data.getTextureCoords(),
+			rock1Data.getNormals(), rock1Data.getIndices());
+		RawModel rock2Model = loader.loadToVAO(
+			rock2Data.getVertices(), rock2Data.getTextureCoords(),
+			rock2Data.getNormals(), rock2Data.getIndices());
+		RawModel rock3Model = loader.loadToVAO(
+			rock3Data.getVertices(), rock3Data.getTextureCoords(),
+			rock3Data.getNormals(), rock3Data.getIndices());
+		RawModel grassModel = loader.loadToVAO(
+			grassData.getVertices(), grassData.getTextureCoords(),
+			grassData.getNormals(), grassData.getIndices());
+		RawModel pineTreeModel = loader.loadToVAO(
+				pineTreeData.getVertices(), pineTreeData.getTextureCoords(),
+				pineTreeData.getNormals(), pineTreeData.getIndices());
+		RawModel fallTreeModel = loader.loadToVAO(
+				fallTreeData.getVertices(), fallTreeData.getTextureCoords(),
+				fallTreeData.getNormals(), fallTreeData.getIndices());
+		//Snow Biome
+		RawModel snowTreeModel = loader.loadToVAO(
+				snowTreeData.getVertices(), snowTreeData.getTextureCoords(),
+				snowTreeData.getNormals(), snowTreeData.getIndices());
+		RawModel snowRock1Model = loader.loadToVAO(
+				snowRock1Data.getVertices(), snowRock1Data.getTextureCoords(),
+				snowRock1Data.getNormals(), snowRock1Data.getIndices());
+		RawModel snowRock2Model = loader.loadToVAO(
+				snowRock2Data.getVertices(), snowRock2Data.getTextureCoords(),
+				snowRock2Data.getNormals(), snowRock2Data.getIndices());
+		RawModel snowRock3Model = loader.loadToVAO(
+				snowRock3Data.getVertices(), snowRock3Data.getTextureCoords(),
+				snowRock3Data.getNormals(), snowRock3Data.getIndices());
+		RawModel snowPineTreeModel = loader.loadToVAO(
+				snowPineTreeData.getVertices(), snowPineTreeData.getTextureCoords(),
+				snowPineTreeData.getNormals(), snowPineTreeData.getIndices());
 		
-		RawModel fallTree = OBJLoader.loadOBJModel("fallTree", loader);		
-		TexturedModel fallTreeModel = new TexturedModel(fallTree,  
-				new ModelTexture(loader.loadTexture("fallTreeTexture")));
+		TexturedModel tree = new TexturedModel(treeModel, new ModelTexture(loader.loadTexture("treeTexture")));
+		TexturedModel rock1 = new TexturedModel(rock1Model, new ModelTexture(loader.loadTexture("rockTexture")));
+		TexturedModel rock2 = new TexturedModel(rock2Model, new ModelTexture(loader.loadTexture("rockTexture")));
+		TexturedModel rock3 = new TexturedModel(rock3Model, new ModelTexture(loader.loadTexture("rockTexture")));
+		TexturedModel grass = new TexturedModel(grassModel, new ModelTexture(loader.loadTexture("tallGrassTexture")));
+		TexturedModel pineTree = new TexturedModel(pineTreeModel, new ModelTexture(loader.loadTexture("pineTreeTexture")));	
+		TexturedModel fallTree = new TexturedModel(fallTreeModel, new ModelTexture(loader.loadTexture("fallTreeTexture")));	
+		TexturedModel snowTree = new TexturedModel(snowTreeModel, new ModelTexture(loader.loadTexture("snowTreeTexture")));	
+		TexturedModel snowRock1 = new TexturedModel(snowRock1Model, new ModelTexture(loader.loadTexture("rockTexture")));
+		TexturedModel snowRock2 = new TexturedModel(snowRock2Model, new ModelTexture(loader.loadTexture("rockTexture")));
+		TexturedModel snowRock3 = new TexturedModel(snowRock3Model, new ModelTexture(loader.loadTexture("rockTexture")));
+		TexturedModel snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("snowPineTreeTexture")));	
 		
-		RawModel tree = OBJLoader.loadOBJModel("tree", loader);		
-		TexturedModel treeModel = new TexturedModel(tree,  
-				new ModelTexture(loader.loadTexture("treeTexture")));
-		
-		RawModel pineTree = OBJLoader.loadOBJModel("pineTree", loader);		
-		TexturedModel pineTreeModel = new TexturedModel(pineTree,  
-				new ModelTexture(loader.loadTexture("pineTreeTexture")));
-		
-		RawModel snowTree = OBJLoader.loadOBJModel("snowTree", loader);		
-		TexturedModel snowTreeModel = new TexturedModel(snowTree,  
-				new ModelTexture(loader.loadTexture("snowTreeTexture")));
-		
-		RawModel rock1 = OBJLoader.loadOBJModel("rock1", loader);		
-		TexturedModel rock1Model = new TexturedModel(rock1,  
-				new ModelTexture(loader.loadTexture("rockTexture")));
-		
-		RawModel rock2 = OBJLoader.loadOBJModel("rock2", loader);		
-		TexturedModel rock2Model = new TexturedModel(rock2,  
-				new ModelTexture(loader.loadTexture("rockTexture")));
-		
-		RawModel rock3 = OBJLoader.loadOBJModel("rock3", loader);		
-		TexturedModel rock3Model = new TexturedModel(rock3,  
-				new ModelTexture(loader.loadTexture("rockTexture")));
-		
-		RawModel snowRock1 = OBJLoader.loadOBJModel("snowRock1", loader);		
-		TexturedModel snowRock1Model = new TexturedModel(snowRock1,  
-				new ModelTexture(loader.loadTexture("rockTexture")));
-		
-		RawModel snowRock2 = OBJLoader.loadOBJModel("snowRock2", loader);		
-		TexturedModel snowRock2Model = new TexturedModel(snowRock2,  
-				new ModelTexture(loader.loadTexture("rockTexture")));
-		
-		RawModel snowRock3 = OBJLoader.loadOBJModel("snowRock3", loader);		
-		TexturedModel snowRock3Model = new TexturedModel(snowRock3,  
-				new ModelTexture(loader.loadTexture("rockTexture")));
-		
-		RawModel snowPineTree = OBJLoader.loadOBJModel("snowPineTree", loader);		
-		TexturedModel snowPineTreeModel = new TexturedModel(snowPineTree,  
-				new ModelTexture(loader.loadTexture("snowPineTreeTexture")));	
-		
-		List<Entity> grass = new ArrayList<Entity>();
-		List<Entity> fallTrees = new ArrayList<Entity>();
-		List<Entity> trees = new ArrayList<Entity>();
-		List<Entity> pineTrees = new ArrayList<Entity>();
-		List<Entity> snowTrees = new ArrayList<Entity>();
-		List<Entity> rocks1 = new ArrayList<Entity>();
-		List<Entity> rocks2 = new ArrayList<Entity>();
-		List<Entity> rocks3 = new ArrayList<Entity>();
-		List<Entity> snowRocks1 = new ArrayList<Entity>();
-		List<Entity> snowRocks2 = new ArrayList<Entity>();
-		List<Entity> snowRocks3 = new ArrayList<Entity>();
-		List<Entity> snowPineTrees = new ArrayList<Entity>();
+		List<Entity> entities = new ArrayList<Entity>();
 		
 		Random rand = new Random();
 		
 		int range = 800;
+		float x, z;
 		
 		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			grass.add(new Entity(tallGrassModel, new Vector3f(x, 0, z), 0, 0, 0, 3));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			fallTrees.add(new Entity(fallTreeModel, new Vector3f(x, 0, z), 0, 0, 0, 5));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			trees.add(new Entity(treeModel, new Vector3f(x, 0, z), 0, 0, 0, 5));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			pineTrees.add(new Entity(pineTreeModel, new Vector3f(x, 0, z), 0, 0, 0, 5));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			snowTrees.add(new Entity(snowTreeModel, new Vector3f(x, 0, z), 0, 0, 0, 5));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			rocks1.add(new Entity(rock1Model, new Vector3f(x, 0, z), 0, 0, 0, 2));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			rocks2.add(new Entity(rock2Model, new Vector3f(x, 0, z), 0, 0, 0, 1));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			rocks3.add(new Entity(rock3Model, new Vector3f(x, 0, z), 0, 0, 0, 3));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			snowRocks1.add(new Entity(snowRock1Model, new Vector3f(x, 0, z), 0, 0, 0, 2));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			snowRocks2.add(new Entity(snowRock2Model, new Vector3f(x, 0, z), 0, 0, 0, 1));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			snowRocks3.add(new Entity(snowRock3Model, new Vector3f(x, 0, z), 0, 0, 0, 3));
-		}
-		for(int i=0; i < 50; i++) {
-			float x = rand.nextFloat() * range;
-			float z = rand.nextFloat() * -range;
-			snowPineTrees.add(new Entity(snowPineTreeModel, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(tree, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(rock1, new Vector3f(x, 0, z), 0, 0, 0, 1));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(rock2, new Vector3f(x, 0, z), 0, 0, 0, 2));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(rock3, new Vector3f(x, 0, z), 0, 0, 0, 3));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(grass, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(pineTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			x = rand.nextFloat() * range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(fallTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			
+			//snow biome
+			x = rand.nextFloat() * -range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(snowTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
+			x = rand.nextFloat() * -range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(snowRock1, new Vector3f(x, 0, z), 0, 0, 0, 1));
+			x = rand.nextFloat() * -range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(snowRock2, new Vector3f(x, 0, z), 0, 0, 0, 2));
+			x = rand.nextFloat() * -range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(snowRock3, new Vector3f(x, 0, z), 0, 0, 0, 3));
+			x = rand.nextFloat() * -range;
+			z = rand.nextFloat() * -range;
+			entities.add(new Entity(snowPineTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
 		}
 		
 		///////////Game Loop///////////////////
@@ -215,42 +198,9 @@ public class Main {
 				renderer.processTerrain(terrain2);
 				renderer.renderer(light, camera);
 				
-				for(Entity e : grass) {
+				for(Entity e : entities) {
 					renderer.processEntity(e);
 				}
-				for(Entity e : fallTrees) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : trees) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : pineTrees) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : snowTrees) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : rocks1) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : rocks2) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : rocks3) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : snowRocks1) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : snowRocks2) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : snowRocks3) {
-					renderer.processEntity(e);
-				}
-				for(Entity e : snowPineTrees) {
-					renderer.processEntity(e);
-				}	
 				
 				window.swapBuffers();
 			}
