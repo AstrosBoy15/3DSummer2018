@@ -212,6 +212,7 @@ public class Main {
 			while(unprocessed >= frame_cap) {
 				if(Window.hasResized()){
 					GL11.glViewport(0, 0, Window.getWidth(), Window.getHeight());
+					renderer.updateProjectionMatrix();
 				}
 				
 				if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_P)) {

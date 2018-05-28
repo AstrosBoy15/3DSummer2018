@@ -27,6 +27,12 @@ public class EntityRenderer {
 		shader.stop();
 	}
 	
+	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
+		shader.start();
+		shader.loadProjectionnMatrix(projectionMatrix);
+		shader.stop();
+	}
+	
 	public void render(Map<TexturedModel, List<Entity>> entities) {
 		for(TexturedModel model:entities.keySet()) {
 			prepareTexturedModel(model);

@@ -19,7 +19,7 @@ import com.draglantix.terrains.Terrain;
 public class MasterRenderer {
 	
 	private static final float FOV = 70;
-	private static final float NEAR_PLANE = 0.1f;
+	private static final float NEAR_PLANE = 0.5f;
 	private static final float FAR_PLANE = 1000;
 	
 	private static final float RED = 0.5f;
@@ -30,9 +30,9 @@ public class MasterRenderer {
 	private Matrix4f projectionMatrix;
 
 	private StaticShader shader = new StaticShader();
-	private EntityRenderer renderer;
+	private static EntityRenderer renderer;
 	
-	private TerrainRenderer terrainRenderer;
+	private static TerrainRenderer terrainRenderer;
 	private TerrainShader terrainShader = new TerrainShader();
 	
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
@@ -44,6 +44,12 @@ public class MasterRenderer {
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
+	}
+	
+	public void updateProjectionMatrix() {
+		createProjectionMatrix();
+		renderer.updateProjectionMatrix(projectionMatrix);
+		terrainRenderer.updateProjectionMatrix(projectionMatrix);
 	}
 	
 	public static void enableCulling() {

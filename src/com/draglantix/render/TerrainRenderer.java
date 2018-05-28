@@ -28,6 +28,12 @@ public class TerrainRenderer {
 		shader.stop();
 	}
 	
+	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
+		shader.start();
+		shader.loadProjectionnMatrix(projectionMatrix);
+		shader.stop();
+	}
+	
 	public void renderer(List<Terrain>terrains) {
 		for(Terrain terrain:terrains) {
 			prepareTerrain(terrain);
