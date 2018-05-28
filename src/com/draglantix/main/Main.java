@@ -29,6 +29,7 @@ import com.draglantix.tools.Timer;
 public class Main {
 	
 	private boolean pause = false;
+	private Random rand = new Random();
 	
 	private Terrain currentTerrain;
 	private Terrain terrains[][] = new Terrain[2][2];
@@ -126,8 +127,11 @@ public class Main {
 				snowmanData.getVertices(), snowmanData.getTextureCoords(),
 				snowmanData.getNormals(), snowmanData.getIndices());
 		
+		ModelTexture mushroomModelTex = new ModelTexture(loader.loadTexture("model/texture/mushroomTextureAtlas"));
+		mushroomModelTex.setNumberOfRows(2);
+		
 		TexturedModel tree = new TexturedModel(treeModel, new ModelTexture(loader.loadTexture("model/texture/treeTexture")));
-		TexturedModel mushroomTest = new TexturedModel(mushroomTestModel, new ModelTexture(loader.loadTexture("model/texture/mushroomTextureTest")));
+		TexturedModel mushroomTest = new TexturedModel(mushroomTestModel, mushroomModelTex);
 		TexturedModel rock1 = new TexturedModel(rock1Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
 		TexturedModel rock2 = new TexturedModel(rock2Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
 		TexturedModel rock3 = new TexturedModel(rock3Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
@@ -160,7 +164,7 @@ public class Main {
 					for(int w=0; w < 50; w++) {
 						
 						entities.add(new Entity(tree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
-						entities.add(new Entity(mushroomTest, generateEntityPos(terrains[j][i]), 0, 0, 0, .5f));
+						entities.add(new Entity(mushroomTest, rand.nextInt(4), generateEntityPos(terrains[j][i]), 0, 0, 0, .5f));
 						entities.add(new Entity(rock1, generateEntityPos(terrains[j][i]), 0, 0, 0, 1));
 						entities.add(new Entity(rock2, generateEntityPos(terrains[j][i]), 0, 0, 0, 2));
 						entities.add(new Entity(rock3, generateEntityPos(terrains[j][i]), 0, 0, 0, 3));
@@ -253,7 +257,6 @@ public class Main {
 	}
 	
 	private Vector3f generateEntityPos(Terrain terrain){
-		Random rand = new Random();
 		float x = (rand.nextFloat() * terrain.SIZE) + terrain.getX();
 		float z = (rand.nextFloat() * terrain.SIZE) + terrain.getZ();
 		float y = terrain.getHeightOfTerrain(x, z);
