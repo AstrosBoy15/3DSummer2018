@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
+import com.draglantix.entities.Player;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.objConverter.ModelData;
@@ -21,6 +22,8 @@ import com.draglantix.render.MasterRenderer;
 import com.draglantix.render.Window;
 import com.draglantix.terrains.Terrain;
 import com.draglantix.textures.ModelTexture;
+import com.draglantix.textures.TerrainTexture;
+import com.draglantix.textures.TerrainTexturePack;
 import com.draglantix.tools.Timer;
 
 public class Main {
@@ -45,29 +48,39 @@ public class Main {
 		double unprocessed = 0;
 		
 		Loader loader = new Loader();
-		Camera camera = new Camera();
 		MasterRenderer renderer = new MasterRenderer();
 	
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
-		Terrain terrain = new Terrain(-1, -1,loader,new ModelTexture(loader.loadTexture("snowTerrainTexture")));
-		Terrain terrain2 = new Terrain(0, -1,loader,new ModelTexture(loader.loadTexture("terrainTexture")));
+		
+		TerrainTexture backgroundTextureGrass = new TerrainTexture(loader.loadTexture("terrain/terrainTexture"));
+		TerrainTexture backgroundTextureSnow = new TerrainTexture(loader.loadTexture("terrain/snowTerrainTexture"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("terrain/mud"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("terrain/pinkFlowers"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("terrain/path"));
+		
+		TerrainTexturePack texturePackGrass = new TerrainTexturePack(backgroundTextureGrass, rTexture, gTexture, bTexture);
+		TerrainTexturePack texturePackSnow = new TerrainTexturePack(backgroundTextureSnow, rTexture, gTexture, bTexture);
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("terrain/blendMap"));
+		
+		Terrain terrain = new Terrain(-1, -1, loader, texturePackSnow, blendMap);
+		Terrain terrain2 = new Terrain(0, -1,loader, texturePackGrass, blendMap);
 
 		//Models///
 		
-		ModelData treeData = OBJFileLoader.loadOBJ("tree");
-		ModelData mushroomTestData = OBJFileLoader.loadOBJ("mushroomTest");
-		ModelData rock1Data = OBJFileLoader.loadOBJ("rock1");
-		ModelData rock2Data = OBJFileLoader.loadOBJ("rock2");
-		ModelData rock3Data = OBJFileLoader.loadOBJ("rock3");
-		ModelData grassData = OBJFileLoader.loadOBJ("grass");	
-		ModelData pineTreeData = OBJFileLoader.loadOBJ("pineTree");	
-		ModelData fallTreeData = OBJFileLoader.loadOBJ("fallTree");	
-		ModelData snowTreeData = OBJFileLoader.loadOBJ("snowTree");		
-		ModelData snowRock1Data = OBJFileLoader.loadOBJ("snowRock1");
-		ModelData snowRock2Data = OBJFileLoader.loadOBJ("snowRock2");
-		ModelData snowRock3Data = OBJFileLoader.loadOBJ("snowRock3");
-		ModelData snowPineTreeData = OBJFileLoader.loadOBJ("snowPineTree");
-		ModelData snowmanData = OBJFileLoader.loadOBJ("snowman");
+		ModelData treeData = OBJFileLoader.loadOBJ("model/obj/tree");
+		ModelData mushroomTestData = OBJFileLoader.loadOBJ("model/obj/mushroomTest");
+		ModelData rock1Data = OBJFileLoader.loadOBJ("model/obj/rock1");
+		ModelData rock2Data = OBJFileLoader.loadOBJ("model/obj/rock2");
+		ModelData rock3Data = OBJFileLoader.loadOBJ("model/obj/rock3");
+		ModelData grassData = OBJFileLoader.loadOBJ("model/obj/grass");	
+		ModelData pineTreeData = OBJFileLoader.loadOBJ("model/obj/pineTree");	
+		ModelData fallTreeData = OBJFileLoader.loadOBJ("model/obj/fallTree");	
+		ModelData snowTreeData = OBJFileLoader.loadOBJ("model/obj/snowTree");		
+		ModelData snowRock1Data = OBJFileLoader.loadOBJ("model/obj/snowRock1");
+		ModelData snowRock2Data = OBJFileLoader.loadOBJ("model/obj/snowRock2");
+		ModelData snowRock3Data = OBJFileLoader.loadOBJ("model/obj/snowRock3");
+		ModelData snowPineTreeData = OBJFileLoader.loadOBJ("model/obj/snowPineTree");
+		ModelData snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
 		
 		RawModel treeModel = loader.loadToVAO(
 			treeData.getVertices(), treeData.getTextureCoords(),
@@ -113,20 +126,20 @@ public class Main {
 				snowmanData.getVertices(), snowmanData.getTextureCoords(),
 				snowmanData.getNormals(), snowmanData.getIndices());
 		
-		TexturedModel tree = new TexturedModel(treeModel, new ModelTexture(loader.loadTexture("treeTexture")));
-		TexturedModel mushroomTest = new TexturedModel(mushroomTestModel, new ModelTexture(loader.loadTexture("mushroomTextureTest")));
-		TexturedModel rock1 = new TexturedModel(rock1Model, new ModelTexture(loader.loadTexture("rockTexture")));
-		TexturedModel rock2 = new TexturedModel(rock2Model, new ModelTexture(loader.loadTexture("rockTexture")));
-		TexturedModel rock3 = new TexturedModel(rock3Model, new ModelTexture(loader.loadTexture("rockTexture")));
-		TexturedModel grass = new TexturedModel(grassModel, new ModelTexture(loader.loadTexture("tallGrassTexture")));
-		TexturedModel pineTree = new TexturedModel(pineTreeModel, new ModelTexture(loader.loadTexture("pineTreeTexture")));	
-		TexturedModel fallTree = new TexturedModel(fallTreeModel, new ModelTexture(loader.loadTexture("fallTreeTexture")));	
-		TexturedModel snowTree = new TexturedModel(snowTreeModel, new ModelTexture(loader.loadTexture("snowTreeTexture")));	
-		TexturedModel snowRock1 = new TexturedModel(snowRock1Model, new ModelTexture(loader.loadTexture("rockTexture")));
-		TexturedModel snowRock2 = new TexturedModel(snowRock2Model, new ModelTexture(loader.loadTexture("rockTexture")));
-		TexturedModel snowRock3 = new TexturedModel(snowRock3Model, new ModelTexture(loader.loadTexture("rockTexture")));
-		TexturedModel snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("snowPineTreeTexture")));
-		TexturedModel snowman = new TexturedModel(snowmanModel, new ModelTexture(loader.loadTexture("snowmanTexture")));		
+		TexturedModel tree = new TexturedModel(treeModel, new ModelTexture(loader.loadTexture("model/texture/treeTexture")));
+		TexturedModel mushroomTest = new TexturedModel(mushroomTestModel, new ModelTexture(loader.loadTexture("model/texture/mushroomTextureTest")));
+		TexturedModel rock1 = new TexturedModel(rock1Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
+		TexturedModel rock2 = new TexturedModel(rock2Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
+		TexturedModel rock3 = new TexturedModel(rock3Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
+		TexturedModel grass = new TexturedModel(grassModel, new ModelTexture(loader.loadTexture("model/texture/tallGrassTexture")));
+		TexturedModel pineTree = new TexturedModel(pineTreeModel, new ModelTexture(loader.loadTexture("model/texture/pineTreeTexture")));	
+		TexturedModel fallTree = new TexturedModel(fallTreeModel, new ModelTexture(loader.loadTexture("model/texture/fallTreeTexture")));	
+		TexturedModel snowTree = new TexturedModel(snowTreeModel, new ModelTexture(loader.loadTexture("model/texture/snowTreeTexture")));	
+		TexturedModel snowRock1 = new TexturedModel(snowRock1Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
+		TexturedModel snowRock2 = new TexturedModel(snowRock2Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
+		TexturedModel snowRock3 = new TexturedModel(snowRock3Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
+		TexturedModel snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("model/texture/snowPineTreeTexture")));
+		TexturedModel snowman = new TexturedModel(snowmanModel, new ModelTexture(loader.loadTexture("model/texture/snowmanTexture")));		
 		
 		List<Entity> entities = new ArrayList<Entity>();
 		
@@ -182,6 +195,9 @@ public class Main {
 			entities.add(new Entity(snowman, new Vector3f(x, 0, z), 0, 0, 0, 3));
 		}
 		
+		Player player = new Player(snowman, new Vector3f(0, 0, 0), 0, 180, 0, 3);
+		Camera camera = new Camera(player);
+		
 		///////////Game Loop///////////////////
 		
 		while(!window.shouldClose()) {
@@ -200,16 +216,10 @@ public class Main {
 				
 				if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_P)) {
 					pause = !pause;
-					Window.getInput().setMousePos(Window.getWidth()/2, Window.getHeight()/2);
 				}
 				
 				if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
 					GLFW.glfwSetWindowShouldClose(Window.getWindow(), true);
-				}
-				if(pause) {
-					GLFW.glfwSetInputMode(Window.getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
-				} else {
-					GLFW.glfwSetInputMode(Window.getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
 				}
 				unprocessed-=frame_cap;
 				can_render = true;
@@ -224,10 +234,11 @@ public class Main {
 			if(can_render) {/////////////RENDER HERE///////////
 				
 				if(!pause) {
-					//game logic goes inside loop
+					player.move();
 					camera.move();
 				}
 				
+				renderer.processEntity(player);
 				renderer.processTerrain(terrain);
 				renderer.processTerrain(terrain2);
 				renderer.renderer(light, camera);
