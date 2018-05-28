@@ -1,0 +1,822 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fd06606f6ec, pid=12175, tid=0x00007fd085dd0700
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_131-b11) (build 1.8.0_131-b11)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [liblwjgl_opengl.so+0x446ec]  Java_org_lwjgl_opengl_GL30_nglGenVertexArrays__IJ+0xc
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fd07c012000):  JavaThread "main" [_thread_in_native, id=12181, stack(0x00007fd085cd0000,0x00007fd085dd1000)]
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000f70
+
+Registers:
+RAX=0x0000000000000000, RBX=0x00007fd06cc32c20, RCX=0x00007fd07c8317bc, RDX=0x0000000000000001
+RSP=0x00007fd085dcf608, RBP=0x00007fd085dcf668, RSI=0x00007fd07c8317bc, RDI=0x0000000000000001
+R8 =0x0000000000000000, R9 =0x0000000000000004, R10=0x00007fd06d017468, R11=0x00007fd084ba7190
+R12=0x0000000000000000, R13=0x00007fd06cc32c20, R14=0x00007fd085dcf698, R15=0x00007fd07c012000
+RIP=0x00007fd06606f6ec, EFLAGS=0x0000000000010287, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007fd085dcf608)
+0x00007fd085dcf608:   00007fd06d017494 00007fd085dcf668
+0x00007fd085dcf618:   00007fd06d017227 00007fd06d0171e2
+0x00007fd085dcf628:   00007fd085dcf628 00007fd06cc32c20
+0x00007fd085dcf638:   00007fd085dcf698 00007fd06cc3b7f0
+0x00007fd085dcf648:   0000000000000000 00007fd06cc32c20
+0x00007fd085dcf658:   0000000000000000 00007fd085dcf688
+0x00007fd085dcf668:   00007fd085dcf6e0 00007fd06d0082bd
+0x00007fd085dcf678:   00000000ec663d88 00007fd06d011538
+0x00007fd085dcf688:   00007fd07c8317bc 00000000ecf8f000
+0x00007fd085dcf698:   0000000000000001 00007fd085dcf6a0
+0x00007fd085dcf6a8:   00007fd06cc32d94 00007fd085dcf710
+0x00007fd085dcf6b8:   00007fd06cc3b7f0 0000000000000000
+0x00007fd085dcf6c8:   00007fd06cc32e00 00007fd085dcf688
+0x00007fd085dcf6d8:   00007fd085dcf718 00007fd085dcf758
+0x00007fd085dcf6e8:   00007fd06d007d00 0000000000000000
+0x00007fd085dcf6f8:   0000000000000000 00000000ecf8f000
+0x00007fd085dcf708:   0000000000010000 00000000ece7c818
+0x00007fd085dcf718:   00007fd085dcf718 00007fd06cc06ac0
+0x00007fd085dcf728:   00007fd085dcf770 00007fd06cc06fa0
+0x00007fd085dcf738:   0000000000000000 00007fd06cc06b00
+0x00007fd085dcf748:   00007fd085dcf718 00007fd085dcf770
+0x00007fd085dcf758:   00007fd085dcf7b8 00007fd06d007d00
+0x00007fd085dcf768:   0000000000000000 00000000ed101568
+0x00007fd085dcf778:   00007fd085dcf778 00007fd06cc06731
+0x00007fd085dcf788:   00007fd085dcf7f0 00007fd06cc06fa0
+0x00007fd085dcf798:   0000000000000000 00007fd06cc067b8
+0x00007fd085dcf7a8:   00007fd085dcf770 00007fd085dcf7d0
+0x00007fd085dcf7b8:   00007fd085dcf840 00007fd06d008040
+0x00007fd085dcf7c8:   0000000000000000 00000000ed1c3580
+0x00007fd085dcf7d8:   00000000ed1bbef0 00000000ed101688
+0x00007fd085dcf7e8:   00000000ed1b4860 00000000ed101568
+0x00007fd085dcf7f8:   00000000ed101490 00007fd085dcf800 
+
+Instructions: (pc=0x00007fd06606f6ec)
+0x00007fd06606f6cc:   78 1c 00 00 ff e0 66 66 66 66 66 2e 0f 1f 84 00
+0x00007fd06606f6dc:   00 00 00 00 48 8b 07 48 89 ce 89 d7 48 8b 40 18
+0x00007fd06606f6ec:   48 8b 80 70 0f 00 00 ff e0 66 66 2e 0f 1f 84 00
+0x00007fd06606f6fc:   00 00 00 00 48 8b 07 48 89 ce 89 d7 48 8b 40 18 
+
+Register to memory mapping:
+
+RAX=0x0000000000000000 is an unknown value
+RBX={method} {0x00007fd06cc32c20} 'nglGenVertexArrays' '(IJ)V' in 'org/lwjgl/opengl/GL30'
+RCX=0x00007fd07c8317bc is an unknown value
+RDX=0x0000000000000001 is an unknown value
+RSP=0x00007fd085dcf608 is pointing into the stack for thread: 0x00007fd07c012000
+RBP=0x00007fd085dcf668 is pointing into the stack for thread: 0x00007fd07c012000
+RSI=0x00007fd07c8317bc is an unknown value
+RDI=0x0000000000000001 is an unknown value
+R8 =0x0000000000000000 is an unknown value
+R9 =0x0000000000000004 is an unknown value
+R10=0x00007fd06d017468 is at code_begin+808 in an Interpreter codelet
+method entry point (kind = native)  [0x00007fd06d017140, 0x00007fd06d017a40]  2304 bytes
+R11=0x00007fd084ba7190: <offset 0x9c5190> in /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so at 0x00007fd0841e2000
+R12=0x0000000000000000 is an unknown value
+R13={method} {0x00007fd06cc32c20} 'nglGenVertexArrays' '(IJ)V' in 'org/lwjgl/opengl/GL30'
+R14=0x00007fd085dcf698 is pointing into the stack for thread: 0x00007fd07c012000
+R15=0x00007fd07c012000 is a thread
+
+
+Stack: [0x00007fd085cd0000,0x00007fd085dd1000],  sp=0x00007fd085dcf608,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [liblwjgl_opengl.so+0x446ec]  Java_org_lwjgl_opengl_GL30_nglGenVertexArrays__IJ+0xc
+j  org.lwjgl.opengl.GL30.glGenVertexArrays()I+20
+j  com.draglantix.render.Loader.createVAO()I+0
+j  com.draglantix.render.Loader.loadToVAO([F[F[F[I)Lcom/draglantix/models/RawModel;+1
+j  com.draglantix.main.Main.<init>()V+189
+j  com.draglantix.main.Main.main([Ljava/lang/String;)V+3
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x691d16]  JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*)+0x1056
+V  [libjvm.so+0x6d3132]  jni_invoke_static(JNIEnv_*, JavaValue*, _jobject*, JNICallType, _jmethodID*, JNI_ArgumentPusher*, Thread*)+0x362
+V  [libjvm.so+0x6ef99a]  jni_CallStaticVoidMethod+0x17a
+C  [libjli.so+0x7bdf]  JavaMain+0x81f
+C  [libpthread.so.0+0x76fa]  start_thread+0xca
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  org.lwjgl.opengl.GL30.nglGenVertexArrays(IJ)V+0
+j  org.lwjgl.opengl.GL30.glGenVertexArrays()I+20
+j  com.draglantix.render.Loader.createVAO()I+0
+j  com.draglantix.render.Loader.loadToVAO([F[F[F[I)Lcom/draglantix/models/RawModel;+1
+j  com.draglantix.main.Main.<init>()V+189
+j  com.draglantix.main.Main.main([Ljava/lang/String;)V+3
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007fd07c0da800 JavaThread "Service Thread" daemon [_thread_blocked, id=12193, stack(0x00007fd066e19000,0x00007fd066f1a000)]
+  0x00007fd07c0c5800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=12192, stack(0x00007fd066f1a000,0x00007fd06701b000)]
+  0x00007fd07c0c4000 JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=12191, stack(0x00007fd06701b000,0x00007fd06711c000)]
+  0x00007fd07c0c1000 JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=12190, stack(0x00007fd06711c000,0x00007fd06721d000)]
+  0x00007fd07c0bf800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=12189, stack(0x00007fd06721d000,0x00007fd06731e000)]
+  0x00007fd07c08c000 JavaThread "Finalizer" daemon [_thread_blocked, id=12188, stack(0x00007fd0675f6000,0x00007fd0676f7000)]
+  0x00007fd07c087800 JavaThread "Reference Handler" daemon [_thread_blocked, id=12187, stack(0x00007fd0676f7000,0x00007fd0677f8000)]
+=>0x00007fd07c012000 JavaThread "main" [_thread_in_native, id=12181, stack(0x00007fd085cd0000,0x00007fd085dd1000)]
+
+Other Threads:
+  0x00007fd07c080000 VMThread [stack: 0x00007fd0677f8000,0x00007fd0678f9000] [id=12186]
+  0x00007fd07c0e5800 WatcherThread [stack: 0x00007fd066d18000,0x00007fd066e19000] [id=12194]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 17920K, used 15169K [0x00000000ec200000, 0x00000000ee500000, 0x0000000100000000)
+  eden space 15360K, 90% used [0x00000000ec200000,0x00000000ecfa12f0,0x00000000ed100000)
+  from space 2560K, 47% used [0x00000000ed100000,0x00000000ed22f270,0x00000000ed380000)
+  to   space 2560K, 0% used [0x00000000ee280000,0x00000000ee280000,0x00000000ee500000)
+ ParOldGen       total 40960K, used 0K [0x00000000c4600000, 0x00000000c6e00000, 0x00000000ec200000)
+  object space 40960K, 0% used [0x00000000c4600000,0x00000000c4600000,0x00000000c6e00000)
+ Metaspace       used 5963K, capacity 6132K, committed 6400K, reserved 1056768K
+  class space    used 649K, capacity 733K, committed 768K, reserved 1048576K
+
+Card table byte_map: [0x00007fd08289e000,0x00007fd082a7c000] byte_map_base: 0x00007fd08227b000
+
+Marking Bits: (ParMarkBitMap*) 0x00007fd0851a7f60
+ Begin Bits: [0x00007fd08058c000, 0x00007fd081474000)
+ End Bits:   [0x00007fd081474000, 0x00007fd08235c000)
+
+Polling page: 0x00007fd085df7000
+
+CodeCache: size=245760Kb used=2703Kb max_used=2703Kb free=243056Kb
+ bounds [0x00007fd06d000000, 0x00007fd06d2b0000, 0x00007fd07c000000]
+ total_blobs=975 nmethods=642 adapters=248
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 0.497 Thread 0x00007fd07c0c5800  643       3       java.util.zip.ZipEntry::setExtra0 (360 bytes)
+Event: 0.499 Thread 0x00007fd07c0c5800 nmethod 643 0x00007fd06d28cc90 code [0x00007fd06d28cf40, 0x00007fd06d28dc28]
+Event: 0.499 Thread 0x00007fd07c0c5800  644       3       java.util.zip.ZipEntry::<init> (43 bytes)
+Event: 0.499 Thread 0x00007fd07c0c5800 nmethod 644 0x00007fd06d28c850 code [0x00007fd06d28c9c0, 0x00007fd06d28cbd0]
+Event: 0.499 Thread 0x00007fd07c0c5800  645       3       java.io.UnixFileSystem::getBooleanAttributes (49 bytes)
+Event: 0.500 Thread 0x00007fd07c0c5800 nmethod 645 0x00007fd06d28be90 code [0x00007fd06d28c040, 0x00007fd06d28c5c8]
+Event: 0.500 Thread 0x00007fd07c0c5800  642       3       sun.misc.PerfCounter::addElapsedTimeFrom (10 bytes)
+Event: 0.500 Thread 0x00007fd07c0c5800 nmethod 642 0x00007fd06d2a4bd0 code [0x00007fd06d2a4d80, 0x00007fd06d2a54b8]
+Event: 0.516 Thread 0x00007fd07c0c5800  648       3       sun.misc.URLClassPath::getResource (83 bytes)
+Event: 0.517 Thread 0x00007fd07c0c5800 nmethod 648 0x00007fd06d28b790 code [0x00007fd06d28b940, 0x00007fd06d28bd08]
+
+GC Heap History (2 events):
+Event: 0.247 GC heap before
+{Heap before GC invocations=1 (full 0):
+ PSYoungGen      total 17920K, used 15360K [0x00000000ec200000, 0x00000000ed600000, 0x0000000100000000)
+  eden space 15360K, 100% used [0x00000000ec200000,0x00000000ed100000,0x00000000ed100000)
+  from space 2560K, 0% used [0x00000000ed380000,0x00000000ed380000,0x00000000ed600000)
+  to   space 2560K, 0% used [0x00000000ed100000,0x00000000ed100000,0x00000000ed380000)
+ ParOldGen       total 40960K, used 0K [0x00000000c4600000, 0x00000000c6e00000, 0x00000000ec200000)
+  object space 40960K, 0% used [0x00000000c4600000,0x00000000c4600000,0x00000000c6e00000)
+ Metaspace       used 3730K, capacity 4722K, committed 4864K, reserved 1056768K
+  class space    used 403K, capacity 430K, committed 512K, reserved 1048576K
+Event: 0.253 GC heap after
+Heap after GC invocations=1 (full 0):
+ PSYoungGen      total 17920K, used 1212K [0x00000000ec200000, 0x00000000ee500000, 0x0000000100000000)
+  eden space 15360K, 0% used [0x00000000ec200000,0x00000000ec200000,0x00000000ed100000)
+  from space 2560K, 47% used [0x00000000ed100000,0x00000000ed22f270,0x00000000ed380000)
+  to   space 2560K, 0% used [0x00000000ee280000,0x00000000ee280000,0x00000000ee500000)
+ ParOldGen       total 40960K, used 0K [0x00000000c4600000, 0x00000000c6e00000, 0x00000000ec200000)
+  object space 40960K, 0% used [0x00000000c4600000,0x00000000c4600000,0x00000000c6e00000)
+ Metaspace       used 3730K, capacity 4722K, committed 4864K, reserved 1056768K
+  class space    used 403K, capacity 430K, committed 512K, reserved 1048576K
+}
+
+Deoptimization events (10 events):
+Event: 0.199 Thread 0x00007fd07c012000 Uncommon trap: reason=predicate action=maybe_recompile pc=0x00007fd06d1988e4 method=java.util.AbstractCollection.toArray([Ljava/lang/Object;)[Ljava/lang/Object; @ 49
+Event: 0.225 Thread 0x00007fd07c012000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fd06d1874dc method=java.util.AbstractCollection.toArray([Ljava/lang/Object;)[Ljava/lang/Object; @ 119
+Event: 0.225 Thread 0x00007fd07c012000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fd06d1874dc method=java.util.AbstractCollection.toArray([Ljava/lang/Object;)[Ljava/lang/Object; @ 119
+Event: 0.225 Thread 0x00007fd07c012000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fd06d1874dc method=java.util.AbstractCollection.toArray([Ljava/lang/Object;)[Ljava/lang/Object; @ 119
+Event: 0.225 Thread 0x00007fd07c012000 Uncommon trap: reason=array_check action=maybe_recompile pc=0x00007fd06d1874dc method=java.util.AbstractCollection.toArray([Ljava/lang/Object;)[Ljava/lang/Object; @ 119
+Event: 0.270 Thread 0x00007fd07c012000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007fd06d19c164 method=java.io.BufferedReader.readLine(Z)Ljava/lang/String; @ 160
+Event: 0.270 Thread 0x00007fd07c012000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007fd06d185d6c method=java.lang.String.startsWith(Ljava/lang/String;I)Z @ 25
+Event: 0.332 Thread 0x00007fd07c012000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007fd06d1c2c74 method=java.util.Arrays.copyOf([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object; @ 3
+Event: 0.371 Thread 0x00007fd07c012000 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007fd06d197b68 method=java.util.AbstractCollection.toArray([Ljava/lang/Object;)[Ljava/lang/Object; @ 1
+Event: 0.395 Thread 0x00007fd07c012000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007fd06d172568 method=java.lang.CharacterDataLatin1.digit(II)I @ 31
+
+Internal exceptions (10 events):
+Event: 0.030 Thread 0x00007fd07c012000 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.defineClass(Ljava/lang/String;[BII)Ljava/lang/Class; name or signature does not match> (0x00000000ec207ca8) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/sha
+Event: 0.030 Thread 0x00007fd07c012000 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x00000000ec207f90) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/jni.cp
+Event: 0.122 Thread 0x00007fd07c012000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ec3c4fa0) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/jvm.cpp, line 1390]
+Event: 0.122 Thread 0x00007fd07c012000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ec3c5398) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/jvm.cpp, line 1390]
+Event: 0.122 Thread 0x00007fd07c012000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ec3c7bd0) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/jvm.cpp, line 1390]
+Event: 0.122 Thread 0x00007fd07c012000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000ec3c7fc8) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/jvm.cpp, line 1390]
+Event: 0.368 Thread 0x00007fd07c012000 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000ec8c5008) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/methodHandles.cpp, line 1146]
+Event: 0.370 Thread 0x00007fd07c012000 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000ec8d23a8) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/methodHandles.cpp, line 1146]
+Event: 0.405 Thread 0x00007fd07c012000 Exception <a 'java/lang/NoSuchMethodError': java.lang.Object.lambda$static$0(Ljava/lang/String;)Ljava/lang/Boolean;> (0x00000000eca430e8) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/interpreter/linkResolver.cpp, l
+Event: 0.469 Thread 0x00007fd07c012000 Exception <a 'sun/nio/fs/UnixException'> (0x00000000ece05978) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u131/8869/hotspot/src/share/vm/prims/jni.cpp, line 709]
+
+Events (10 events):
+Event: 0.490 loading class org/lwjgl/system/jni/JNINativeInterface
+Event: 0.490 loading class org/lwjgl/system/jni/JNINativeInterface done
+Event: 0.493 loading class org/lwjgl/system/linux/DynamicLinkLoader
+Event: 0.493 loading class org/lwjgl/system/linux/DynamicLinkLoader done
+Event: 0.515 loading class org/lwjgl/opengl/GL$2
+Event: 0.515 loading class org/lwjgl/opengl/GL$2 done
+Event: 0.516 loading class org/lwjgl/opengl/GL$SharedLibraryGL
+Event: 0.516 loading class org/lwjgl/opengl/GL$SharedLibraryGL done
+Event: 0.516 loading class org/lwjgl/system/SharedLibrary$Delegate
+Event: 0.516 loading class org/lwjgl/system/SharedLibrary$Delegate done
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 fc:00 3149795                            /usr/lib/jvm/java-8-oracle/bin/java
+00600000-00601000 rw-p 00000000 fc:00 3149795                            /usr/lib/jvm/java-8-oracle/bin/java
+006dd000-006fe000 rw-p 00000000 00:00 0                                  [heap]
+c4600000-c6e00000 rw-p 00000000 00:00 0 
+c6e00000-ec200000 ---p 00000000 00:00 0 
+ec200000-ee500000 rw-p 00000000 00:00 0 
+ee500000-100000000 ---p 00000000 00:00 0 
+100000000-1000c0000 rw-p 00000000 00:00 0 
+1000c0000-140000000 ---p 00000000 00:00 0 
+7fd030000000-7fd030021000 rw-p 00000000 00:00 0 
+7fd030021000-7fd034000000 ---p 00000000 00:00 0 
+7fd034000000-7fd034021000 rw-p 00000000 00:00 0 
+7fd034021000-7fd038000000 ---p 00000000 00:00 0 
+7fd038000000-7fd0382b8000 rw-p 00000000 00:00 0 
+7fd0382b8000-7fd03c000000 ---p 00000000 00:00 0 
+7fd03c000000-7fd03c304000 rw-p 00000000 00:00 0 
+7fd03c304000-7fd040000000 ---p 00000000 00:00 0 
+7fd040000000-7fd040021000 rw-p 00000000 00:00 0 
+7fd040021000-7fd044000000 ---p 00000000 00:00 0 
+7fd044000000-7fd04436b000 rw-p 00000000 00:00 0 
+7fd04436b000-7fd048000000 ---p 00000000 00:00 0 
+7fd048000000-7fd048021000 rw-p 00000000 00:00 0 
+7fd048021000-7fd04c000000 ---p 00000000 00:00 0 
+7fd04c000000-7fd04c021000 rw-p 00000000 00:00 0 
+7fd04c021000-7fd050000000 ---p 00000000 00:00 0 
+7fd050000000-7fd050021000 rw-p 00000000 00:00 0 
+7fd050021000-7fd054000000 ---p 00000000 00:00 0 
+7fd054000000-7fd054021000 rw-p 00000000 00:00 0 
+7fd054021000-7fd058000000 ---p 00000000 00:00 0 
+7fd058000000-7fd058021000 rw-p 00000000 00:00 0 
+7fd058021000-7fd05c000000 ---p 00000000 00:00 0 
+7fd05d3ec000-7fd05edae000 r-xp 00000000 fc:00 8789402                    /usr/lib/nvidia-340/libnvidia-glcore.so.340.96
+7fd05edae000-7fd05edcc000 rwxp 019c2000 fc:00 8789402                    /usr/lib/nvidia-340/libnvidia-glcore.so.340.96
+7fd05edcc000-7fd05f24a000 r-xp 019e0000 fc:00 8789402                    /usr/lib/nvidia-340/libnvidia-glcore.so.340.96
+7fd05f24a000-7fd05f449000 ---p 01e5e000 fc:00 8789402                    /usr/lib/nvidia-340/libnvidia-glcore.so.340.96
+7fd05f449000-7fd05ffe3000 rw-p 01e5d000 fc:00 8789402                    /usr/lib/nvidia-340/libnvidia-glcore.so.340.96
+7fd05ffe3000-7fd060000000 rw-p 00000000 00:00 0 
+7fd060000000-7fd060021000 rw-p 00000000 00:00 0 
+7fd060021000-7fd064000000 ---p 00000000 00:00 0 
+7fd064f41000-7fd064f46000 r-xp 00000000 fc:00 8397325                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7fd064f46000-7fd065145000 ---p 00005000 fc:00 8397325                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7fd065145000-7fd065146000 r--p 00004000 fc:00 8397325                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7fd065146000-7fd065147000 rw-p 00005000 fc:00 8397325                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7fd065147000-7fd065149000 r-xp 00000000 fc:00 8397314                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7fd065149000-7fd065349000 ---p 00002000 fc:00 8397314                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7fd065349000-7fd06534a000 r--p 00002000 fc:00 8397314                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7fd06534a000-7fd06534b000 rw-p 00003000 fc:00 8397314                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7fd06534b000-7fd06536c000 r-xp 00000000 fc:00 8398734                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7fd06536c000-7fd06556b000 ---p 00021000 fc:00 8398734                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7fd06556b000-7fd06556c000 r--p 00020000 fc:00 8398734                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7fd06556c000-7fd06556d000 rw-p 00021000 fc:00 8398734                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7fd06556d000-7fd06557e000 r-xp 00000000 fc:00 8397327                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7fd06557e000-7fd06577d000 ---p 00011000 fc:00 8397327                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7fd06577d000-7fd06577e000 r--p 00010000 fc:00 8397327                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7fd06577e000-7fd06577f000 rw-p 00011000 fc:00 8397327                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7fd06577f000-7fd0658b4000 r-xp 00000000 fc:00 8397310                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7fd0658b4000-7fd065ab4000 ---p 00135000 fc:00 8397310                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7fd065ab4000-7fd065ab5000 r--p 00135000 fc:00 8397310                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7fd065ab5000-7fd065ab9000 rw-p 00136000 fc:00 8397310                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7fd065ab9000-7fd065abc000 r-xp 00000000 fc:00 9310464                    /usr/lib/nvidia-340/tls/libnvidia-tls.so.340.96
+7fd065abc000-7fd065cbb000 ---p 00003000 fc:00 9310464                    /usr/lib/nvidia-340/tls/libnvidia-tls.so.340.96
+7fd065cbb000-7fd065cbc000 rw-p 00002000 fc:00 9310464                    /usr/lib/nvidia-340/tls/libnvidia-tls.so.340.96
+7fd065cbc000-7fd065d83000 r-xp 00000000 fc:00 8789409                    /usr/lib/nvidia-340/libGL.so.340.96
+7fd065d83000-7fd065db2000 rwxp 000c7000 fc:00 8789409                    /usr/lib/nvidia-340/libGL.so.340.96
+7fd065db2000-7fd065dce000 r-xp 000f6000 fc:00 8789409                    /usr/lib/nvidia-340/libGL.so.340.96
+7fd065dce000-7fd065fcd000 ---p 00112000 fc:00 8789409                    /usr/lib/nvidia-340/libGL.so.340.96
+7fd065fcd000-7fd065ff2000 rw-p 00111000 fc:00 8789409                    /usr/lib/nvidia-340/libGL.so.340.96
+7fd065ff2000-7fd066008000 rw-p 00000000 00:00 0 
+7fd06602b000-7fd066096000 r-xp 00000000 fc:00 4461041                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl_opengl.so
+7fd066096000-7fd066295000 ---p 0006b000 fc:00 4461041                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl_opengl.so
+7fd066295000-7fd066296000 r--p 0006a000 fc:00 4461041                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl_opengl.so
+7fd066296000-7fd066297000 rw-p 0006b000 fc:00 4461041                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl_opengl.so
+7fd066297000-7fd066298000 r--s 0002f000 fc:00 3016214                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-yoga-natives-windows.jar
+7fd066298000-7fd066299000 r--s 0000d000 fc:00 3016396                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-yoga-natives-macos.jar
+7fd066299000-7fd06629a000 r--s 0000a000 fc:00 3016371                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-yoga-natives-linux.jar
+7fd06629a000-7fd06629b000 r--s 00015000 fc:00 3016365                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-xxhash-natives-windows.jar
+7fd06629b000-7fd06629d000 r--s 00000000 fc:00 3015060                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-xxhash-natives-macos.jar
+7fd06629d000-7fd0662f1000 r-xp 00000000 fc:00 4461011                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl.so
+7fd0662f1000-7fd0664f1000 ---p 00054000 fc:00 4461011                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl.so
+7fd0664f1000-7fd0664f2000 r--p 00054000 fc:00 4461011                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl.so
+7fd0664f2000-7fd0664f3000 rw-p 00055000 fc:00 4461011                    /tmp/lwjglapietras/3.1.6-build-14/liblwjgl.so
+7fd0664f3000-7fd0667f4000 rw-p 00000000 00:00 0 
+7fd0667f4000-7fd06680a000 r-xp 00000000 fc:00 3152452                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+7fd06680a000-7fd066a0a000 ---p 00016000 fc:00 3152452                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+7fd066a0a000-7fd066a0b000 rw-p 00016000 fc:00 3152452                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+7fd066a0b000-7fd066a1c000 r-xp 00000000 fc:00 3152455                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnio.so
+7fd066a1c000-7fd066c1b000 ---p 00011000 fc:00 3152455                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnio.so
+7fd066c1b000-7fd066c1c000 rw-p 00010000 fc:00 3152455                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnio.so
+7fd066c1c000-7fd066c21000 r--s 00045000 fc:00 3015517                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl.jar
+7fd066c21000-7fd066c23000 r--s 0000a000 fc:00 3016270                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-zstd.jar
+7fd066c23000-7fd066c24000 r--s 0000b000 fc:00 3016389                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-zstd-sources.jar
+7fd066c24000-7fd066c25000 r--s 00049000 fc:00 3016311                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-zstd-natives-windows.jar
+7fd066c25000-7fd066c26000 r--s 00036000 fc:00 3016210                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-zstd-natives-macos.jar
+7fd066c26000-7fd066c28000 r--s 00023000 fc:00 3015070                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-zstd-natives-linux.jar
+7fd066c28000-7fd066c2a000 r--s 00076000 fc:00 3016336                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-zstd-javadoc.jar
+7fd066c2a000-7fd066c2c000 r--s 0000c000 fc:00 3015536                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-yoga.jar
+7fd066c2c000-7fd066c2d000 r--s 00009000 fc:00 3015090                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-yoga-sources.jar
+7fd066c2d000-7fd066c30000 r--s 00075000 fc:00 3016216                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-yoga-javadoc.jar
+7fd066c30000-7fd066c31000 r--s 00005000 fc:00 3016189                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-xxhash.jar
+7fd066c31000-7fd066c32000 r--s 00003000 fc:00 3016176                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-xxhash-sources.jar
+7fd066c32000-7fd066c33000 r--s 00001000 fc:00 3016227                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-xxhash-natives-linux.jar
+7fd066c33000-7fd066c34000 r--s 00038000 fc:00 3016249                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tootle-natives-windows.jar
+7fd066c34000-7fd066c35000 r--s 00012000 fc:00 3015232                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tootle-natives-macos.jar
+7fd066c35000-7fd066c36000 r--s 0000c000 fc:00 3015563                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tootle-natives-linux.jar
+7fd066c36000-7fd066c37000 r--s 00031000 fc:00 3015104                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tinyfd-natives-windows.jar
+7fd066c37000-7fd066c38000 r--s 00009000 fc:00 3015570                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tinyfd-natives-macos.jar
+7fd066c38000-7fd066c39000 r--s 00009000 fc:00 3015525                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tinyfd-natives-linux.jar
+7fd066c39000-7fd066c3b000 r--s 00044000 fc:00 3015518                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tinyexr-natives-windows.jar
+7fd066c3b000-7fd066c3d000 r--s 00010000 fc:00 3016379                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tinyexr-natives-macos.jar
+7fd066c3d000-7fd066c3e000 r--s 0000e000 fc:00 3016392                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-tinyexr-natives-linux.jar
+7fd066c3e000-7fd066c3f000 r--s 0006f000 fc:00 3015238                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-stb-natives-windows.jar
+7fd066c3f000-7fd066c40000 r--s 0002a000 fc:00 3015542                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-stb-natives-macos.jar
+7fd066c40000-7fd066c41000 r--s 00031000 fc:00 3015243                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-stb-natives-linux.jar
+7fd066c41000-7fd066c43000 r--s 00013000 fc:00 3016241                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-sse-natives-windows.jar
+7fd066c43000-7fd066c44000 r--s 00000000 fc:00 3015257                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-sse-natives-macos.jar
+7fd066c44000-7fd066c45000 r--s 00000000 fc:00 3016289                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-sse-natives-linux.jar
+7fd066c45000-7fd066c46000 r--s 00016000 fc:00 3016382                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-rpmalloc-natives-windows.jar
+7fd066c46000-7fd066c47000 r--s 00002000 fc:00 3015600                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-rpmalloc-natives-macos.jar
+7fd066c47000-7fd066c48000 r--s 00002000 fc:00 3015582                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-rpmalloc-natives-linux.jar
+7fd066c48000-7fd066c49000 r--s 0001b000 fc:00 3015549                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-remotery-natives-windows.jar
+7fd066c49000-7fd066c4a000 r--s 00005000 fc:00 3016347                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-remotery-natives-macos.jar
+7fd066c4a000-7fd066c4b000 r--s 00006000 fc:00 3016307                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-remotery-natives-linux.jar
+7fd066c4b000-7fd066c4c000 r--s 00031000 fc:00 3016292                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-par-natives-windows.jar
+7fd066c4c000-7fd066c4d000 r--s 00004000 fc:00 3016273                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-par-natives-macos.jar
+7fd066c4d000-7fd066c4e000 r--s 00005000 fc:00 3015263                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-par-natives-linux.jar
+7fd066c4e000-7fd066c4f000 r--s 00024000 fc:00 3016248                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-ovr-natives-windows.jar
+7fd066c4f000-7fd066c50000 r--s 00000000 fc:00 3016218                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-ovr-natives-macos.jar
+7fd066c50000-7fd066c51000 r--s 00000000 fc:00 3015276                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-ovr-natives-linux.jar
+7fd066c51000-7fd066c52000 r--s 0008c000 fc:00 3016205                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-openvr-natives-windows.jar
+7fd066c52000-7fd066c53000 r--s 00016000 fc:00 3016274                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-openvr-natives-macos.jar
+7fd066c53000-7fd066c54000 r--s 0001c000 fc:00 3015362                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-openvr-natives-linux.jar
+7fd066c54000-7fd066c56000 r--s 0001c000 fc:00 3016281                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-opengles-natives-windows.jar
+7fd066c56000-7fd066c57000 r--s 00004000 fc:00 3015540                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-opengles-natives-macos.jar
+7fd066c57000-7fd066c58000 r--s 00008000 fc:00 3015533                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-opengles-natives-linux.jar
+7fd066c58000-7fd066c59000 r--s 0002a000 fc:00 3016332                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-opengl-natives-windows.jar
+7fd066c59000-7fd066c5a000 r--s 0000b000 fc:00 3016364                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-opengl-natives-macos.jar
+7fd066c5a000-7fd066c5b000 r--s 00016000 fc:00 3016355                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-opengl-natives-linux.jar
+7fd066c5b000-7fd066c5c000 r--s 00105000 fc:00 3015581                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-openal-natives-windows.jar
+7fd066c5c000-7fd066c5d000 r--s 00064000 fc:00 3016375                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-openal-natives-macos.jar
+7fd066c5d000-7fd066c5e000 r--s 00077000 fc:00 3016203                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-openal-natives-linux.jar
+7fd066c5e000-7fd066c5f000 r--s 00041000 fc:00 3015598                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nuklear-natives-windows.jar
+7fd066c5f000-7fd066c60000 r--s 0002e000 fc:00 3016385                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nuklear-natives-macos.jar
+7fd066c60000-7fd066c61000 r--s 00022000 fc:00 3016383                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nuklear-natives-linux.jar
+7fd066c61000-7fd066c62000 r--s 0001f000 fc:00 3016357                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nfd-natives-windows.jar
+7fd066c62000-7fd066c63000 r--s 00001000 fc:00 3015108                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nfd-natives-macos.jar
+7fd066c63000-7fd066c64000 r--s 00001000 fc:00 3016295                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nfd-natives-linux.jar
+7fd066c64000-7fd066c65000 r--s 00039000 fc:00 3016391                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-natives-windows.jar
+7fd066c65000-7fd066c67000 r--s 00008000 fc:00 3015265                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-natives-macos.jar
+7fd066c67000-7fd066c68000 r--s 00013000 fc:00 3016298                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-natives-linux.jar
+7fd066c68000-7fd066c69000 r--s 00068000 fc:00 3015229                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nanovg-natives-windows.jar
+7fd066c69000-7fd066c6b000 r--s 00026000 fc:00 3016288                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nanovg-natives-macos.jar
+7fd066c6b000-7fd066c6c000 r--s 00029000 fc:00 3015272                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-nanovg-natives-linux.jar
+7fd066c6c000-7fd066c6d000 r--s 00021000 fc:00 3016343                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-lz4-natives-windows.jar
+7fd066c6d000-7fd066c6e000 r--s 0000b000 fc:00 3015564                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-lz4-natives-macos.jar
+7fd066c6e000-7fd066c6f000 r--s 0000e000 fc:00 3016267                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-lz4-natives-linux.jar
+7fd066c6f000-7fd066c70000 r--s 0002e000 fc:00 3015523                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-lmdb-natives-windows.jar
+7fd066c70000-7fd066c71000 r--s 0000d000 fc:00 3015113                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-lmdb-natives-macos.jar
+7fd066c71000-7fd066c73000 r--s 0000c000 fc:00 3016259                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-lmdb-natives-linux.jar
+7fd066c73000-7fd066c74000 r--s 00030000 fc:00 3016315                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-jemalloc-natives-windows.jar
+7fd066c74000-7fd066c75000 r--s 00017000 fc:00 3016261                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-jemalloc-natives-macos.jar
+7fd066c75000-7fd066c77000 r--s 0001f000 fc:00 3015427                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-jemalloc-natives-linux.jar
+7fd066c77000-7fd066c78000 r--s 0003d000 fc:00 3015524                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-glfw-natives-windows.jar
+7fd066c78000-7fd066c79000 r--s 0000e000 fc:00 3015594                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-glfw-natives-macos.jar
+7fd066c79000-7fd066c7b000 r--s 00022000 fc:00 3015562                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-glfw-natives-linux.jar
+7fd066c7b000-7fd066c7c000 r--s 0009f000 fc:00 3015094                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-bgfx-natives-windows.jar
+7fd066c7c000-7fd066c7d000 r--s 00041000 fc:00 3015561                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-bgfx-natives-macos.jar
+7fd066c7d000-7fd066c7e000 r--s 00051000 fc:00 3015609                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-bgfx-natives-linux.jar
+7fd066c7e000-7fd066c7f000 r--s 003ca000 fc:00 3016317                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-assimp-natives-windows.jar
+7fd066c7f000-7fd066c80000 r--s 00230000 fc:00 3015579                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-assimp-natives-macos.jar
+7fd066c80000-7fd066c81000 r--s 002ed000 fc:00 3015537                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/natives/lwjgl-assimp-natives-linux.jar
+7fd066c81000-7fd066c84000 r--s 00017000 fc:00 3016369                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/slick-util.jar
+7fd066c84000-7fd066c86000 r--s 00062000 fc:00 3016207                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-xxhash-javadoc.jar
+7fd066c86000-7fd066c99000 r--s 0014d000 fc:00 3015539                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-vulkan.jar
+7fd066c99000-7fd066ca3000 r--s 0014e000 fc:00 3015545                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-vulkan-sources.jar
+7fd066ca3000-7fd066cb6000 r--s 0043d000 fc:00 3015242                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-vulkan-javadoc.jar
+7fd066cb6000-7fd066cb7000 r--s 00001000 fc:00 3016381                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tootle.jar
+7fd066cb7000-7fd066cb8000 r--s 00002000 fc:00 3015588                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tootle-sources.jar
+7fd066cb8000-7fd066cba000 r--s 00059000 fc:00 3015538                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tootle-javadoc.jar
+7fd066cba000-7fd066cbb000 r--s 00001000 fc:00 3015400                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tinyfd.jar
+7fd066cbb000-7fd066cbd000 r--s 00000000 fc:00 3015399                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tinyfd-sources.jar
+7fd066cbd000-7fd066cc0000 r--s 00057000 fc:00 3016238                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tinyfd-javadoc.jar
+7fd066cc0000-7fd066cc1000 r--s 0000a000 fc:00 3016263                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tinyexr.jar
+7fd066cc1000-7fd066cc3000 r--s 00006000 fc:00 3015531                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tinyexr-sources.jar
+7fd066cc3000-7fd066cc5000 r--s 0006d000 fc:00 3015241                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-tinyexr-javadoc.jar
+7fd066cc5000-7fd066cc7000 r--s 00018000 fc:00 3016282                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-stb.jar
+7fd066cc7000-7fd066cc9000 r--s 00016000 fc:00 3015227                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-stb-sources.jar
+7fd066cc9000-7fd066ccc000 r--s 00098000 fc:00 3016304                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-stb-javadoc.jar
+7fd066ccc000-7fd066cce000 r--s 00000000 fc:00 3015260                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-sse.jar
+7fd066cce000-7fd066cd0000 r--s 00000000 fc:00 3015615                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-sse-sources.jar
+7fd066cd0000-7fd066cd2000 r--s 00058000 fc:00 3016255                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-sse-javadoc.jar
+7fd066cd2000-7fd066cd5000 r--s 00039000 fc:00 3016372                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-sources.jar
+7fd066cd5000-7fd066cd7000 r--s 00005000 fc:00 3016240                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-rpmalloc.jar
+7fd066cd7000-7fd066cd8000 r--s 00004000 fc:00 3016337                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-rpmalloc-sources.jar
+7fd066cd8000-7fd066cda000 r--s 00065000 fc:00 3016393                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-rpmalloc-javadoc.jar
+7fd066cda000-7fd066cdc000 r--s 00005000 fc:00 3015066                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-remotery.jar
+7fd066cdc000-7fd066cdd000 r--s 00004000 fc:00 3016269                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-remotery-sources.jar
+7fd066cdd000-7fd066cdf000 r--s 00064000 fc:00 3016322                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-remotery-javadoc.jar
+7fd066cdf000-7fd066ce0000 r--s 00002000 fc:00 3016199                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-par.jar
+7fd066ce0000-7fd066ce2000 r--s 00001000 fc:00 3015095                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-par-sources.jar
+7fd066ce2000-7fd066ce5000 r--s 0005a000 fc:00 3016268                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-par-javadoc.jar
+7fd066ce5000-7fd066ce9000 r--s 00035000 fc:00 3015522                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-ovr.jar
+7fd066ce9000-7fd066ced000 r--s 000ed000 fc:00 3015096                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-ovr-javadoc.jar
+7fd066ced000-7fd066cf2000 r--s 0004b000 fc:00 3015556                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-openvr.jar
+7fd066cf2000-7fd066cf5000 r--s 00038000 fc:00 3016390                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-openvr-sources.jar
+7fd066cf5000-7fd066cfa000 r--s 00126000 fc:00 3016335                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-openvr-javadoc.jar
+7fd066cfa000-7fd066d01000 r--s 0004e000 fc:00 3015557                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opengles.jar
+7fd066d01000-7fd066d07000 r--s 0005c000 fc:00 3016254                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opengles-sources.jar
+7fd066d07000-7fd066d0e000 r--s 00164000 fc:00 3015111                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opengles-javadoc.jar
+7fd066d0e000-7fd066d18000 r--s 000bf000 fc:00 3016272                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opengl.jar
+7fd066d18000-7fd066d19000 ---p 00000000 00:00 0 
+7fd066d19000-7fd066e19000 rw-p 00000000 00:00 0 
+7fd066e19000-7fd066e1c000 ---p 00000000 00:00 0 
+7fd066e1c000-7fd066f1a000 rw-p 00000000 00:00 0 
+7fd066f1a000-7fd066f1d000 ---p 00000000 00:00 0 
+7fd066f1d000-7fd06701b000 rw-p 00000000 00:00 0 
+7fd06701b000-7fd06701e000 ---p 00000000 00:00 0 
+7fd06701e000-7fd06711c000 rw-p 00000000 00:00 0 
+7fd06711c000-7fd06711f000 ---p 00000000 00:00 0 
+7fd06711f000-7fd06721d000 rw-p 00000000 00:00 0 
+7fd06721d000-7fd067220000 ---p 00000000 00:00 0 
+7fd067220000-7fd06731e000 rw-p 00000000 00:00 0 
+7fd06731e000-7fd0675f6000 r--p 00000000 fc:00 8395946                    /usr/lib/locale/locale-archive
+7fd0675f6000-7fd0675f9000 ---p 00000000 00:00 0 
+7fd0675f9000-7fd0676f7000 rw-p 00000000 00:00 0 
+7fd0676f7000-7fd0676fa000 ---p 00000000 00:00 0 
+7fd0676fa000-7fd0677f8000 rw-p 00000000 00:00 0 
+7fd0677f8000-7fd0677f9000 ---p 00000000 00:00 0 
+7fd0677f9000-7fd068000000 rw-p 00000000 00:00 0 
+7fd068000000-7fd068021000 rw-p 00000000 00:00 0 
+7fd068021000-7fd06c000000 ---p 00000000 00:00 0 
+7fd06c000000-7fd06c002000 r--s 0002d000 fc:00 3016225                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-ovr-sources.jar
+7fd06c002000-7fd06c00b000 r--s 000fb000 fc:00 3015550                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opengl-sources.jar
+7fd06c00b000-7fd06c016000 r--s 002c6000 fc:00 3015590                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opengl-javadoc.jar
+7fd06c016000-7fd06c019000 r--s 00027000 fc:00 3016380                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opencl.jar
+7fd06c019000-7fd06c01c000 r--s 00035000 fc:00 3015098                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opencl-sources.jar
+7fd06c01c000-7fd06c020000 r--s 000d5000 fc:00 3016354                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-opencl-javadoc.jar
+7fd06c020000-7fd06c023000 r--s 00011000 fc:00 3016325                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-openal.jar
+7fd06c023000-7fd06c025000 r--s 00011000 fc:00 3015256                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-openal-sources.jar
+7fd06c025000-7fd06c028000 r--s 0008e000 fc:00 3016211                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-openal-javadoc.jar
+7fd06c028000-7fd06c02a000 r--s 00015000 fc:00 3016331                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-odbc.jar
+7fd06c02a000-7fd06c02b000 r--s 00013000 fc:00 3016192                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-odbc-sources.jar
+7fd06c02b000-7fd06c02e000 r--s 0009e000 fc:00 3015105                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-odbc-javadoc.jar
+7fd06c02e000-7fd06c033000 r--s 0005f000 fc:00 3015109                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nuklear.jar
+7fd06c033000-7fd06c036000 r--s 00040000 fc:00 3016290                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nuklear-sources.jar
+7fd06c036000-7fd06c03b000 r--s 0011b000 fc:00 3015119                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nuklear-javadoc.jar
+7fd06c03b000-7fd06c03d000 r--s 00001000 fc:00 3015246                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nfd.jar
+7fd06c03d000-7fd06c03e000 r--s 00001000 fc:00 3016195                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nfd-sources.jar
+7fd06c03e000-7fd06c040000 r--s 0005a000 fc:00 3015117                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nfd-javadoc.jar
+7fd06c040000-7fd06c042000 r--s 0000e000 fc:00 3016276                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nanovg.jar
+7fd06c042000-7fd06c043000 r--s 0000c000 fc:00 3015244                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nanovg-sources.jar
+7fd06c043000-7fd06c046000 r--s 0007b000 fc:00 3015604                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-nanovg-javadoc.jar
+7fd06c046000-7fd06c048000 r--s 0000b000 fc:00 3016183                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-lz4.jar
+7fd06c048000-7fd06c049000 r--s 0000a000 fc:00 3016386                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-lz4-sources.jar
+7fd06c049000-7fd06c04b000 r--s 00075000 fc:00 3016235                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-lz4-javadoc.jar
+7fd06c04b000-7fd06c04c000 r--s 00006000 fc:00 3015330                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-lmdb.jar
+7fd06c04c000-7fd06c04e000 r--s 00008000 fc:00 3015114                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-lmdb-sources.jar
+7fd06c04e000-7fd06c050000 r--s 0006b000 fc:00 3016200                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-lmdb-javadoc.jar
+7fd06c050000-7fd06c052000 r--s 00008000 fc:00 3015264                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-jemalloc.jar
+7fd06c052000-7fd06c053000 r--s 00007000 fc:00 3016204                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-jemalloc-sources.jar
+7fd06c053000-7fd06c055000 r--s 0006e000 fc:00 3015110                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-jemalloc-javadoc.jar
+7fd06c055000-7fd06c057000 r--s 00005000 fc:00 3015516                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-jawt.jar
+7fd06c057000-7fd06c05a000 r--s 00066000 fc:00 3015097                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-jawt-javadoc.jar
+7fd06c05a000-7fd06c05f000 r--s 00116000 fc:00 3016247                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-javadoc.jar
+7fd06c05f000-7fd06c062000 r--s 00019000 fc:00 3016333                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-glfw.jar
+7fd06c062000-7fd06c064000 r--s 00017000 fc:00 3016237                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-glfw-sources.jar
+7fd06c064000-7fd06c067000 r--s 0009f000 fc:00 3015240                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-glfw-javadoc.jar
+7fd06c067000-7fd06c06c000 r--s 0001e000 fc:00 3016309                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-egl.jar
+7fd06c06c000-7fd06c070000 r--s 00022000 fc:00 3016215                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-egl-sources.jar
+7fd06c070000-7fd06c075000 r--s 000c9000 fc:00 3015107                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-egl-javadoc.jar
+7fd06c075000-7fd06c079000 r--s 00027000 fc:00 3016260                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-bgfx.jar
+7fd06c079000-7fd06c07c000 r--s 0001e000 fc:00 3016209                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-bgfx-sources.jar
+7fd06c07c000-7fd06c080000 r--s 000bc000 fc:00 3015083                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-bgfx-javadoc.jar
+7fd06c080000-7fd06c084000 r--s 0002e000 fc:00 3015259                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-assimp.jar
+7fd06c084000-7fd06c086000 r--s 00028000 fc:00 3016234                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-assimp-sources.jar
+7fd06c086000-7fd06c08a000 r--s 000d9000 fc:00 3015329                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-assimp-javadoc.jar
+7fd06c08a000-7fd06c08e000 r--s 00095000 fc:00 3016243                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/joml-1.9.9.jar
+7fd06c08e000-7fd06c091000 r--s 00097000 fc:00 3015565                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/joml-1.9.9-sources.jar
+7fd06c091000-7fd06c096000 r--s 00188000 fc:00 3016184                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/joml-1.9.9-javadoc.jar
+7fd06c096000-7fd06cd80000 rw-p 00000000 00:00 0 
+7fd06cd80000-7fd06d000000 ---p 00000000 00:00 0 
+7fd06d000000-7fd06d2b0000 rwxp 00000000 00:00 0 
+7fd06d2b0000-7fd07c000000 ---p 00000000 00:00 0 
+7fd07c000000-7fd07cb65000 rw-p 00000000 00:00 0 
+7fd07cb65000-7fd080000000 ---p 00000000 00:00 0 
+7fd080000000-7fd080005000 r--s 00084000 fc:00 3152231                    /usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar
+7fd080005000-7fd08000a000 r--s 002f9000 fc:00 3152312                    /usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar
+7fd08000a000-7fd08001d000 r--s 00345000 fc:00 3152352                    /usr/lib/jvm/java-8-oracle/jre/lib/resources.jar
+7fd08001d000-7fd080160000 rw-p 00000000 00:00 0 
+7fd080160000-7fd080339000 r--s 03d40000 fc:00 3152314                    /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar
+7fd080339000-7fd08235c000 rw-p 00000000 00:00 0 
+7fd08235c000-7fd08235d000 ---p 00000000 00:00 0 
+7fd08235d000-7fd08245d000 rw-p 00000000 00:00 0 
+7fd08245d000-7fd08245e000 ---p 00000000 00:00 0 
+7fd08245e000-7fd08255e000 rw-p 00000000 00:00 0 
+7fd08255e000-7fd08255f000 ---p 00000000 00:00 0 
+7fd08255f000-7fd08265f000 rw-p 00000000 00:00 0 
+7fd08265f000-7fd082660000 ---p 00000000 00:00 0 
+7fd082660000-7fd082774000 rw-p 00000000 00:00 0 
+7fd082774000-7fd08289e000 ---p 00000000 00:00 0 
+7fd08289e000-7fd0828b2000 rw-p 00000000 00:00 0 
+7fd0828b2000-7fd0829dc000 ---p 00000000 00:00 0 
+7fd0829dc000-7fd0829ee000 rw-p 00000000 00:00 0 
+7fd0829ee000-7fd082a7b000 ---p 00000000 00:00 0 
+7fd082a7b000-7fd082a87000 rw-p 00000000 00:00 0 
+7fd082a87000-7fd082e3c000 ---p 00000000 00:00 0 
+7fd082e3c000-7fd082e56000 r-xp 00000000 fc:00 3152448                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+7fd082e56000-7fd083056000 ---p 0001a000 fc:00 3152448                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+7fd083056000-7fd083057000 rw-p 0001a000 fc:00 3152448                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+7fd083057000-7fd083062000 r-xp 00000000 fc:00 4854419                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7fd083062000-7fd083261000 ---p 0000b000 fc:00 4854419                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7fd083261000-7fd083262000 r--p 0000a000 fc:00 4854419                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7fd083262000-7fd083263000 rw-p 0000b000 fc:00 4854419                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7fd083263000-7fd083269000 rw-p 00000000 00:00 0 
+7fd083269000-7fd083274000 r-xp 00000000 fc:00 4854429                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7fd083274000-7fd083473000 ---p 0000b000 fc:00 4854429                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7fd083473000-7fd083474000 r--p 0000a000 fc:00 4854429                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7fd083474000-7fd083475000 rw-p 0000b000 fc:00 4854429                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7fd083475000-7fd08348b000 r-xp 00000000 fc:00 4854413                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7fd08348b000-7fd08368a000 ---p 00016000 fc:00 4854413                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7fd08368a000-7fd08368b000 r--p 00015000 fc:00 4854413                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7fd08368b000-7fd08368c000 rw-p 00016000 fc:00 4854413                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7fd08368c000-7fd08368e000 rw-p 00000000 00:00 0 
+7fd08368e000-7fd083696000 r-xp 00000000 fc:00 4854415                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7fd083696000-7fd083895000 ---p 00008000 fc:00 4854415                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7fd083895000-7fd083896000 r--p 00007000 fc:00 4854415                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7fd083896000-7fd083897000 rw-p 00008000 fc:00 4854415                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7fd083897000-7fd0838c2000 r-xp 00000000 fc:00 3152442                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+7fd0838c2000-7fd083ac1000 ---p 0002b000 fc:00 3152442                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+7fd083ac1000-7fd083ac3000 rw-p 0002a000 fc:00 3152442                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+7fd083ac3000-7fd083ad0000 r-xp 00000000 fc:00 3152447                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+7fd083ad0000-7fd083ccf000 ---p 0000d000 fc:00 3152447                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+7fd083ccf000-7fd083cd1000 rw-p 0000c000 fc:00 3152447                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+7fd083cd1000-7fd083cd8000 r-xp 00000000 fc:00 4854474                    /lib/x86_64-linux-gnu/librt-2.23.so
+7fd083cd8000-7fd083ed7000 ---p 00007000 fc:00 4854474                    /lib/x86_64-linux-gnu/librt-2.23.so
+7fd083ed7000-7fd083ed8000 r--p 00006000 fc:00 4854474                    /lib/x86_64-linux-gnu/librt-2.23.so
+7fd083ed8000-7fd083ed9000 rw-p 00007000 fc:00 4854474                    /lib/x86_64-linux-gnu/librt-2.23.so
+7fd083ed9000-7fd083fe1000 r-xp 00000000 fc:00 4854390                    /lib/x86_64-linux-gnu/libm-2.23.so
+7fd083fe1000-7fd0841e0000 ---p 00108000 fc:00 4854390                    /lib/x86_64-linux-gnu/libm-2.23.so
+7fd0841e0000-7fd0841e1000 r--p 00107000 fc:00 4854390                    /lib/x86_64-linux-gnu/libm-2.23.so
+7fd0841e1000-7fd0841e2000 rw-p 00108000 fc:00 4854390                    /lib/x86_64-linux-gnu/libm-2.23.so
+7fd0841e2000-7fd084eb1000 r-xp 00000000 fc:00 3410978                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+7fd084eb1000-7fd0850b1000 ---p 00ccf000 fc:00 3410978                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+7fd0850b1000-7fd08518a000 rw-p 00ccf000 fc:00 3410978                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+7fd08518a000-7fd0851d5000 rw-p 00000000 00:00 0 
+7fd0851d5000-7fd085395000 r-xp 00000000 fc:00 4854320                    /lib/x86_64-linux-gnu/libc-2.23.so
+7fd085395000-7fd085594000 ---p 001c0000 fc:00 4854320                    /lib/x86_64-linux-gnu/libc-2.23.so
+7fd085594000-7fd085598000 r--p 001bf000 fc:00 4854320                    /lib/x86_64-linux-gnu/libc-2.23.so
+7fd085598000-7fd08559a000 rw-p 001c3000 fc:00 4854320                    /lib/x86_64-linux-gnu/libc-2.23.so
+7fd08559a000-7fd08559e000 rw-p 00000000 00:00 0 
+7fd08559e000-7fd0855a1000 r-xp 00000000 fc:00 4854344                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7fd0855a1000-7fd0857a0000 ---p 00003000 fc:00 4854344                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7fd0857a0000-7fd0857a1000 r--p 00002000 fc:00 4854344                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7fd0857a1000-7fd0857a2000 rw-p 00003000 fc:00 4854344                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7fd0857a2000-7fd0857b7000 r-xp 00000000 fc:00 3152129                    /usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+7fd0857b7000-7fd0859b7000 ---p 00015000 fc:00 3152129                    /usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+7fd0859b7000-7fd0859b8000 rw-p 00015000 fc:00 3152129                    /usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+7fd0859b8000-7fd0859d0000 r-xp 00000000 fc:00 4854466                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7fd0859d0000-7fd085bcf000 ---p 00018000 fc:00 4854466                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7fd085bcf000-7fd085bd0000 r--p 00017000 fc:00 4854466                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7fd085bd0000-7fd085bd1000 rw-p 00018000 fc:00 4854466                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7fd085bd1000-7fd085bd5000 rw-p 00000000 00:00 0 
+7fd085bd5000-7fd085bfb000 r-xp 00000000 fc:00 4854292                    /lib/x86_64-linux-gnu/ld-2.23.so
+7fd085bfb000-7fd085bfe000 r--s 0001a000 fc:00 3152468                    /usr/lib/jvm/java-8-oracle/jre/lib/jce.jar
+7fd085bfe000-7fd085cd0000 rw-p 00000000 00:00 0 
+7fd085cd0000-7fd085cd3000 ---p 00000000 00:00 0 
+7fd085cd3000-7fd085dd5000 rw-p 00000000 00:00 0 
+7fd085dd5000-7fd085dd6000 r--s 00004000 fc:00 3016219                    /home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-jawt-sources.jar
+7fd085dd6000-7fd085ddb000 r--s 0009a000 fc:00 3152366                    /usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar
+7fd085ddb000-7fd085dee000 rw-p 00000000 00:00 0 
+7fd085dee000-7fd085df6000 rw-s 00000000 fc:00 4461043                    /tmp/hsperfdata_apietras/12175
+7fd085df6000-7fd085df7000 rw-p 00000000 00:00 0 
+7fd085df7000-7fd085df8000 r--p 00000000 00:00 0 
+7fd085df8000-7fd085dfa000 rw-p 00000000 00:00 0 
+7fd085dfa000-7fd085dfb000 r--p 00025000 fc:00 4854292                    /lib/x86_64-linux-gnu/ld-2.23.so
+7fd085dfb000-7fd085dfc000 rw-p 00026000 fc:00 4854292                    /lib/x86_64-linux-gnu/ld-2.23.so
+7fd085dfc000-7fd085dfd000 rw-p 00000000 00:00 0 
+7fff8fb7f000-7fff8fba4000 rw-p 00000000 00:00 0                          [stack]
+7fff8fbb6000-7fff8fbb8000 r--p 00000000 00:00 0                          [vvar]
+7fff8fbb8000-7fff8fbba000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -Dfile.encoding=UTF-8 
+java_command: com.draglantix.main.Main
+java_class_path (initial): /usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/bin:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/joml-1.9.9-javadoc.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/joml-1.9.9-sources.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/joml-1.9.9.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-assimp-javadoc.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-assimp-sources.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-assimp.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-bgfx-javadoc.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-bgfx-sources.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-bgfx.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-egl-javadoc.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-egl-sources.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/lib/jars/lwjgl-egl.jar:/home/apietras/Documents/DraglantixSummer2018/3DSummer2018/l
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/usr/lib/jvm/java-8-oracle
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-openjdk-amd64/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
+USERNAME=apietras
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xac8af0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0xac8af0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x921dd0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x921dd0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x921dd0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x921dd0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x923610], sa_mask[0]=00100000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x924a10], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: [libjvm.so+0x924a10], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGTERM: [libjvm.so+0x924a10], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x924a10], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=LinuxMint
+DISTRIB_RELEASE=18
+DISTRIB_CODENAME=sarah
+DISTRIB_DESCRIPTION="Linux Mint 18 Sarah"
+
+uname:Linux 4.4.0-21-generic #37-Ubuntu SMP Mon Apr 18 18:33:37 UTC 2016 x86_64
+libc:glibc 2.23 NPTL 2.23 
+rlimit: STACK 8192k, CORE 0k, NPROC 15103, NOFILE 65536, AS infinity
+load average:0.54 0.56 0.58
+
+/proc/meminfo:
+MemTotal:        3907096 kB
+MemFree:          684376 kB
+MemAvailable:     869212 kB
+Buffers:            6536 kB
+Cached:           180292 kB
+SwapCached:        62144 kB
+Active:          2200888 kB
+Inactive:         843472 kB
+Active(anon):    2078228 kB
+Inactive(anon):   789520 kB
+Active(file):     122660 kB
+Inactive(file):    53952 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:       4050940 kB
+SwapFree:        3148544 kB
+Dirty:               252 kB
+Writeback:             0 kB
+AnonPages:       2843408 kB
+Mapped:           142568 kB
+Shmem:             10416 kB
+Slab:              68908 kB
+SReclaimable:      37408 kB
+SUnreclaim:        31500 kB
+KernelStack:        8656 kB
+PageTables:        27484 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     6004488 kB
+Committed_AS:    5581032 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:   1693696 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      678268 kB
+DirectMap2M:     3375104 kB
+
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 37 stepping 5, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, aes, clmul, ht, tsc, tscinvbit
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 640  @ 2.80GHz
+stepping	: 5
+microcode	: 0x3
+cpu MHz		: 1466.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm tpr_shadow vnmi flexpriority ept vpid dtherm ida arat
+bugs		:
+bogomips	: 5586.33
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 640  @ 2.80GHz
+stepping	: 5
+microcode	: 0x3
+cpu MHz		: 2800.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 2
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm tpr_shadow vnmi flexpriority ept vpid dtherm ida arat
+bugs		:
+bogomips	: 5586.33
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 640  @ 2.80GHz
+stepping	: 5
+microcode	: 0x3
+cpu MHz		: 2800.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm tpr_shadow vnmi flexpriority ept vpid dtherm ida arat
+bugs		:
+bogomips	: 5586.33
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 640  @ 2.80GHz
+stepping	: 5
+microcode	: 0x3
+cpu MHz		: 2800.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 2
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm tpr_shadow vnmi flexpriority ept vpid dtherm ida arat
+bugs		:
+bogomips	: 5586.33
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 3907096k(684376k free), swap 4050940k(3148544k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.131-b11) for linux-amd64 JRE (1.8.0_131-b11), built on Mar 15 2017 01:23:40 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Sun May 27 23:46:03 2018
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

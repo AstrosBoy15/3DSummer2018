@@ -5,16 +5,15 @@ import org.lwjgl.glfw.GLFW;
 
 import com.draglantix.models.TexturedModel;
 import com.draglantix.render.Window;
+import com.draglantix.terrains.Terrain;
 import com.draglantix.tools.Timer;
 
 public class Player extends Entity {
 	
-	private static final float RUN_SPEED = 20;
+	private static final float RUN_SPEED = 50;
 	private static final float TURN_SPEED = 160;
 	private static final float GRAVITY = -50;
 	private static final float JUMP_POWER = 30;
-	
-	private static final float TERRAIN_HEIGHT = 0;
 	
 	private static float time;
 	
@@ -29,7 +28,7 @@ public class Player extends Entity {
 		time = (float) Timer.getTime();
 	}
 	
-	public void move() {
+	public void move(Terrain terrain) {
 		float time_2 = (float) Timer.getTime();
 		float passed = time_2 - time;
 		
@@ -44,10 +43,11 @@ public class Player extends Entity {
 		super.increasePosition(dx, 0, dz);
 		upwardsSpeed += GRAVITY * passed;
 		super.increasePosition(0, upwardsSpeed * passed, 0);
-		if(super.getPosition().y<TERRAIN_HEIGHT) {
+		float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
+		if(super.getPosition().y<terrainHeight) {
 			upwardsSpeed = 0;
 			isInAir = false;
-			super.getPosition().y = TERRAIN_HEIGHT;
+			super.getPosition().y = terrainHeight;
 		}
 	}
 	

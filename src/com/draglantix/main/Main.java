@@ -30,6 +30,9 @@ public class Main {
 	
 	private boolean pause = false;
 	
+	private Terrain currentTerrain;
+	private Terrain terrains[][] = new Terrain[2][2];
+	
 	public Main() {
 		Window.setCallbacks();
 	
@@ -62,9 +65,6 @@ public class Main {
 		TerrainTexturePack texturePackSnow = new TerrainTexturePack(backgroundTextureSnow, rTexture, gTexture, bTexture);
 		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("terrain/blendMap"));
 		
-		Terrain terrain = new Terrain(-1, -1, loader, texturePackSnow, blendMap);
-		Terrain terrain2 = new Terrain(0, -1,loader, texturePackGrass, blendMap);
-
 		//Models///
 		
 		ModelData treeData = OBJFileLoader.loadOBJ("model/obj/tree");
@@ -143,56 +143,33 @@ public class Main {
 		
 		List<Entity> entities = new ArrayList<Entity>();
 		
-		Random rand = new Random();
-		
-		int range = 800;
-		float x, z;
-		
-		for(int i=0; i < 50; i++) {
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(tree, new Vector3f(x, 0, z), 0, 0, 0, 5));
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(mushroomTest, new Vector3f(x, 0, z), 0, 0, 0, .5f));
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(rock1, new Vector3f(x, 0, z), 0, 0, 0, 1));
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(rock2, new Vector3f(x, 0, z), 0, 0, 0, 2));
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(rock3, new Vector3f(x, 0, z), 0, 0, 0, 3));
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(grass, new Vector3f(x, 0, z), 0, 0, 0, 5));
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(pineTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
-			x = rand.nextFloat() * range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(fallTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
-			
-			//snow biome
-			x = rand.nextFloat() * -range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(snowTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
-			x = rand.nextFloat() * -range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(snowRock1, new Vector3f(x, 0, z), 0, 0, 0, 1));
-			x = rand.nextFloat() * -range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(snowRock2, new Vector3f(x, 0, z), 0, 0, 0, 2));
-			x = rand.nextFloat() * -range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(snowRock3, new Vector3f(x, 0, z), 0, 0, 0, 3));
-			x = rand.nextFloat() * -range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(snowPineTree, new Vector3f(x, 0, z), 0, 0, 0, 5));
-			x = rand.nextFloat() * -range;
-			z = rand.nextFloat() * -range;
-			entities.add(new Entity(snowman, new Vector3f(x, 0, z), 0, 0, 0, 3));
+		for(int i = 0; i < terrains.length; i++) {
+			for(int j = 0; j < terrains[i].length; j++) {
+				if(j<terrains[i].length/2) {
+					terrains[j][i] = new Terrain(-j, -i, loader, texturePackSnow, blendMap, "terrain/heightmap2");
+					for(int w=0; w < 50; w++) {
+						entities.add(new Entity(snowTree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
+						entities.add(new Entity(snowRock1, generateEntityPos(terrains[j][i]), 0, 0, 0, 1));
+						entities.add(new Entity(snowRock2, generateEntityPos(terrains[j][i]), 0, 0, 0, 2));
+						entities.add(new Entity(snowRock3, generateEntityPos(terrains[j][i]), 0, 0, 0, 3));
+						entities.add(new Entity(snowPineTree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
+						entities.add(new Entity(snowman, generateEntityPos(terrains[j][i]), 0, 0, 0, 3));
+					}
+				}else {
+					terrains[j][i] = new Terrain(-j, -i, loader, texturePackGrass, blendMap, "terrain/heightmap");
+					for(int w=0; w < 50; w++) {
+						
+						entities.add(new Entity(tree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
+						entities.add(new Entity(mushroomTest, generateEntityPos(terrains[j][i]), 0, 0, 0, .5f));
+						entities.add(new Entity(rock1, generateEntityPos(terrains[j][i]), 0, 0, 0, 1));
+						entities.add(new Entity(rock2, generateEntityPos(terrains[j][i]), 0, 0, 0, 2));
+						entities.add(new Entity(rock3, generateEntityPos(terrains[j][i]), 0, 0, 0, 3));
+						entities.add(new Entity(grass, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
+						entities.add(new Entity(pineTree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
+						entities.add(new Entity(fallTree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
+					}
+				}
+			}
 		}
 		
 		Player player = new Player(snowman, new Vector3f(0, 0, 0), 0, 180, 0, 3);
@@ -226,6 +203,16 @@ public class Main {
 				can_render = true;
 				
 				window.update();
+				
+				int currentX = (int) (1-player.getPosition().x/Terrain.SIZE);
+				int currentZ = (int) (1-player.getPosition().z/Terrain.SIZE);
+				
+				if(currentZ < terrains.length) {
+					if(currentX < terrains[currentZ].length) {
+						currentTerrain = terrains[currentX][currentZ];
+					}
+				}
+			
 				if(frame_time>=1.0) {
 					frame_time = 0;
 				}
@@ -235,13 +222,18 @@ public class Main {
 			if(can_render) {/////////////RENDER HERE///////////
 				
 				if(!pause) {
-					player.move();
+					player.move(currentTerrain);
 					camera.move();
 				}
 				
 				renderer.processEntity(player);
-				renderer.processTerrain(terrain);
-				renderer.processTerrain(terrain2);
+				
+				
+				for(int i = 0; i < terrains.length; i++) {
+					for(int j = 0; j < terrains[i].length; j++) {
+						renderer.processTerrain(terrains[j][i]);
+					}
+				}
 				renderer.renderer(light, camera);
 				
 				for(Entity e : entities) {
@@ -258,6 +250,14 @@ public class Main {
 		GLFW.glfwTerminate();
 		
 		////////////////////////////////////////////////////////
+	}
+	
+	private Vector3f generateEntityPos(Terrain terrain){
+		Random rand = new Random();
+		float x = (rand.nextFloat() * terrain.SIZE) + terrain.getX();
+		float z = (rand.nextFloat() * terrain.SIZE) + terrain.getZ();
+		float y = terrain.getHeightOfTerrain(x, z);
+		return new Vector3f(x, y, z);
 	}
 	
 	public static void main(String[] args) {
