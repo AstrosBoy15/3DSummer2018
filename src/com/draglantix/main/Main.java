@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
@@ -13,6 +14,8 @@ import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.entities.Player;
+import com.draglantix.guis.GuiRenderer;
+import com.draglantix.guis.GuiTexture;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.objConverter.ModelData;
@@ -54,7 +57,12 @@ public class Main {
 		Loader loader = new Loader();
 		MasterRenderer renderer = new MasterRenderer();
 	
-		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
+		List<Light> lights = new ArrayList<Light>();
+		lights.add(new Light(new Vector3f(0, 10000, 1000), new Vector3f(10, 0, 0)));
+		lights.add(new Light(new Vector3f(0, 1000, -1000), new Vector3f(0, 0, 10)));
+		lights.add(new Light(new Vector3f(1000, 100, 0), new Vector3f(0, 10, 0)));
+		lights.add(new Light(new Vector3f(-7000, 10000, 0), new Vector3f(1, 1, 1)));
+		
 		
 		TerrainTexture backgroundTextureGrass = new TerrainTexture(loader.loadTexture("terrain/terrainTexture"));
 		TerrainTexture backgroundTextureSnow = new TerrainTexture(loader.loadTexture("terrain/snowTerrainTexture"));
@@ -160,7 +168,7 @@ public class Main {
 						entities.add(new Entity(snowman, generateEntityPos(terrains[j][i]), 0, 0, 0, 3));
 					}
 				}else {
-					terrains[j][i] = new Terrain(-j, -i, loader, texturePackGrass, blendMap, "terrain/heightmap");
+					terrains[j][i] = new Terrain(-j, -i, loader, texturePackGrass, blendMap, "terrain/heightmap2");
 					for(int w=0; w < 50; w++) {
 						
 						entities.add(new Entity(tree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
@@ -178,6 +186,12 @@ public class Main {
 		
 		Player player = new Player(snowman, new Vector3f(0, 0, 0), 0, 180, 0, 3);
 		Camera camera = new Camera(player);
+		
+		List<GuiTexture> guis = new ArrayList<GuiTexture>();
+		GuiTexture dragon = new GuiTexture(loader.loadTexture("dragon"), new Vector2f(0.4f, 0.4f), 0.25f);
+		guis.add(dragon);
+		
+		GuiRenderer guiRenderer = new GuiRenderer(loader);
 		
 		///////////Game Loop///////////////////
 		
@@ -229,26 +243,24 @@ public class Main {
 					player.move(currentTerrain);
 					camera.move();
 				}
-				
 				renderer.processEntity(player);
-				
-				
 				for(int i = 0; i < terrains.length; i++) {
 					for(int j = 0; j < terrains[i].length; j++) {
 						renderer.processTerrain(terrains[j][i]);
 					}
 				}
-				renderer.renderer(light, camera);
-				
 				for(Entity e : entities) {
 					renderer.processEntity(e);
 				}
+				renderer.renderer(lights, camera);
+		
 				
-				
+				guiRenderer.render(guis);
 				window.swapBuffers();
 			}
 		}
 		
+		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		GLFW.glfwTerminate();
