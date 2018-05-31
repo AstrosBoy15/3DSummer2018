@@ -1,9 +1,22 @@
 package com.draglantix.render;
 
-import static org.lwjgl.glfw.Callbacks.*;
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
-import org.lwjgl.glfw.*;
+import org.joml.Vector2f;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
 
 import com.draglantix.tools.Input;
 
@@ -19,6 +32,8 @@ public class Window {
 	private GLFWWindowSizeCallback windowSizeCallback;
 	
 	private static Input input;
+	
+	private Vector2f MousePos;
 	
 	public static void setCallbacks() {
 		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
@@ -97,6 +112,10 @@ public class Window {
 		hasResized = false;
 		input.update();
 		glfwPollEvents();
+	}
+	
+	public static Vector2f getMousePos() {
+		return input.getMousePos();
 	}
 	
 	public static int getWidth() {return width;}

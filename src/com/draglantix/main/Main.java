@@ -27,6 +27,7 @@ import com.draglantix.terrains.Terrain;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.textures.TerrainTexture;
 import com.draglantix.textures.TerrainTexturePack;
+import com.draglantix.tools.MousePicker;
 import com.draglantix.tools.Timer;
 
 public class Main {
@@ -55,15 +56,8 @@ public class Main {
 		double unprocessed = 0;
 		
 		Loader loader = new Loader();
-		MasterRenderer renderer = new MasterRenderer();
+		MasterRenderer renderer = new MasterRenderer(loader);
 	
-		List<Light> lights = new ArrayList<Light>();
-		lights.add(new Light(new Vector3f(0, 10000, 1000), new Vector3f(10, 0, 0)));
-		lights.add(new Light(new Vector3f(0, 1000, -1000), new Vector3f(0, 0, 10)));
-		lights.add(new Light(new Vector3f(1000, 100, 0), new Vector3f(0, 10, 0)));
-		lights.add(new Light(new Vector3f(-7000, 10000, 0), new Vector3f(1, 1, 1)));
-		
-		
 		TerrainTexture backgroundTextureGrass = new TerrainTexture(loader.loadTexture("terrain/terrainTexture"));
 		TerrainTexture backgroundTextureSnow = new TerrainTexture(loader.loadTexture("terrain/snowTerrainTexture"));
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("terrain/mud"));
@@ -90,6 +84,7 @@ public class Main {
 		ModelData snowRock3Data = OBJFileLoader.loadOBJ("model/obj/snowRock3");
 		ModelData snowPineTreeData = OBJFileLoader.loadOBJ("model/obj/snowPineTree");
 		ModelData snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
+		ModelData lampData = OBJFileLoader.loadOBJ("model/obj/lamp");
 		
 		RawModel treeModel = loader.loadToVAO(
 			treeData.getVertices(), treeData.getTextureCoords(),
@@ -134,9 +129,14 @@ public class Main {
 		RawModel snowmanModel = loader.loadToVAO(
 				snowmanData.getVertices(), snowmanData.getTextureCoords(),
 				snowmanData.getNormals(), snowmanData.getIndices());
+		RawModel lampModel = loader.loadToVAO(
+				lampData.getVertices(), lampData.getTextureCoords(),
+				lampData.getNormals(), lampData.getIndices());
 		
 		ModelTexture mushroomModelTex = new ModelTexture(loader.loadTexture("model/texture/mushroomTextureAtlas"));
 		mushroomModelTex.setNumberOfRows(2);
+		ModelTexture lampModelTex = new ModelTexture(loader.loadTexture("model/texture/lamp"));
+		lampModelTex.setUseFakeLighting(true);
 		
 		TexturedModel tree = new TexturedModel(treeModel, new ModelTexture(loader.loadTexture("model/texture/treeTexture")));
 		TexturedModel mushroomTest = new TexturedModel(mushroomTestModel, mushroomModelTex);
@@ -152,13 +152,26 @@ public class Main {
 		TexturedModel snowRock3 = new TexturedModel(snowRock3Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
 		TexturedModel snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("model/texture/snowPineTreeTexture")));
 		TexturedModel snowman = new TexturedModel(snowmanModel, new ModelTexture(loader.loadTexture("model/texture/snowmanTexture")));		
+		TexturedModel lamp = new TexturedModel(lampModel, lampModelTex);
 		
 		List<Entity> entities = new ArrayList<Entity>();
+		
+		List<Light> lights = new ArrayList<Light>();
+		lights.add(new Light(new Vector3f(0, 1000, -7000), new Vector3f(0.4f, 0.4f, 0.4f)));
+		Light light = new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.002f));
+		lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2, 2), new Vector3f(1, 0.1f, 0.002f)));
+		lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.1f, 0.002f)));
+		lights.add(light);
+		
+		Entity LampEntity = new Entity(lamp, new Vector3f(185, -4.7f, -293), 0, 0, 0, 1);
+		entities.add(new Entity(lamp, new Vector3f(370, 4.2f, -300), 0, 0, 0, 1));
+		entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), 0, 0, 0, 1));
+		entities.add(LampEntity);
 		
 		for(int i = 0; i < terrains.length; i++) {
 			for(int j = 0; j < terrains[i].length; j++) {
 				if(j<terrains[i].length/2) {
-					terrains[j][i] = new Terrain(-j, -i, loader, texturePackSnow, blendMap, "terrain/heightmap2");
+					terrains[j][i] = new Terrain(-j, -i, loader, texturePackSnow, blendMap, "terrain/heightmap");
 					for(int w=0; w < 50; w++) {
 						entities.add(new Entity(snowTree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
 						entities.add(new Entity(snowRock1, generateEntityPos(terrains[j][i]), 0, 0, 0, 1));
@@ -168,7 +181,7 @@ public class Main {
 						entities.add(new Entity(snowman, generateEntityPos(terrains[j][i]), 0, 0, 0, 3));
 					}
 				}else {
-					terrains[j][i] = new Terrain(-j, -i, loader, texturePackGrass, blendMap, "terrain/heightmap2");
+					terrains[j][i] = new Terrain(-j, -i, loader, texturePackGrass, blendMap, "terrain/heightmap");
 					for(int w=0; w < 50; w++) {
 						
 						entities.add(new Entity(tree, generateEntityPos(terrains[j][i]), 0, 0, 0, 5));
@@ -192,6 +205,8 @@ public class Main {
 		guis.add(dragon);
 		
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
+		
+		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrains);
 		
 		///////////Game Loop///////////////////
 		
@@ -221,28 +236,35 @@ public class Main {
 				can_render = true;
 				
 				window.update();
-				
+					
 				int currentX = (int) (1-player.getPosition().x/Terrain.SIZE);
 				int currentZ = (int) (1-player.getPosition().z/Terrain.SIZE);
-				
 				if(currentZ < terrains.length) {
 					if(currentX < terrains[currentZ].length) {
 						currentTerrain = terrains[currentX][currentZ];
 					}
 				}
-			
-				if(frame_time>=1.0) {
-					frame_time = 0;
-				}
-				
-			}
-			
-			if(can_render) {/////////////RENDER HERE///////////
 				
 				if(!pause) {
 					player.move(currentTerrain);
 					camera.move();
 				}
+					picker.update();
+					Vector3f terrainPoint = picker.getCurrentTerrainPoint();
+					if(terrainPoint!=null) {
+						LampEntity.setPosition(terrainPoint);
+						light.setPosition(new Vector3f(terrainPoint.x, terrainPoint.y+15, terrainPoint.z));
+					}
+					System.out.println(picker.getCurrentRay());
+					
+				
+				if(frame_time>=1.0) {
+					frame_time = 0;
+				}
+			}
+			
+			if(can_render) {/////////////RENDER HERE///////////
+				
 				renderer.processEntity(player);
 				for(int i = 0; i < terrains.length; i++) {
 					for(int j = 0; j < terrains[i].length; j++) {

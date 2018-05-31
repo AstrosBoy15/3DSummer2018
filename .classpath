@@ -102,7 +102,6 @@
 	<classpathentry kind="lib" path="lib/jars/lwjgl-zstd-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl-zstd.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl.jar"/>
-	<classpathentry kind="lib" path="lib/jars/slick-util.jar"/>
 	<classpathentry kind="lib" path="lib/natives/lwjgl-assimp-natives-linux.jar"/>
 	<classpathentry kind="lib" path="lib/natives/lwjgl-assimp-natives-macos.jar"/>
 	<classpathentry kind="lib" path="lib/natives/lwjgl-assimp-natives-windows.jar"/>
@@ -178,5 +177,6 @@
 	<classpathentry kind="lib" path="lib/natives/lwjgl-yoga-natives-linux.jar"/>
 	<classpathentry kind="lib" path="lib/natives/lwjgl-yoga-natives-macos.jar"/>
 	<classpathentry kind="lib" path="lib/natives/lwjgl-yoga-natives-windows.jar"/>
+	<classpathentry kind="lib" path="lib/jars/PNGDecoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

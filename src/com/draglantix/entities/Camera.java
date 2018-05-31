@@ -86,7 +86,7 @@ public class Camera {
 		if(Window.getInput().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
 			float pitchChange = (float) (Window.getInput().getMousePos().y - lastMousePos.y) * 0.1f;
 			pitch -= pitchChange;
-			if(pitch>75) pitch = 75;
+			if(pitch>90) pitch = 90;
 			if(pitch<0) pitch = 0;
 		}
 		lastMousePos.y = Window.getInput().getMousePos().y;

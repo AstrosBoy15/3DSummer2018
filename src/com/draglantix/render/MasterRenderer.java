@@ -14,6 +14,7 @@ import com.draglantix.entities.Light;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.shaders.StaticShader;
 import com.draglantix.shaders.TerrainShader;
+import com.draglantix.skybox.SkyboxRenderer;
 import com.draglantix.terrains.Terrain;
 
 public class MasterRenderer {
@@ -22,10 +23,9 @@ public class MasterRenderer {
 	private static final float NEAR_PLANE = 0.5f;
 	private static final float FAR_PLANE = 1000;
 	
-	private static final float RED = 0.5f;
-	private static final float GREEN = 0.5f;
-	private static final float BLUE = 0.5f;
-	
+	private static final float RED = 0.5444f;
+	private static final float GREEN = 0.62f;
+	private static final float BLUE = 0.69f;
 	
 	private Matrix4f projectionMatrix;
 
@@ -38,12 +38,14 @@ public class MasterRenderer {
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 	
+	private SkyboxRenderer skyboxRenderer;
 	
-	public MasterRenderer() {
+	public MasterRenderer(Loader loader) {
 		enableCulling();
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
+		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
 	}
 	
 	public void updateProjectionMatrix() {
@@ -61,6 +63,10 @@ public class MasterRenderer {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 	
+	public Matrix4f getProjectionMatrix(){
+		return projectionMatrix;
+	}
+	
 	public void renderer(List<Light> lights, Camera camera) {
 		prepare();
 		shader.start();
@@ -75,6 +81,7 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.renderer(terrains);
 		terrainShader.stop();
+		skyboxRenderer.render(camera, RED, GREEN, BLUE);
 		terrains.clear();
 		entities.clear();
 	}

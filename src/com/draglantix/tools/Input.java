@@ -1,10 +1,13 @@
 package com.draglantix.tools;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LAST;
+import static org.lwjgl.glfw.GLFW.glfwGetKey;
+import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
 
 import java.nio.DoubleBuffer;
 
 import org.joml.Vector2f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 
 public class Input {
@@ -36,12 +39,11 @@ public class Input {
 	}
 	
 	public Vector2f getMousePos() {
-		double[] posx = new double[] {0};
-		double[] posy = new double[] {0};
-		DoubleBuffer.wrap(posx);
-		GLFW.glfwGetCursorPos(window, posx, posy);
-		double x = posx[0];
-		double y = posy[0];
+		DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
+		DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
+		GLFW.glfwGetCursorPos(window, xBuffer, yBuffer);
+		double x = xBuffer.get(0);
+		double y = yBuffer.get(0);
 		return new Vector2f((float)x, (float)y);
 	}
 	
