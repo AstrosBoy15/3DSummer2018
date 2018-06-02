@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -72,6 +73,11 @@ public abstract class ShaderProgram {
 	protected void loadVector(int location, Vector3f vector) {
 		GL20.glUniform3f(location, vector.x, vector.y, vector.z);
 	}
+	
+	protected void loadVector4D(int location, Vector4f vector) {
+		GL20.glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
+	}
+	
 	
 	protected void load2DVector(int location, Vector2f vector) {
 		GL20.glUniform2f(location, vector.x, vector.y);
