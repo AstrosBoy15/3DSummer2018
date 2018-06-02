@@ -24,7 +24,9 @@ public class WaterRenderer {
 
 	private static final String DUDV_MAP = "water/waterDUDV";
 	private static final String NORMAL_MAP = "water/normalMap";
-	private static final float WAVE_SPEED = 0.01f;
+	private static final float WAVE_SPEED = 0.05f;
+	
+	private static float time;
 	
 	private RawModel quad;
 	private WaterShader shader;
@@ -45,6 +47,7 @@ public class WaterRenderer {
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
 		setUpVAO(loader);
+		time = (float) Timer.getTimeSec();
 	}
 
 	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
@@ -66,10 +69,15 @@ public class WaterRenderer {
 	}
 	
 	private void prepareRender(Camera camera, Light sun, float near, float far){
+		float time_2 = (float) Timer.getTimeSec();
+		float passed = time_2 - time;
+		
+		time = time_2;
+		
 		shader.start();
 		shader.loadViewMatrix(camera);
 		shader.loadPlaneValues(near, far);
-		moveFactor += WAVE_SPEED * Timer.getTime() / 50000;
+		moveFactor += WAVE_SPEED * passed;
 		moveFactor %= 1;
 		shader.loadMoveFactor(moveFactor);
 		shader.loadLight(sun);

@@ -12,7 +12,7 @@ public class SkyboxShader extends ShaderProgram{
     private static final String VERTEX_FILE = "shaders/skyboxVertexShader.txt";
     private static final String FRAGMENT_FILE = "shaders/skyboxFragmentShader.txt";
     
-    private static final float ROTATE_SPEED = 1f;
+    private static final float ROTATE_SPEED = 5f;
     
     private int location_projectionMatrix;
     private int location_viewMatrix;
@@ -31,7 +31,7 @@ public class SkyboxShader extends ShaderProgram{
         super.loadMatrix(location_projectionMatrix, matrix);
     }
  
-    public void loadViewMatrix(Camera camera){
+    public void loadViewMatrix(Camera camera, float passed){
         Matrix4f matrix = Maths.createViewMatrix(camera);
         matrix._m30(0);
         matrix._m31(0);
@@ -39,7 +39,7 @@ public class SkyboxShader extends ShaderProgram{
         if(rotation>=360) {
         	rotation = rotation-360;
         }
-        rotation += ROTATE_SPEED * Timer.getTime()/500000;
+        rotation += ROTATE_SPEED * passed;
         matrix.rotate((float)Math.toRadians(rotation), new Vector3f(0, 1, 0), matrix);
         super.loadMatrix(location_viewMatrix, matrix);
     }

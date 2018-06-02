@@ -58,7 +58,7 @@ public class Main {
 		
 		double frame_cap = 1.0/60.0;
 		double frame_time = 0;
-		double time = Timer.getTime();
+		double time = Timer.getTimeSec();
 		double unprocessed = 0;
 		
 		Loader loader = new Loader();
@@ -226,7 +226,7 @@ public class Main {
 		while(!window.shouldClose()) {
 			boolean can_render = false;
 			
-			double time_2 = Timer.getTime();
+			double time_2 = Timer.getTimeSec();
 			double passed = time_2 - time;
 			unprocessed += passed;
 			frame_time += passed;

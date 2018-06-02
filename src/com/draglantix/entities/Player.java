@@ -25,11 +25,11 @@ public class Player extends Entity {
 
 	public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		super(model, position, rotX, rotY, rotZ, scale);
-		time = (float) Timer.getTime();
+		time = (float) Timer.getTimeSec();
 	}
 	
 	public void move(Terrain terrain) {
-		float time_2 = (float) Timer.getTime();
+		float time_2 = (float) Timer.getTimeSec();
 		float passed = time_2 - time;
 		
 		time = time_2;
