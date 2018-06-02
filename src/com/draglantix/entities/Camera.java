@@ -61,7 +61,7 @@ public class Camera {
 		float offsetX = (float) (horizontalDistance * Math.sin(Math.toRadians(theta)));
 		float offsetZ = (float) (horizontalDistance * Math.cos(Math.toRadians(theta)));
 		position.x = player.getPosition().x - offsetX;
-		position.y = player.getPosition().y + verticalDistance + 7;
+		position.y = player.getPosition().y + verticalDistance + 9;
 		position.z = player.getPosition().z - offsetZ;
 		yaw = 180 - theta;
 	}
@@ -81,8 +81,8 @@ public class Camera {
 			ypos = (float) yoffset;
 			float zoomLevel = ypos;
 			distanceFromPlayer -= zoomLevel;
-			if(distanceFromPlayer < 10) distanceFromPlayer = 10;
-			if(distanceFromPlayer > 100) distanceFromPlayer = 100;
+			if(distanceFromPlayer < -10) distanceFromPlayer = -10;
+			if(distanceFromPlayer > 200) distanceFromPlayer = 200;
 		}));
 	}
 	
