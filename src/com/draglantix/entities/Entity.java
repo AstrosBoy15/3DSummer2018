@@ -13,6 +13,8 @@ public class Entity {
 	
 	private int textureIndex = 0;
 	
+	private Vector3f ID;
+	
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, 
 			float scale) {
 		this.model = model;
@@ -102,6 +104,14 @@ public class Entity {
 
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+
+	public Vector3f getID() {
+		return ID;
+	}
+
+	public void setID(Vector3f iD) {
+		ID = iD;
 	}
 	
 }

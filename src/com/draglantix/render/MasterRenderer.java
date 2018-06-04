@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
@@ -14,6 +13,7 @@ import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.models.TexturedModel;
+import com.draglantix.shaders.SelectionShader;
 import com.draglantix.shaders.StaticShader;
 import com.draglantix.shaders.TerrainShader;
 import com.draglantix.shaders.WaterShader;
@@ -36,6 +36,8 @@ public class MasterRenderer {
 
 	private StaticShader shader = new StaticShader();
 	private static EntityRenderer renderer;
+	private static SelectionRenderer selectionRenderer;
+	private SelectionShader selectionShader = new SelectionShader();
 	
 	private static TerrainRenderer terrainRenderer;
 	private TerrainShader terrainShader = new TerrainShader();
@@ -52,6 +54,7 @@ public class MasterRenderer {
 		enableCulling();
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
+		selectionRenderer = new SelectionRenderer(selectionShader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
 		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, fbos);
@@ -96,6 +99,16 @@ public class MasterRenderer {
 		
 	}
 	
+	public void renderEntities(List<Entity> entities, Camera camera) { 
+		
+		for(Entity e : entities) {
+			processEntity(e);
+		}
+		
+		rendererEntity(camera);
+
+	}
+	
 	public void renderWater(List<WaterTile> waters, Camera camera, Light sun) {
 		waterRenderer.render(waters, camera, sun, NEAR_PLANE, FAR_PLANE);
 	}
@@ -121,6 +134,15 @@ public class MasterRenderer {
 		entities.clear();
 	}
 	
+	public void rendererEntity(Camera camera) {
+		prepare();
+		selectionShader.start();
+		selectionShader.loadViewMatrix(camera);
+		selectionRenderer.render(entities);
+		selectionShader.stop();
+		entities.clear();
+	}
+	
 	public void processTerrain(Terrain terrain){
 		terrains.add(terrain);
 	}
@@ -138,6 +160,7 @@ public class MasterRenderer {
 	}
 	
 	public void cleanUp(){
+		selectionShader.cleanUp();
 		shader.cleanUp();
 		terrainShader.cleanUp();
 		waterShader.cleanUp();
@@ -146,7 +169,7 @@ public class MasterRenderer {
 	public void prepare() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(RED, GREEN, BLUE, 1);
+		GL11.glClearColor(0, 0, 0, 1);
 	}
 	
 	private void createProjectionMatrix() {

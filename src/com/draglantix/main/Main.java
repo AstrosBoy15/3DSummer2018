@@ -24,14 +24,13 @@ import com.draglantix.objConverter.ModelData;
 import com.draglantix.objConverter.OBJFileLoader;
 import com.draglantix.render.Loader;
 import com.draglantix.render.MasterRenderer;
-import com.draglantix.render.WaterRenderer;
 import com.draglantix.render.Window;
-import com.draglantix.shaders.WaterShader;
 import com.draglantix.terrains.Terrain;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.textures.TerrainTexture;
 import com.draglantix.textures.TerrainTexturePack;
-import com.draglantix.tools.MousePicker;
+import com.draglantix.tools.EntitySelector;
+import com.draglantix.tools.SelectionBuffers;
 import com.draglantix.tools.Timer;
 import com.draglantix.water.WaterFrameBuffers;
 import com.draglantix.water.WaterTile;
@@ -43,6 +42,8 @@ public class Main {
 	
 	private Terrain terrains[][] = new Terrain[2][2];
 	private Terrain currentTerrain = terrains[0][0];
+	
+	private Entity currentSelection = null;
 	
 	public Main() {
 		Window.setCallbacks();
@@ -63,9 +64,11 @@ public class Main {
 		
 		Loader loader = new Loader();
 		
-		WaterFrameBuffers buffers = new WaterFrameBuffers();
+		WaterFrameBuffers waterBuffers = new WaterFrameBuffers();
+		SelectionBuffers selectionBuffers = new SelectionBuffers();
+		EntitySelector entitySelector = new EntitySelector(selectionBuffers);
 		
-		MasterRenderer renderer = new MasterRenderer(loader, buffers);
+		MasterRenderer renderer = new MasterRenderer(loader, waterBuffers);
 		
 		List<WaterTile> waters = new ArrayList<WaterTile>();
 		WaterTile water = new WaterTile(-400, 400, 0);
@@ -185,6 +188,9 @@ public class Main {
 		List<GuiTexture> guis = new ArrayList<GuiTexture>();
 		GuiTexture dragon = new GuiTexture(loader.loadTexture("dragon"), new Vector2f(0.4f, 0.4f), 0.25f);
 		guis.add(dragon);
+		//GuiTexture selection = new GuiTexture(selectionBuffers.getSelectionTexture(), new Vector2f(-0.4f, 0.4f), 0.25f);
+		//guis.add(selection);
+		
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
 		
 		for(int i = 0; i < terrains.length; i++) {
@@ -216,10 +222,13 @@ public class Main {
 			}
 		}
 		
+		//After all entities are added
+		createEntityIDSystem(entities);
+		
 		Player player = new Player(snowman, new Vector3f(40, 40, 40), 0, 180, 0, 3);
 		Camera camera = new Camera(player);
 
-		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrains);
+		//MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrains);
 		
 		///////////Game Loop///////////////////
 		
@@ -274,6 +283,24 @@ public class Main {
 					
 					///////////////////////////////////////////////
 				
+					Vector3f ID = entitySelector.getEntityAtMousePos();
+					Entity selected = getEntityWithID(ID, entities);
+				
+					if(selected!=null) {
+						if(Window.getInput().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+							currentSelection = selected;
+						}
+					}else {
+						if(Window.getInput().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+							currentSelection = null;
+						}
+					}
+					
+					if(currentSelection!=null) {
+						currentSelection.increaseRotation(0, 1, 0);
+					}
+					
+					
 				if(frame_time>=1.0) {
 					frame_time = 0;
 				}
@@ -283,7 +310,7 @@ public class Main {
 				
 				GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 				
-				buffers.bindReflectionFrameBuffer();
+				waterBuffers.bindReflectionFrameBuffer();
 				float distance = 2 * (camera.getPosition().y - water.getHeight());
 				camera.getPosition().y -= distance;
 				camera.invertPitch();
@@ -291,19 +318,24 @@ public class Main {
 				camera.getPosition().y += distance;
 				camera.invertPitch();
 				
-				buffers.bindRefractionFrameBuffer();
+				waterBuffers.bindRefractionFrameBuffer();
 				renderer.renderScene(player, entities, terrains, lights, camera, new Vector4f(0, -1, 0, water.getHeight()+1f));
 				
-				buffers.unbindCurrentFrameBuffer();
+				waterBuffers.unbindCurrentFrameBuffer();
 				GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 				renderer.renderScene(player, entities, terrains, lights, camera, new Vector4f(0, -1, 0, 1000000));
 				renderer.renderWater(waters, camera, sun);
 				guiRenderer.render(guis);
 				window.swapBuffers();
+				
+				selectionBuffers.bindSelectionBuffer();
+				renderer.renderEntities(entities, camera);
+				
 			}
 		}
 		
-		buffers.cleanUp();
+		selectionBuffers.cleanUp();
+		waterBuffers.cleanUp();
 		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
@@ -317,6 +349,37 @@ public class Main {
 		float z = (rand.nextFloat() * terrain.SIZE) + terrain.getZ();
 		float y = terrain.getHeightOfTerrain(x, z);
 		return new Vector3f(x, y, z);
+	}
+	
+	public static void createEntityIDSystem(List<Entity> entities) {
+		float x=0, y=0, z=0;
+		double delta = 1;
+		System.out.println(entities.size());
+		System.out.println(delta);
+		for(Entity e : entities){
+			if(x<255) {
+				x+=delta;
+			}else if(y<255){
+				x=0;
+				y+=delta;
+			}else if(z<255){
+				y=0;
+				z+=delta;
+			}
+			e.setID(new Vector3f(x/255, y/255, z/255));
+		}
+	}
+	
+	public Entity getEntityWithID(Vector3f iD, List<Entity> entities) {
+		for(Entity e : entities) {
+			
+			if(e.getID().x == iD.x/255 &&
+			   e.getID().y == iD.y/255 &&
+			   e.getID().z == iD.z/255) {
+				return e;
+			}
+		}
+		return null;
 	}
 	
 	public static void main(String[] args) {

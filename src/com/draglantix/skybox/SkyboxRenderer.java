@@ -110,7 +110,8 @@ private static final float SIZE = 500f;
 			time24 = time_2;
 		}
 		
-		System.out.println("Time of Day: " + (int)passed + ":" + (int) (60 * (passed % 1)) );
+		//Clock
+		//System.out.println("Time of Day: " + (int)passed + ":" + (int) (60 * (passed % 1)) );
 		
 		int texture1;
 		int texture2;
