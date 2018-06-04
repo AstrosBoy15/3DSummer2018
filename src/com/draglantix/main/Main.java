@@ -186,8 +186,8 @@ public class Main {
 		entities.add(LampEntity);
 		
 		List<GuiTexture> guis = new ArrayList<GuiTexture>();
-		GuiTexture dragon = new GuiTexture(loader.loadTexture("dragon"), new Vector2f(0.4f, 0.4f), 0.25f);
-		guis.add(dragon);
+		//GuiTexture dragon = new GuiTexture(loader.loadTexture("dragon"), new Vector2f(0.4f, 0.4f), 0.25f);
+		//guis.add(dragon);
 		//GuiTexture selection = new GuiTexture(selectionBuffers.getSelectionTexture(), new Vector2f(-0.4f, 0.4f), 0.25f);
 		//guis.add(selection);
 		
@@ -222,11 +222,11 @@ public class Main {
 			}
 		}
 		
-		//After all entities are added
-		createEntityIDSystem(entities);
-		
 		Player player = new Player(snowman, new Vector3f(40, 40, 40), 0, 180, 0, 3);
 		Camera camera = new Camera(player);
+		
+		//After all entities are added
+		createEntityIDSystem(entities, player);
 
 		//MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrains);
 		
@@ -329,7 +329,7 @@ public class Main {
 				window.swapBuffers();
 				
 				selectionBuffers.bindSelectionBuffer();
-				renderer.renderEntities(entities, camera);
+				renderer.renderEntities(entities, terrains, player, camera);
 				
 			}
 		}
@@ -351,7 +351,7 @@ public class Main {
 		return new Vector3f(x, y, z);
 	}
 	
-	public static void createEntityIDSystem(List<Entity> entities) {
+	public static void createEntityIDSystem(List<Entity> entities, Player player) {
 		float x=0, y=0, z=0;
 		double delta = 1;
 		System.out.println(entities.size());
@@ -368,6 +368,7 @@ public class Main {
 			}
 			e.setID(new Vector3f(x/255, y/255, z/255));
 		}
+		player.setID(new Vector3f(0, 0, 0));
 	}
 	
 	public Entity getEntityWithID(Vector3f iD, List<Entity> entities) {

@@ -15,6 +15,7 @@ import com.draglantix.main.Main;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.shaders.SelectionShader;
+import com.draglantix.terrains.Terrain;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.tools.Maths;
 
@@ -35,7 +36,7 @@ public class SelectionRenderer {
 		shader.stop();
 	}
 	
-	public void render(Map<TexturedModel, List<Entity>> entities) {
+	public void render(Map<TexturedModel, List<Entity>> entities, Entity player, List<Terrain> terrain) {
 		for(TexturedModel model:entities.keySet()) {
 			prepareTexturedModel(model);
 			List<Entity> batch = entities.get(model);
@@ -45,6 +46,32 @@ public class SelectionRenderer {
 			}
 			unbindTexturedModel();
 		}
+		for(Terrain terrains:terrain) {
+			prepareTerrain(terrains);
+			loadModelMatrix(terrains);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, terrains.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			unbindTexturedModel();
+		}
+		prepareTexturedModel(player.getModel());
+		prepareInstance(player);
+		GL11.glDrawElements(GL11.GL_TRIANGLES, player.getModel().getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+		unbindTexturedModel();
+		
+	}
+	
+	private void loadModelMatrix(Terrain terrain){
+		Matrix4f transformationMatrix = Maths.createTransformationMatrix(
+				new Vector3f(terrain.getX(), 0, terrain.getZ()), 0, 0, 0, 1);
+		shader.loadModelMatrix(transformationMatrix);
+		shader.loadEntityID(new Vector3f(0, 0, 0));
+	}
+	
+	private void prepareTerrain(Terrain terrain) {
+		RawModel rawModel = terrain.getModel();
+		GL30.glBindVertexArray(rawModel.getVaoID());
+		GL20.glEnableVertexAttribArray(0);
+		GL20.glEnableVertexAttribArray(1);
+		GL20.glEnableVertexAttribArray(2);
 	}
 	
 	private void prepareTexturedModel(TexturedModel model) {

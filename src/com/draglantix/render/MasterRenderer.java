@@ -101,13 +101,21 @@ public class MasterRenderer {
 		
 	}
 	
-	public void renderEntities(List<Entity> entities, Camera camera) { 
+	public void renderEntities(List<Entity> entities, Terrain[][] terrains, Entity player, Camera camera) { 
 		
 		for(Entity e : entities) {
 			processEntity(e);
 		}
 		
-		rendererEntity(camera);
+		for(int i = 0; i < terrains.length; i++) {
+			for(int j = 0; j < terrains[i].length; j++) {
+				processTerrain(terrains[j][i]);
+			}
+		}
+		
+		processEntity(player);
+		
+		rendererEntity(camera, player);
 
 	}
 	
@@ -136,11 +144,11 @@ public class MasterRenderer {
 		entities.clear();
 	}
 	
-	public void rendererEntity(Camera camera) {
+	public void rendererEntity(Camera camera, Entity player) {
 		prepare();
 		selectionShader.start();
 		selectionShader.loadViewMatrix(camera);
-		selectionRenderer.render(entities);
+		selectionRenderer.render(entities, player, terrains);
 		selectionShader.stop();
 		entities.clear();
 	}

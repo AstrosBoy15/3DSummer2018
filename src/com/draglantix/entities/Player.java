@@ -22,6 +22,8 @@ public class Player extends Entity {
 	private float upwardsSpeed = 0;
 	
 	private boolean isInAir = false;
+	
+	private Vector3f ID;
 
 	public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		super(model, position, rotX, rotY, rotZ, scale);
@@ -81,5 +83,14 @@ public class Player extends Entity {
 		
 		
 	}
+	
+	public Vector3f getID() {
+		return ID;
+	}
+
+	public void setID(Vector3f iD) {
+		ID = iD;
+	}
+	
 
 }
