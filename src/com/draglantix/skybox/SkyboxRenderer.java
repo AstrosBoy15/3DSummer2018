@@ -68,8 +68,8 @@ private static final float SIZE = 500f;
 	private int nightTexture;
 	private SkyboxShader shader;
 	
-	private static float time;
-	private static float time24;
+	private static double time;
+	private static double time24;
 	
 	public SkyboxRenderer(Loader loader, Matrix4f projectionMatrix) {
 		cube = loader.loadToVAO(VERTICES, 3);
@@ -84,14 +84,20 @@ private static final float SIZE = 500f;
 		time24 = (float) Timer.getTimeMin();
 	}
 	
+	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
+		shader.start();
+		shader.loadProjectionMatrix(projectionMatrix);
+		shader.stop();
+	}
+	
 	public void render(Camera camera, float r, float g, float b) {
-		float time_2 = (float) Timer.getTimeSec();
-		float passed = time_2 - time;
+		double time_2 = Timer.getTimeSec();
+		double passed = time_2 - time;
 		
 		time = time_2;
 		
 		shader.start();
-		shader.loadViewMatrix(camera, passed);
+		shader.loadViewMatrix(camera, (float) passed);
 		shader.loadFogColor(r, g, b);
 		GL30.glBindVertexArray(cube.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
@@ -103,8 +109,8 @@ private static final float SIZE = 500f;
 	}
 	
 	private void bindTextures(){
-		float time_2 = (float) Timer.getTimeMin();
-		float passed = time_2 - time24;
+		double time_2 = Timer.getTimeMin();
+		double passed = time_2 - time24;
 		
 		if(passed>=24) {
 			time24 = time_2;
@@ -119,19 +125,19 @@ private static final float SIZE = 500f;
 		if(passed >= 0 && passed < 5){
 			texture1 = nightTexture;
 			texture2 = nightTexture;
-			blendFactor = (passed - 0)/(5 - 0);
+			blendFactor = ((float) passed - 0)/(5 - 0);
 		}else if(passed >= 5 && passed < 8){
 			texture1 = nightTexture;
 			texture2 = texture;
-			blendFactor = (passed - 5)/(8 - 5);
+			blendFactor = ((float) passed - 5)/(8 - 5);
 		}else if(passed >= 8 && passed < 21){
 			texture1 = texture;
 			texture2 = texture;
-			blendFactor = (passed - 8)/(21- 8);
+			blendFactor = ((float) passed - 8)/(21- 8);
 		}else{
 			texture1 = texture;
 			texture2 = nightTexture;
-			blendFactor = (passed - 21)/(24 - 21);
+			blendFactor = ((float) passed - 21)/(24 - 21);
 		}
 
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);

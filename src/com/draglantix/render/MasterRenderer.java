@@ -66,7 +66,9 @@ public class MasterRenderer {
 		renderer.updateProjectionMatrix(projectionMatrix);
 		terrainRenderer.updateProjectionMatrix(projectionMatrix);
 		waterRenderer.updateProjectionMatrix(projectionMatrix);
-	}
+		selectionRenderer.updateProjectionMatrix(projectionMatrix);
+		skyboxRenderer.updateProjectionMatrix(projectionMatrix);
+		}
 	
 	public static void enableCulling() {
 		GL11.glEnable(GL11.GL_CULL_FACE);

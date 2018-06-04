@@ -10,8 +10,9 @@ import com.draglantix.render.Window;
 
 public class SelectionBuffers {
 
-	 	protected static final int RES_WIDTH = 180;
-	    private static final int RES_HEIGHT = 180;
+	 	public static final int RES_WIDTH = 260;
+	    public static final int RES_HEIGHT = 200;
+	    
 	   
 	    private int selectionBuffer;
 	    private int selectionTexture;

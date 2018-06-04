@@ -15,7 +15,7 @@ public class Player extends Entity {
 	private static final float GRAVITY = -50;
 	private static final float JUMP_POWER = 30;
 	
-	private static float time;
+	private static double time;
 	
 	private float currentSpeed = 0;
 	private float currentTurnSpeed = 0;
@@ -29,20 +29,20 @@ public class Player extends Entity {
 	}
 	
 	public void move(Terrain terrain) {
-		float time_2 = (float) Timer.getTimeSec();
-		float passed = time_2 - time;
+		double time_2 = Timer.getTimeSec();
+		double passed = time_2 - time;
 		
 		time = time_2;
 		
 		checkInputs();
 		
-		super.increaseRotation(0, currentTurnSpeed * passed, 0);
-		float distance = currentSpeed * passed;
+		super.increaseRotation(0, currentTurnSpeed * (float) passed, 0);
+		float distance = currentSpeed;
 		float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotY())));
 		float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotY())));
-		super.increasePosition(dx, 0, dz);
-		upwardsSpeed += GRAVITY * passed;
-		super.increasePosition(0, upwardsSpeed * passed, 0);
+		super.increasePosition(dx * (float) passed, 0, dz * (float) passed);
+		upwardsSpeed += GRAVITY * (float) passed;
+		super.increasePosition(0, upwardsSpeed * (float) passed, 0);
 		float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
 		if(super.getPosition().y<terrainHeight) {
 			upwardsSpeed = 0;
