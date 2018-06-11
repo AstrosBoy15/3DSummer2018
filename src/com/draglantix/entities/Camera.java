@@ -75,6 +75,7 @@ public class Camera {
 	}
 	
 	private void calculateZoom() {
+		@SuppressWarnings("unused")
 		GLFWScrollCallbackI scrollCallback;
 		ypos = 0;
 		GLFW.glfwSetScrollCallback(Window.getWindow(), scrollCallback = GLFWScrollCallback.create((window, xoffset, yoffset) -> {

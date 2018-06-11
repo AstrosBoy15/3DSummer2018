@@ -68,8 +68,8 @@ private static final float SIZE = 500f;
 	private int nightTexture;
 	private SkyboxShader shader;
 	
-	private static double time;
-	private static double time24;
+	private Timer timer;
+	private double passed24;
 	
 	public SkyboxRenderer(Loader loader, Matrix4f projectionMatrix) {
 		cube = loader.loadToVAO(VERTICES, 3);
@@ -80,8 +80,7 @@ private static final float SIZE = 500f;
 		shader.connectTextureUnits();
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
-		time = (float) Timer.getTimeSec();
-		time24 = (float) Timer.getTimeMin();
+		timer = new Timer();
 	}
 	
 	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
@@ -91,53 +90,51 @@ private static final float SIZE = 500f;
 	}
 	
 	public void render(Camera camera, float r, float g, float b) {
-		double time_2 = Timer.getTimeSec();
-		double passed = time_2 - time;
 		
-		time = time_2;
+		double passed = timer.getDelta();
 		
 		shader.start();
 		shader.loadViewMatrix(camera, (float) passed);
 		shader.loadFogColor(r, g, b);
 		GL30.glBindVertexArray(cube.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
-		bindTextures();
+		bindTextures(passed);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, cube.getVertexCount());
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
 	}
 	
-	private void bindTextures(){
-		double time_2 = Timer.getTimeMin();
-		double passed = time_2 - time24;
+	private void bindTextures(double passed){
 		
-		if(passed>=24) {
-			time24 = time_2;
+		passed24 += passed;
+		
+		if(passed24>=24) {
+			passed24 = 0;
 		}
 		
 		//Clock
-		//System.out.println("Time of Day: " + (int)passed + ":" + (int) (60 * (passed % 1)) );
+		//System.out.println("Time of Day: " + (int)passed24 + ":" + (int) (60 * (passed24 % 1)) );
 		
 		int texture1;
 		int texture2;
 		float blendFactor;		
-		if(passed >= 0 && passed < 5){
+		if(passed24 >= 0 && passed24 < 5){
 			texture1 = nightTexture;
 			texture2 = nightTexture;
-			blendFactor = ((float) passed - 0)/(5 - 0);
-		}else if(passed >= 5 && passed < 8){
+			blendFactor = ((float) passed24 - 0)/(5 - 0);
+		}else if(passed24 >= 5 && passed24 < 8){
 			texture1 = nightTexture;
 			texture2 = texture;
-			blendFactor = ((float) passed - 5)/(8 - 5);
-		}else if(passed >= 8 && passed < 21){
+			blendFactor = ((float) passed24 - 5)/(8 - 5);
+		}else if(passed24 >= 8 && passed24 < 21){
 			texture1 = texture;
 			texture2 = texture;
-			blendFactor = ((float) passed - 8)/(21- 8);
+			blendFactor = ((float) passed24 - 8)/(21- 8);
 		}else{
 			texture1 = texture;
 			texture2 = nightTexture;
-			blendFactor = ((float) passed - 21)/(24 - 21);
+			blendFactor = ((float) passed24 - 21)/(24 - 21);
 		}
 
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);

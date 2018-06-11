@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL30;
 import com.draglantix.models.RawModel;
 import com.draglantix.shaders.TerrainShader;
 import com.draglantix.terrains.Terrain;
-import com.draglantix.textures.ModelTexture;
 import com.draglantix.textures.TerrainTexturePack;
 import com.draglantix.tools.Maths;
 

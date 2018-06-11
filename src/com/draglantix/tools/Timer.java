@@ -1,11 +1,24 @@
 package com.draglantix.tools;
 
+import org.lwjgl.glfw.GLFW;
+
 public class Timer {
-	public static double getTimeSec() {
-		return (double)System.nanoTime()/(double) 1000000000L;
+
+    private double lastTime;
+   
+    public Timer() {
+        lastTime = getTime();
+    }
+
+    public static double getTime() {
+		return GLFW.glfwGetTime();
+    }
+    
+	public float getDelta() {
+        double time = getTime();
+        float delta = (float) (time - lastTime);
+        lastTime = time;
+        return delta;
 	}
-	
-	public static double getTimeMin() {
-		return getTimeSec()/60;
-	}
+
 }

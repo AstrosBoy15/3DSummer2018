@@ -33,8 +33,6 @@ public class Window {
 	
 	private static Input input;
 	
-	private Vector2f MousePos;
-	
 	public static void setCallbacks() {
 		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
 	}
@@ -55,7 +53,7 @@ public class Window {
 	}
 	
 	public Window() {
-		GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		glfwGetVideoMode(glfwGetPrimaryMonitor());
 		setSize(800, 600);
 		setFullscreen(false);
 		hasResized = false;
@@ -101,11 +99,11 @@ public class Window {
 	}
 	
 	public void setSize(int width, int height) {
-		this.width = width;
-		this.height = height;
+		Window.width = width;
+		Window.height = height;
 	}
 	public void setFullscreen(boolean fullscreen) {
-		this.fullscreen = fullscreen;
+		Window.fullscreen = fullscreen;
 	}
 	
 	public void update() {

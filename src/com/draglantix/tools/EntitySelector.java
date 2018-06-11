@@ -32,7 +32,7 @@ public class EntitySelector {
 		double scaleY = (double) (height)/Window.getHeight();
 		
 		double mouseX = (Window.getMousePos().x * scaleX);
-		double mouseY = -(Window.getMousePos().y * scaleY) + selectionBuffers.RES_HEIGHT;
+		double mouseY = -(Window.getMousePos().y * scaleY) + SelectionBuffers.RES_HEIGHT;
 		
 		if(mouseX > width) {
 			mouseX = width;

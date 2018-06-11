@@ -15,8 +15,6 @@ public class Player extends Entity {
 	private static final float GRAVITY = -50;
 	private static final float JUMP_POWER = 30;
 	
-	private static double time;
-	
 	private float currentSpeed = 0;
 	private float currentTurnSpeed = 0;
 	private float upwardsSpeed = 0;
@@ -24,17 +22,17 @@ public class Player extends Entity {
 	private boolean isInAir = false;
 	
 	private Vector3f ID;
-
+	
+	private Timer timer;
+	
 	public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		super(model, position, rotX, rotY, rotZ, scale);
-		time = (float) Timer.getTimeSec();
+		timer = new Timer();
 	}
 	
 	public void move(Terrain terrain) {
-		double time_2 = Timer.getTimeSec();
-		double passed = time_2 - time;
 		
-		time = time_2;
+		double passed = timer.getDelta();
 		
 		checkInputs();
 		

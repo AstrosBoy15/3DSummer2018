@@ -5,7 +5,6 @@ import org.joml.Vector3f;
 
 import com.draglantix.entities.Camera;
 import com.draglantix.tools.Maths;
-import com.draglantix.tools.Timer;
  
 public class SkyboxShader extends ShaderProgram{
  

@@ -12,8 +12,6 @@ import org.lwjgl.opengl.GL30;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Light;
 import com.draglantix.models.RawModel;
-import com.draglantix.objConverter.ModelData;
-import com.draglantix.objConverter.OBJFileLoader;
 import com.draglantix.shaders.WaterShader;
 import com.draglantix.tools.Maths;
 import com.draglantix.tools.Timer;
@@ -26,8 +24,6 @@ public class WaterRenderer {
 	private static final String NORMAL_MAP = "water/normalMap";
 	private static final float WAVE_SPEED = 0.05f;
 	
-	private static double time;
-	
 	private RawModel quad;
 	private WaterShader shader;
 	private WaterFrameBuffers fbos;
@@ -37,6 +33,8 @@ public class WaterRenderer {
 	private int dudvTexture;
 	private int normalMap;
 
+	private Timer timer;
+	
 	public WaterRenderer(Loader loader, WaterShader shader, Matrix4f projectionMatrix, WaterFrameBuffers fbos) {
 		this.shader = shader;
 		this.fbos = fbos;
@@ -47,7 +45,7 @@ public class WaterRenderer {
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
 		setUpVAO(loader);
-		time = (float) Timer.getTimeSec();
+		timer = new Timer();
 	}
 
 	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
@@ -69,10 +67,8 @@ public class WaterRenderer {
 	}
 	
 	private void prepareRender(Camera camera, Light sun, float near, float far){
-		double time_2 = Timer.getTimeSec();
-		double passed = time_2 - time;
 		
-		time = time_2;
+		double passed = timer.getDelta();
 		
 		shader.start();
 		shader.loadViewMatrix(camera);
