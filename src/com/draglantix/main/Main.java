@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL30;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Player;
+import com.draglantix.font.FontRenderer;
 import com.draglantix.guis.GuiRenderer;
 import com.draglantix.render.Loader;
 import com.draglantix.render.MasterRenderer;
@@ -22,7 +23,7 @@ import com.draglantix.tools.Timer;
 
 public class Main {
 
-	private float version = 0.1f;
+	private float version = 0.11f;
 	
 	private boolean pause = false;
 	private Random rand = new Random();
@@ -32,10 +33,11 @@ public class Main {
 	private Loader loader;
 	private MasterRenderer renderer;
 	private GuiRenderer guiRenderer;
+	private FontRenderer fontRenderer;
 	private Camera camera;
 	
 	private Timer timer;
-	private float targetFPS = 60.0f; //I'm getting like 20 on my linux computer lol (See if calc is done right later)
+	private float targetFPS = 60.0f;
 	private float FPS;
 	private float frameCount;
 	private double timePassed;
@@ -79,7 +81,7 @@ public class Main {
 		}
 		
 		window = new Window();
-		window.createWindow("Engine State v"+version);
+		window.createWindow("Engine v"+version);
 		
 		GL.createCapabilities();
 		
@@ -88,6 +90,7 @@ public class Main {
 		loader = assets.loader;
 		renderer = new MasterRenderer(loader, assets.waterBuffers);
 		guiRenderer = new GuiRenderer(loader);
+		fontRenderer = new FontRenderer(loader);
 		camera = new Camera(assets.player);
 	}
 	
@@ -159,6 +162,7 @@ public class Main {
 		renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
 		renderer.renderWater(assets.waters, camera, assets.sun);
 		guiRenderer.render(assets.guis);
+		fontRenderer.render(assets.fonts);
 		window.swapBuffers();
 		
 		assets.selectionBuffers.bindSelectionBuffer();
@@ -252,6 +256,7 @@ public class Main {
 		loader.cleanUp();
 		renderer.cleanUp();
 		guiRenderer.cleanUp();
+		fontRenderer.cleanUp();
 		assets.selectionBuffers.cleanUp();
 		assets.waterBuffers.cleanUp();
 		GLFW.glfwTerminate();

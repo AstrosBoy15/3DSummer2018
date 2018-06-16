@@ -75,6 +75,8 @@ public class EntitySelector {
 		    }
 		}
 		
+		buffer.flip();
+		
 		Color color = new Color(image.getRGB((int)mouseX, (int)mouseY));
 		
 		Vector3f ID = new Vector3f((color.getRed()), (color.getGreen()), (color.getBlue()));

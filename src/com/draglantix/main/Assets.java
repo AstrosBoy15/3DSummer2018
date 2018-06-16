@@ -3,11 +3,13 @@ package com.draglantix.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.entities.Player;
+import com.draglantix.font.FontTexture;
 import com.draglantix.guis.GuiTexture;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
@@ -18,6 +20,7 @@ import com.draglantix.terrains.Terrain;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.textures.TerrainTexture;
 import com.draglantix.textures.TerrainTexturePack;
+import com.draglantix.textures.Texture;
 import com.draglantix.tools.EntitySelector;
 import com.draglantix.tools.SelectionBuffers;
 import com.draglantix.water.WaterFrameBuffers;
@@ -38,6 +41,7 @@ public class Assets {
 	
 	public List<WaterTile> waters;
 	public List<GuiTexture> guis;
+	public List<FontTexture> fonts;
 	public List<Entity> entities;
 	public List<Light> lights;
 	
@@ -85,8 +89,13 @@ public class Assets {
 		
 		waters = new ArrayList<WaterTile>();
 		guis = new ArrayList<GuiTexture>();
+		fonts = new ArrayList<FontTexture>();
 		entities = new ArrayList<Entity>();
 		lights = new ArrayList<Light>();
+		
+		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "abcdefghijklmnopqrstuvwxyz0123456789., !%()/\"", new Vector2f(0, 0), 0.5f, 7, new Vector3f(255, 0, 0)));
+		
+		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
 		
 		water = new WaterTile(-400, 400, 0);
 		waters.add(water);

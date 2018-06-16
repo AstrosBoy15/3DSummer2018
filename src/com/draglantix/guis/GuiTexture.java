@@ -9,7 +9,6 @@ public class GuiTexture {
 	private float scale;
 	
 	public GuiTexture(int texture, Vector2f position, float scale) {
-		super();
 		this.texture = texture;
 		this.position = position;
 		this.scale = scale;
