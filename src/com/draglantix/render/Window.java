@@ -24,8 +24,8 @@ public class Window {
 	
 	private static long window;
 	
-	private static int width;
-	private static int height;
+	private static int width = 800, startWidth;
+	private static int height = 600;
 	
 	private static boolean fullscreen;
 	private static boolean hasResized;
@@ -54,7 +54,8 @@ public class Window {
 	
 	public Window() {
 		glfwGetVideoMode(glfwGetPrimaryMonitor());
-		setSize(800, 600);
+		setSize(width, height);
+		startWidth = width;
 		setFullscreen(false);
 		hasResized = false;
 	}
@@ -117,6 +118,7 @@ public class Window {
 	}
 	
 	public static int getWidth() {return width;}
+	public static int getStartWidth() {return startWidth;}
 	public static int getHeight() {return height;}
 	public static boolean hasResized() { return hasResized; }
 	public static boolean isFullscreen() { return fullscreen; }

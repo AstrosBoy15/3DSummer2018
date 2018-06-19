@@ -93,7 +93,7 @@ public class Assets {
 		entities = new ArrayList<Entity>();
 		lights = new ArrayList<Light>();
 		
-		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "abcdefghijklmnopqrstuvwxyz0123456789., !%()/\"", new Vector2f(0, 0), 0.5f, 7, new Vector3f(255, 0, 0)));
+		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "The quick brown fox jumps over the lazy dog", new Vector2f(0, 0), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
 		
 		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
 		
