@@ -93,9 +93,11 @@ public class Assets {
 		entities = new ArrayList<Entity>();
 		lights = new ArrayList<Light>();
 		
-		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "The quick brown fox jumps over the lazy dog", new Vector2f(0, 0), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
+		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
 		
-		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
+		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 0.9f, 7, 20, new Vector3f(0, 50, 15)));
+		
+		guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
 		
 		water = new WaterTile(-400, 400, 0);
 		waters.add(water);

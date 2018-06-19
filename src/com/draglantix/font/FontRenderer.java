@@ -52,13 +52,13 @@ public class FontRenderer {
 				}
 					
 				if(i!=0) {
-					cursor += (float)msg.getImageWidth(msg.getTextureIndex()[i-1])/Window.getStartWidth();
+					cursor += (float) (msg.getImageWidth(msg.getTextureIndex()[i-1]) * msg.getScale()/0.5f)/Window.getStartWidth();
 				}
 				
 				if(currentLineIndex + msg.getWordLengths().get(currentWord)> msg.getMaxCharLength()-1) {
 					if(i-1<msg.getTextureIndex().length) {
 						if(msg.getTextureIndex()[i-1]==39) {
-							returnLength -= 0.1f;
+							returnLength -= 0.1f * msg.getScale()/0.5f;
 							currentLineIndex = 0;
 							cursor = 0;
 						}
