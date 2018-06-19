@@ -3,6 +3,7 @@ package com.draglantix.entities;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
+import com.draglantix.main.Main;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.render.Window;
 import com.draglantix.terrains.Terrain;
@@ -12,7 +13,6 @@ public class Player extends Entity {
 	
 	private static final float RUN_SPEED = 50;
 	private static final float TURN_SPEED = 160;
-	private static final float GRAVITY = -50;
 	private static final float JUMP_POWER = 30;
 	
 	private float currentSpeed = 0;
@@ -41,7 +41,7 @@ public class Player extends Entity {
 		float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotY())));
 		float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotY())));
 		super.increasePosition(dx * (float) passed, 0, dz * (float) passed);
-		upwardsSpeed += GRAVITY * (float) passed;
+		upwardsSpeed += Main.GRAVITY * (float) passed;
 		super.increasePosition(0, upwardsSpeed * (float) passed, 0);
 		float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
 		if(super.getPosition().y<terrainHeight) {

@@ -15,6 +15,8 @@ import com.draglantix.entities.Entity;
 import com.draglantix.entities.Player;
 import com.draglantix.font.FontRenderer;
 import com.draglantix.guis.GuiRenderer;
+import com.draglantix.particles.Particle;
+import com.draglantix.particles.ParticleMaster;
 import com.draglantix.render.Loader;
 import com.draglantix.render.MasterRenderer;
 import com.draglantix.render.Window;
@@ -34,6 +36,7 @@ public class Main {
 	private MasterRenderer renderer;
 	private GuiRenderer guiRenderer;
 	private FontRenderer fontRenderer;
+	private ParticleMaster particleMaster;
 	private Camera camera;
 	
 	private Timer timer;
@@ -41,6 +44,8 @@ public class Main {
 	private float FPS;
 	private float frameCount;
 	private double timePassed;
+	
+	public static final float GRAVITY = -50;
 	
 	public Main() {
 		init();
@@ -92,6 +97,8 @@ public class Main {
 		guiRenderer = new GuiRenderer(loader);
 		fontRenderer = new FontRenderer(loader);
 		camera = new Camera(assets.player);
+		particleMaster = new ParticleMaster();
+		particleMaster.init(loader, renderer.getProjectionMatrix());
 	}
 	
 	public void tick() {
@@ -110,6 +117,14 @@ public class Main {
 			GLFW.glfwSetWindowShouldClose(Window.getWindow(), true);
 		}
 	
+		if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_Q)) {
+			new Particle(particleMaster, new Vector3f(assets.player.getPosition().x, assets.player.getPosition().y, assets.player.getPosition().z), new Vector3f(0, 30, 0), 1, 4, 0, 1);
+			System.out.println("added");
+		}
+			
+		particleMaster.update();
+		System.out.println("player: " + assets.player.getPosition());
+		
 		int currentX = (int) (1-assets.player.getPosition().x/Terrain.SIZE);
 		int currentZ = (int) (1-assets.player.getPosition().z/Terrain.SIZE);
 		if(currentZ < assets.terrains.length) {
@@ -161,12 +176,16 @@ public class Main {
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
 		renderer.renderWater(assets.waters, camera, assets.sun);
+		
+		particleMaster.renderParticles(camera);
+		
 		guiRenderer.render(assets.guis);
 		fontRenderer.render(assets.fonts);
-		window.swapBuffers();
 		
 		assets.selectionBuffers.bindSelectionBuffer();
 		renderer.renderEntities(assets.entities, assets.terrains, assets.player, camera);
+		
+		window.swapBuffers();
 	}
 	
 	public void calculateFPS() {
@@ -259,6 +278,7 @@ public class Main {
 		fontRenderer.cleanUp();
 		assets.selectionBuffers.cleanUp();
 		assets.waterBuffers.cleanUp();
+		particleMaster.cleanUp();
 		GLFW.glfwTerminate();
 	}
 	

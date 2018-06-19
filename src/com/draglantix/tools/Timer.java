@@ -10,7 +10,7 @@ public class Timer {
         lastTime = getTime();
     }
 
-    public static double getTime() {
+    public double getTime() {
 		return GLFW.glfwGetTime();
     }
     
