@@ -25,7 +25,7 @@ import com.draglantix.tools.Timer;
 
 public class Main {
 
-	private float version = 0.11f;
+	private float version = 0.12f;
 	
 	private boolean pause = false;
 	private Random rand = new Random();
@@ -33,10 +33,6 @@ public class Main {
 	private Window window;
 	private Assets assets;
 	private Loader loader;
-	private MasterRenderer renderer;
-	private GuiRenderer guiRenderer;
-	private FontRenderer fontRenderer;
-	private ParticleMaster particleMaster;
 	private Camera camera;
 	
 	private Timer timer;
@@ -93,12 +89,7 @@ public class Main {
 		assets = new Assets();
 		
 		loader = assets.loader;
-		renderer = new MasterRenderer(loader, assets.waterBuffers);
-		guiRenderer = new GuiRenderer(loader);
-		fontRenderer = new FontRenderer(loader);
 		camera = new Camera(assets.player);
-		particleMaster = new ParticleMaster();
-		particleMaster.init(loader, renderer.getProjectionMatrix());
 	}
 	
 	public void tick() {
@@ -106,7 +97,7 @@ public class Main {
 		
 		if(Window.hasResized()){
 			GL11.glViewport(0, 0, Window.getWidth(), Window.getHeight());
-			renderer.updateProjectionMatrix();
+			assets.renderer.updateProjectionMatrix();
 		}
 		
 		if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_P)) {
@@ -116,14 +107,10 @@ public class Main {
 		if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
 			GLFW.glfwSetWindowShouldClose(Window.getWindow(), true);
 		}
-	
-		if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_Q)) {
-			new Particle(particleMaster, new Vector3f(assets.player.getPosition().x, assets.player.getPosition().y, assets.player.getPosition().z), new Vector3f(0, 30, 0), 1, 4, 0, 1);
-			System.out.println("added");
-		}
-			
-		particleMaster.update();
-		System.out.println("player: " + assets.player.getPosition());
+		
+		assets.particleSystem.generateParticles(assets.player.getPosition());
+		
+		assets.particleMaster.update();
 		
 		int currentX = (int) (1-assets.player.getPosition().x/Terrain.SIZE);
 		int currentZ = (int) (1-assets.player.getPosition().z/Terrain.SIZE);
@@ -165,25 +152,25 @@ public class Main {
 		float distance = 2 * (camera.getPosition().y - assets.water.getHeight());
 		camera.getPosition().y -= distance;
 		camera.invertPitch();
-		renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, 1, 0, -assets.water.getHeight()+1f));
+		assets.renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, 1, 0, -assets.water.getHeight()+1f));
 		camera.getPosition().y += distance;
 		camera.invertPitch();
 		
 		assets.waterBuffers.bindRefractionFrameBuffer();
-		renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, -1, 0, assets.water.getHeight()+1f));
+		assets.renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, -1, 0, assets.water.getHeight()+1f));
 		
 		assets.waterBuffers.unbindCurrentFrameBuffer();
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
-		renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
-		renderer.renderWater(assets.waters, camera, assets.sun);
+		assets.renderer.renderScene(assets.player, assets.entities, assets.terrains, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
+		assets.renderer.renderWater(assets.waters, camera, assets.sun);
 		
-		particleMaster.renderParticles(camera);
+		assets.particleMaster.renderParticles(camera);
 		
-		guiRenderer.render(assets.guis);
-		fontRenderer.render(assets.fonts);
+		assets.guiRenderer.render(assets.guis);
+		assets.fontRenderer.render(assets.fonts);
 		
 		assets.selectionBuffers.bindSelectionBuffer();
-		renderer.renderEntities(assets.entities, assets.terrains, assets.player, camera);
+		assets.renderer.renderEntities(assets.entities, assets.terrains, assets.player, camera);
 		
 		window.swapBuffers();
 	}
@@ -273,12 +260,12 @@ public class Main {
 	
 	public void cleanUp() {
 		loader.cleanUp();
-		renderer.cleanUp();
-		guiRenderer.cleanUp();
-		fontRenderer.cleanUp();
+		assets.renderer.cleanUp();
+		assets.guiRenderer.cleanUp();
+		assets.fontRenderer.cleanUp();
 		assets.selectionBuffers.cleanUp();
 		assets.waterBuffers.cleanUp();
-		particleMaster.cleanUp();
+		assets.particleMaster.cleanUp();
 		GLFW.glfwTerminate();
 	}
 	

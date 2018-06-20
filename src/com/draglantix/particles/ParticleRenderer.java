@@ -20,51 +20,31 @@ public class ParticleRenderer {
 	private RawModel quad;
 	private ParticleShader shader;
 	
-	protected ParticleRenderer(Loader loader, Matrix4f projectionMatrix){
+	protected ParticleRenderer(Loader loader, ParticleShader shader, Matrix4f projectionMatrix){
 		quad = loader.loadToVAO(VERTICES, 2);
-		shader = new ParticleShader();
+		this.shader = shader;
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
 	}
 	
-	protected void render(List<Particle> particles, Camera camera){
-		Matrix4f viewMatrix = Maths.createViewMatrix(camera);
+	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
+		shader.start();
+		shader.loadProjectionMatrix(projectionMatrix);
+		shader.stop();
+	}
+	
+	public void render(List<Particle> particles, Camera camera) {
 		prepare();
-		for(Particle particle : particles) {
-			updateModelViewMatrix(particle.getPosition(), particle.getRotation(),
-					particle.getScale(), viewMatrix);
+		for(Particle p : particles) {
+			loadModelMatrix(p, camera);
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
-			System.out.println(particle.getPosition());
 		}
 		finishRendering();
-	}
-
-	public void updateModelViewMatrix(Vector3f position, float rotation, float scale, Matrix4f viewMatrix) {
-		Matrix4f modelMatrix = new Matrix4f();
-		modelMatrix.translate(position);
-		modelMatrix.m00(viewMatrix.m00());
-		modelMatrix.m01(viewMatrix.m10());
-		modelMatrix.m02(viewMatrix.m20());
-		modelMatrix.m10(viewMatrix.m01());
-		modelMatrix.m11(viewMatrix.m11());
-		modelMatrix.m12(viewMatrix.m21());
-		modelMatrix.m20(viewMatrix.m02());
-		modelMatrix.m21(viewMatrix.m12());
-		modelMatrix.m22(viewMatrix.m22());
-		modelMatrix.rotation((float)Math.toRadians(rotation), new Vector3f(0, 0, 1));
-		modelMatrix.scale(scale);
-		Matrix4f modelViewMatrix = new Matrix4f();
-		viewMatrix.mul(modelMatrix, modelViewMatrix);
-		shader.loadModelViewMatrix(modelViewMatrix);
-	}
-
-	protected void cleanUp(){
-		shader.cleanUp();
+		
 	}
 	
 	private void prepare(){
-		shader.start();
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL11.glEnable(GL11.GL_BLEND);
@@ -77,7 +57,26 @@ public class ParticleRenderer {
 		GL11.glDisable(GL11.GL_BLEND);
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
-		shader.stop();
 	}
+	
+	private void loadModelMatrix(Particle p, Camera camera){
+		float theta = camera.getTheta()-180;
+		float xAxis, yAxis;
+		if(theta>360) {
+			theta-=360;
+		}
+		if(theta<-360) { //TODO finish Top rotation correction
+			theta+=360;
+		}
+		System.out.println(theta);
+		p.setRotation(new Vector3f(theta-camera.getPitch(), theta, theta-camera.getPitch()));
+		Matrix4f transformationMatrix = Maths.createTransformationMatrix(
+				new Vector3f(p.getPosition().x, p.getPosition().y, p.getPosition().z), 
+				p.getRotation().x, p.getRotation().y, p.getRotation().z, p.getScale());
+		shader.loadModelMatrix(transformationMatrix);
+		shader.loadViewMatrix(camera);
+	}
+	
+	
 
 }

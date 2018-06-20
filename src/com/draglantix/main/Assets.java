@@ -3,24 +3,27 @@ package com.draglantix.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.entities.Player;
+import com.draglantix.font.FontRenderer;
 import com.draglantix.font.FontTexture;
+import com.draglantix.guis.GuiRenderer;
 import com.draglantix.guis.GuiTexture;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.objConverter.ModelData;
 import com.draglantix.objConverter.OBJFileLoader;
+import com.draglantix.particles.ParticleMaster;
+import com.draglantix.particles.ParticleSystem;
 import com.draglantix.render.Loader;
+import com.draglantix.render.MasterRenderer;
 import com.draglantix.terrains.Terrain;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.textures.TerrainTexture;
 import com.draglantix.textures.TerrainTexturePack;
-import com.draglantix.textures.Texture;
 import com.draglantix.tools.EntitySelector;
 import com.draglantix.tools.SelectionBuffers;
 import com.draglantix.water.WaterFrameBuffers;
@@ -29,6 +32,10 @@ import com.draglantix.water.WaterTile;
 public class Assets {
 
 	public Loader loader = new Loader();
+	
+	public MasterRenderer renderer;
+	public GuiRenderer guiRenderer;
+	public FontRenderer fontRenderer;
 	
 	public WaterFrameBuffers waterBuffers;
 	public SelectionBuffers selectionBuffers;
@@ -74,15 +81,22 @@ public class Assets {
 	
 	public Player player;
 	
+	public ParticleMaster particleMaster;
+	public ParticleSystem particleSystem;
+	
 	public Assets() {
 		
 		System.out.println("Loading...");
 		
 		loader = new Loader();
-		
+	
 		waterBuffers = new WaterFrameBuffers();
 		selectionBuffers = new SelectionBuffers();
 		entitySelector = new EntitySelector(selectionBuffers);
+	
+		renderer = new MasterRenderer(loader, waterBuffers);
+		guiRenderer = new GuiRenderer(loader);
+		fontRenderer = new FontRenderer(loader);
 		
 		terrains = new Terrain[2][2];
 		currentTerrain = terrains[0][0];
@@ -93,11 +107,11 @@ public class Assets {
 		entities = new ArrayList<Entity>();
 		lights = new ArrayList<Light>();
 		
-		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
+	//	fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
 		
-		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 1f, 7, 20, new Vector3f(0, 50, 15)));
+		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 1f, 7, 20, new Vector3f(0, 50, 15)));
 		
-		guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
+		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
 		
 		water = new WaterTile(-400, 400, 0);
 		waters.add(water);
@@ -209,5 +223,10 @@ public class Assets {
 		lights.add(light);
 		
 		player = new Player(snowman, new Vector3f(40, 40, 40), 0, 180, 0, 3);
+		
+		particleMaster = new ParticleMaster();
+		particleMaster.init(loader, renderer.getProjectionMatrix());
+		particleSystem = new ParticleSystem(particleMaster, 50, 25, 0.3f, 4);
+		
 	}
 }

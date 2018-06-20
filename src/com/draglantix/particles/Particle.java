@@ -11,15 +11,14 @@ public class Particle {
 	private Vector3f velocity;
 	private float gravityEffect;
 	private float lifeLength;
-	private float rotation;
+	private Vector3f rotation;
 	private float scale;
 	
 	private double elapsedTime = 0;
-	private double startTime;
 
 	private Timer timer;
 	
-	public Particle(ParticleMaster particleMaster, Vector3f position, Vector3f velocity, float gravityEffect, float lifeLength, float rotation,
+	public Particle(ParticleMaster particleMaster, Vector3f position, Vector3f velocity, float gravityEffect, float lifeLength, Vector3f rotation,
 			float scale) {
 		this.position = position;
 		this.velocity = velocity;
@@ -29,14 +28,17 @@ public class Particle {
 		this.scale = scale;
 		particleMaster.addParticle(this);
 		timer = new Timer();
-		startTime = timer.getTime();
 	}
 
 	public Vector3f getPosition() {
 		return position;
 	}
 
-	public float getRotation() {
+	public void setRotation(Vector3f rotation) {
+		this.rotation = rotation;
+	}
+
+	public Vector3f getRotation() {
 		return rotation;
 	}
 
@@ -53,7 +55,7 @@ public class Particle {
 		velocity.y += Main.GRAVITY * gravityEffect * passed;
 		Vector3f change = new Vector3f(velocity);
 		change.mul((float)passed);
-		change.add(position);
+		position.add(change);
 		
 		return elapsedTime > lifeLength;
 	}

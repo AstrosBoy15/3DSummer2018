@@ -18,6 +18,8 @@ public class Camera {
 	private float yaw = 0;
 	private float roll;
 	
+	private float theta;
+	
 	private float ypos = 0;
 	private Vector2f lastMousePos = Window.getInput().getMousePos();
 	
@@ -56,8 +58,12 @@ public class Camera {
 		return roll;
 	}
 	
+	public float getTheta() {
+		return theta;
+	}
+	
 	private void calculateCameraPosition(float horizontalDistance, float verticalDistance) {
-		float theta = player.getRotY() + angleAroundPlayer;
+		theta = player.getRotY() + angleAroundPlayer;
 		float offsetX = (float) (horizontalDistance * Math.sin(Math.toRadians(theta)));
 		float offsetZ = (float) (horizontalDistance * Math.cos(Math.toRadians(theta)));
 		position.x = player.getPosition().x - offsetX;

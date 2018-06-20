@@ -13,9 +13,10 @@ public class ParticleMaster {
 
 	private List<Particle> particles = new ArrayList<Particle>();
 	private ParticleRenderer renderer;
+	private ParticleShader shader = new ParticleShader();
 	
 	public void init(Loader loader, Matrix4f projectionMatrix) {
-		renderer = new ParticleRenderer(loader, projectionMatrix);
+		renderer = new ParticleRenderer(loader, shader, projectionMatrix);
 	}
 	
 	public void update() {
@@ -30,11 +31,13 @@ public class ParticleMaster {
 	}
 	
 	public void renderParticles(Camera camera) {
+		shader.start();
 		renderer.render(particles, camera);
+		shader.stop();
 	}
 	
 	public void cleanUp() {
-		renderer.cleanUp();
+		shader.cleanUp();
 	}
 	
 	public void addParticle(Particle particle) {
