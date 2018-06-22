@@ -23,13 +23,13 @@ public class EntityRenderer {
 	public EntityRenderer(StaticShader shader, Matrix4f projectionMatrix) {
 		this.shader = shader;
 		shader.start();
-		shader.loadProjectionnMatrix(projectionMatrix);
+		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
 	}
 	
 	public void updateProjectionMatrix(Matrix4f projectionMatrix) {
 		shader.start();
-		shader.loadProjectionnMatrix(projectionMatrix);
+		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
 	}
 	

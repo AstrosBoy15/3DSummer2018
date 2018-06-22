@@ -61,18 +61,24 @@ public class ParticleRenderer {
 	
 	private void loadModelMatrix(Particle p, Camera camera){
 		float theta = camera.getTheta()-180;
-		float xAxis, yAxis;
 		if(theta>360) {
 			theta-=360;
-		}
-		if(theta<-360) { //TODO finish Top rotation correction
+		}else if(theta<-360) {
 			theta+=360;
 		}
-		System.out.println(theta);
-		p.setRotation(new Vector3f(theta-camera.getPitch(), theta, theta-camera.getPitch()));
-		Matrix4f transformationMatrix = Maths.createTransformationMatrix(
+
+		float angle = -camera.getPitch()/60;
+		
+		Matrix4f transformationMatrix;		
+		
+		p.setRotation(new Vector3f(0, theta, 0));
+			
+		transformationMatrix = Maths.createTransformationMatrix(
 				new Vector3f(p.getPosition().x, p.getPosition().y, p.getPosition().z), 
 				p.getRotation().x, p.getRotation().y, p.getRotation().z, p.getScale());
+		
+		transformationMatrix.rotateX(angle);
+		
 		shader.loadModelMatrix(transformationMatrix);
 		shader.loadViewMatrix(camera);
 	}
