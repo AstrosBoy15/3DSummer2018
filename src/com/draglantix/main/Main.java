@@ -13,12 +13,7 @@ import org.lwjgl.opengl.GL30;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Player;
-import com.draglantix.font.FontRenderer;
-import com.draglantix.guis.GuiRenderer;
-import com.draglantix.particles.Particle;
-import com.draglantix.particles.ParticleMaster;
 import com.draglantix.render.Loader;
-import com.draglantix.render.MasterRenderer;
 import com.draglantix.render.Window;
 import com.draglantix.terrains.Terrain;
 import com.draglantix.tools.Timer;
@@ -110,7 +105,7 @@ public class Main {
 		
 		assets.particleSystem.generateParticles(assets.player.getPosition());
 		
-		assets.particleMaster.update();
+		assets.particleMaster.update(camera);
 		
 		int currentX = (int) (1-assets.player.getPosition().x/Terrain.SIZE);
 		int currentZ = (int) (1-assets.player.getPosition().z/Terrain.SIZE);

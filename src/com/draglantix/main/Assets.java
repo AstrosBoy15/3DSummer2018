@@ -18,6 +18,7 @@ import com.draglantix.objConverter.ModelData;
 import com.draglantix.objConverter.OBJFileLoader;
 import com.draglantix.particles.ParticleMaster;
 import com.draglantix.particles.ParticleSystem;
+import com.draglantix.particles.ParticleTexture;
 import com.draglantix.render.Loader;
 import com.draglantix.render.MasterRenderer;
 import com.draglantix.terrains.Terrain;
@@ -82,6 +83,7 @@ public class Assets {
 	public Player player;
 	
 	public ParticleMaster particleMaster;
+	public ParticleTexture particleTexture;
 	public ParticleSystem particleSystem;
 	
 	public Assets() {
@@ -226,7 +228,10 @@ public class Assets {
 		
 		particleMaster = new ParticleMaster();
 		particleMaster.init(loader, renderer.getProjectionMatrix());
-		particleSystem = new ParticleSystem(particleMaster, 50, 25, 0.3f, 4);
+		
+		particleTexture = new ParticleTexture(loader.loadTexture("fireParticle"), 4, true);
+		
+		particleSystem = new ParticleSystem(particleTexture, 50, 10, 0f, 4);
 		
 	}
 }

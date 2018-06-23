@@ -10,17 +10,17 @@ public class ParticleSystem {
 	    private float speed;
 	    private float gravityComplient;
 	    private float lifeLength;
-	     
+	    
+	    private ParticleTexture texture;
+	    
 	    private Timer timer;
 	    
-	    private ParticleMaster particleMaster;
-	    
-	    public ParticleSystem(ParticleMaster particleMaster, float pps, float speed, float gravityComplient, float lifeLength) {
-	        this.pps = pps;
+	    public ParticleSystem(ParticleTexture texture, float pps, float speed, float gravityComplient, float lifeLength) {
+	        this.texture = texture;
+	    	this.pps = pps;
 	        this.speed = speed;
 	        this.gravityComplient = gravityComplient;
 	        this.lifeLength = lifeLength;
-	        this.particleMaster = particleMaster;
 	        timer = new Timer();
 	    }
 	     
@@ -43,7 +43,7 @@ public class ParticleSystem {
 	        Vector3f velocity = new Vector3f(dirX, 1, dirZ);
 	        velocity.normalize();
 	        velocity.normalize(speed);
-	        new Particle(particleMaster, new Vector3f(center), velocity, gravityComplient, lifeLength, new Vector3f(0, 0, 0), 1);
+	        new Particle(texture, new Vector3f(center), velocity, gravityComplient, lifeLength, new Vector3f(0, 0, 0), 5);
 	    }
 	
 }
