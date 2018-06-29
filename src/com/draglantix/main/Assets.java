@@ -3,6 +3,7 @@ package com.draglantix.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import com.draglantix.entities.Entity;
@@ -84,7 +85,7 @@ public class Assets {
 	
 	public ParticleMaster particleMaster;
 	public ParticleTexture particleTexture;
-	public ParticleSystem particleSystem;
+	public ParticleSystem particleSystem, particleSystem2;
 	
 	public Assets() {
 		
@@ -109,11 +110,11 @@ public class Assets {
 		entities = new ArrayList<Entity>();
 		lights = new ArrayList<Light>();
 		
-	//	fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
+		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
 		
-		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 1f, 7, 20, new Vector3f(0, 50, 15)));
+		fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 1f, 7, 20, new Vector3f(0, 50, 15)));
 		
-		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
+		guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
 		
 		water = new WaterTile(-400, 400, 0);
 		waters.add(water);
@@ -229,9 +230,10 @@ public class Assets {
 		particleMaster = new ParticleMaster();
 		particleMaster.init(loader, renderer.getProjectionMatrix());
 		
-		particleTexture = new ParticleTexture(loader.loadTexture("fireParticle"), 4, true);
+		particleTexture = new ParticleTexture(loader.loadTexture("particleShapes"), 4, false);
 		
-		particleSystem = new ParticleSystem(particleTexture, 50, 10, 0f, 4);
+		particleSystem = new ParticleSystem(new Vector2f(0, 1), particleTexture, 50, 10, 0f, 2, 5);
+		particleSystem2 = new ParticleSystem(new Vector2f(1, 0), particleTexture, 50, 10, 0f, 2, 5);
 		
 	}
 }

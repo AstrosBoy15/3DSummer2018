@@ -13,6 +13,7 @@ import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.models.TexturedModel;
+import com.draglantix.particles.ParticleRenderer;
 import com.draglantix.shaders.SelectionShader;
 import com.draglantix.shaders.StaticShader;
 import com.draglantix.shaders.TerrainShader;
@@ -68,7 +69,8 @@ public class MasterRenderer {
 		waterRenderer.updateProjectionMatrix(projectionMatrix);
 		selectionRenderer.updateProjectionMatrix(projectionMatrix);
 		skyboxRenderer.updateProjectionMatrix(projectionMatrix);
-		}
+		ParticleRenderer.updateProjectionMatrix(projectionMatrix);
+	}
 	
 	public static void enableCulling() {
 		GL11.glEnable(GL11.GL_CULL_FACE);

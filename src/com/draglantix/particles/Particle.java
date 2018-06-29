@@ -27,8 +27,14 @@ public class Particle {
 
 	private Timer timer;
 	
-	public Particle(ParticleTexture texture, Vector3f position, Vector3f velocity, float gravityEffect, float lifeLength, Vector3f rotation,
-			float scale) {
+	private Vector3f change = new Vector3f(); 
+	private float lifeFactor, atlasProgression;
+	private int stageCount, index1, index2, column, row;
+	private Vector2f atlasOffset;
+	
+	public Particle(Vector2f atlasOffset, ParticleTexture texture, Vector3f position, Vector3f velocity, 
+			float gravityEffect, float lifeLength, Vector3f rotation, float scale) {
+		this.atlasOffset = atlasOffset;
 		this.texture = texture;
 		this.position = position;
 		this.velocity = velocity;
@@ -76,6 +82,10 @@ public class Particle {
 		return scale;
 	}
 	
+	public Vector2f getAtlasOffset() {
+		return atlasOffset;
+	}
+	
 	protected boolean update(Camera camera){
 		
 		double passed = timer.getDelta();
@@ -83,7 +93,11 @@ public class Particle {
 		elapsedTime += passed;
 		
 		velocity.y += Main.GRAVITY * gravityEffect * passed;
-		Vector3f change = new Vector3f(velocity);
+		
+		change.x = velocity.x;
+		change.y = velocity.y;
+		change.z = velocity.z;
+		
 		change.mul((float)passed);
 		position.add(change);
 		
@@ -95,19 +109,20 @@ public class Particle {
 	}
 	
 	private void updateTextureCoordInfo() {
-		float lifeFactor = (float) (elapsedTime / lifeLength);
-		int stageCount = texture.getNumberOfRows() * texture.getNumberOfRows();
-		float atlasProgression = lifeFactor * stageCount;
-		int index1 = (int) Math.floor(atlasProgression);
-		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
+		lifeFactor = (float) (elapsedTime / lifeLength);
+		
+		stageCount = (texture.getNumberOfRows() * texture.getNumberOfRows());
+		atlasProgression = lifeFactor * stageCount;
+		index1 = (int) Math.floor(atlasProgression);
+		index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 		this.blend = atlasProgression % 1;
 		setTextureOffset(texOffset1, index1);
 		setTextureOffset(texOffset2, index2);
 	}
 	
 	private void setTextureOffset(Vector2f offset, int index) {
-		int column = index % texture.getNumberOfRows();
-		int row =  index / texture.getNumberOfRows();
+		column = index % texture.getNumberOfRows();
+		row =  index/ texture.getNumberOfRows();
 		offset.x = (float)column / texture.getNumberOfRows();
 		offset.y = (float)row / texture.getNumberOfRows();
 	}

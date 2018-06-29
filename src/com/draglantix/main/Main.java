@@ -85,6 +85,8 @@ public class Main {
 		
 		loader = assets.loader;
 		camera = new Camera(assets.player);
+			
+		//World.init();
 	}
 	
 	public void tick() {
@@ -104,6 +106,7 @@ public class Main {
 		}
 		
 		assets.particleSystem.generateParticles(assets.player.getPosition());
+		assets.particleSystem2.generateParticles(new Vector3f(0, 40, 0));
 		
 		assets.particleMaster.update(camera);
 		
