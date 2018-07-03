@@ -21,7 +21,7 @@ public class ParticleRenderer {
 	
 	private static final float[] VERTICES = {-0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f};
 	public static final int MAX_INSTANCES = 1000;
-	private static final int INSTANCE_DATA_LENGTH = 39;
+	private static final int INSTANCE_DATA_LENGTH = 46;
 	
 	private static final FloatBuffer buffer = BufferUtils.createFloatBuffer(MAX_INSTANCES * INSTANCE_DATA_LENGTH);
 	
@@ -54,7 +54,11 @@ public class ParticleRenderer {
 		loader.addInstancedAttribute(quad.getVaoID(), vbo, 10, 1, INSTANCE_DATA_LENGTH, 36);
 		
 		loader.addInstancedAttribute(quad.getVaoID(), vbo, 11, 2, INSTANCE_DATA_LENGTH, 37);
-			
+		
+		loader.addInstancedAttribute(quad.getVaoID(), vbo, 12, 3, INSTANCE_DATA_LENGTH, 39);
+		loader.addInstancedAttribute(quad.getVaoID(), vbo, 13, 3, INSTANCE_DATA_LENGTH, 42);
+		loader.addInstancedAttribute(quad.getVaoID(), vbo, 14, 1, INSTANCE_DATA_LENGTH, 45);
+		
 		ParticleRenderer.shader = shader;
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);
@@ -75,6 +79,7 @@ public class ParticleRenderer {
 		for(Particle p : particles) {
 			update(p, camera, vboData);
 			updateTexCoordInfo(p, vboData);
+			updateColor(p, vboData);
 		}
 		loader.updateVbo(vbo, vboData, buffer);
 		GL31.glDrawArraysInstanced(GL11.GL_TRIANGLE_STRIP, 0, quad.getVaoID(), particles.size());
@@ -90,6 +95,16 @@ public class ParticleRenderer {
 		data[pointer++] = particle.getBlend();
 		data[pointer++] = particle.getAtlasOffset().x;
 		data[pointer++] = particle.getAtlasOffset().y;
+	}
+	
+	private void updateColor(Particle p, float[] data) {
+		data[pointer++] = p.getCurrentColor().x;
+		data[pointer++] = p.getCurrentColor().y;
+		data[pointer++] = p.getCurrentColor().z;
+		data[pointer++] = p.getNextColor().x;
+		data[pointer++] = p.getNextColor().y;
+		data[pointer++] = p.getNextColor().z;
+		data[pointer++] = p.getColorBlend();
 	}
 	
 	private void bindTexture(ParticleTexture texture) {
@@ -117,6 +132,9 @@ public class ParticleRenderer {
 		GL20.glEnableVertexAttribArray(9);
 		GL20.glEnableVertexAttribArray(10);
 		GL20.glEnableVertexAttribArray(11);
+		GL20.glEnableVertexAttribArray(12);
+		GL20.glEnableVertexAttribArray(13);
+		GL20.glEnableVertexAttribArray(14);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDepthMask(false);
 	}
@@ -136,6 +154,9 @@ public class ParticleRenderer {
 		GL20.glDisableVertexAttribArray(9);
 		GL20.glDisableVertexAttribArray(10);
 		GL20.glDisableVertexAttribArray(11);
+		GL20.glDisableVertexAttribArray(12);
+		GL20.glDisableVertexAttribArray(13);
+		GL20.glDisableVertexAttribArray(14);
 		GL30.glBindVertexArray(0);
 	}
 	

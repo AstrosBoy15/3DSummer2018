@@ -232,8 +232,8 @@ public class Assets {
 		
 		particleTexture = new ParticleTexture(loader.loadTexture("particleShapes"), 4, false);
 		
-		particleSystem = new ParticleSystem(new Vector2f(0, 1), particleTexture, 50, 10, 0f, 2, 5);
-		particleSystem2 = new ParticleSystem(new Vector2f(1, 0), particleTexture, 50, 10, 0f, 2, 5);
+		particleSystem = new ParticleSystem(0, new Vector2f(0, 1), particleTexture, 50, 10, 0f, 2, 5);
+		particleSystem2 = new ParticleSystem(1, new Vector2f(1, 0), particleTexture, 50, 10, 0f, 2, 5);
 		
 	}
 }

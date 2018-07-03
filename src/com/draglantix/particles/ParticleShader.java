@@ -24,6 +24,8 @@ public class ParticleShader extends ShaderProgram {
 		bindAttribute(9, "texOffsets");
 		bindAttribute(10, "blendFactor");
 		bindAttribute(11, "atlasOffset");
+		bindAttribute(12, "currentColor");
+		bindAttribute(13, "nextColor");
 	}
 
 	@Override

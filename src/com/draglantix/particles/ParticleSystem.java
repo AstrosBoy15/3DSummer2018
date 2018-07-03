@@ -25,7 +25,10 @@ public class ParticleSystem {
 	    private Particle[] particles = new Particle[ParticleRenderer.MAX_INSTANCES];
 	    private Vector2f atlasOffset;
 	    
-	    public ParticleSystem(Vector2f atlasOffset, ParticleTexture texture, float pps, float speed, float gravityComplient, float lifeLength, float maxScale) {
+	    private int colorArray;
+	    
+	    public ParticleSystem(int colorArray, Vector2f atlasOffset, ParticleTexture texture, float pps, float speed, float gravityComplient, float lifeLength, float maxScale) {
+	    	this.colorArray = colorArray;
 	    	this.atlasOffset = atlasOffset;
 	    	this.maxScale = maxScale;
 	    	this.texture = texture;
@@ -62,7 +65,7 @@ public class ParticleSystem {
 	        if(pointer>=particles.length) {
 	        	pointer = 0;
 	        }
-	        particles[pointer++] = new Particle(atlasOffset, texture, new Vector3f(center), velocity, gravityComplient, lifeLength, rotation, scale);
+	        particles[pointer++] = new Particle(colorArray, atlasOffset, texture, new Vector3f(center), velocity, gravityComplient, lifeLength, rotation, scale);
 	    }
 	
 }

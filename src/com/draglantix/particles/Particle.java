@@ -16,11 +16,16 @@ public class Particle {
 	private Vector3f rotation;
 	private float scale;
 	
+	private int colorArray;
+	private Vector3f[] colors;
+	private Vector3f currentColor = new Vector3f(),
+			nextColor = new Vector3f();
+	
 	private ParticleTexture texture;
 	
 	private Vector2f texOffset1 = new Vector2f();
 	private Vector2f texOffset2 = new Vector2f();
-	private float blend;
+	private float blend, colorBlend;
 	
 	private double elapsedTime = 0;
 	private float distance;
@@ -32,8 +37,9 @@ public class Particle {
 	private int stageCount, index1, index2, column, row;
 	private Vector2f atlasOffset;
 	
-	public Particle(Vector2f atlasOffset, ParticleTexture texture, Vector3f position, Vector3f velocity, 
+	public Particle(int colorArray, Vector2f atlasOffset, ParticleTexture texture, Vector3f position, Vector3f velocity, 
 			float gravityEffect, float lifeLength, Vector3f rotation, float scale) {
+		this.colorArray = colorArray;
 		this.atlasOffset = atlasOffset;
 		this.texture = texture;
 		this.position = position;
@@ -42,8 +48,37 @@ public class Particle {
 		this.lifeLength = lifeLength;
 		this.rotation = rotation;
 		this.scale = scale;
+		
+		initColors();
+		
 		ParticleMaster.addParticle(this);
 		timer = new Timer();
+	}	
+	
+	private void initColors() {
+		colors = new Vector3f[5];
+		
+		if(colorArray == 0) {
+			colors[0] = new Vector3f(1, 1, 1);
+			colors[1] = new Vector3f(1, 1, .2f);
+			colors[2] = new Vector3f(1, .5f, 0);
+			colors[3] = new Vector3f(1, 0, 0);
+			colors[4] = new Vector3f(0, 0, 0);
+		}else {
+			colors[0] = new Vector3f(1, 1, 1);
+			colors[1] = new Vector3f(.5f, 1, 1);
+			colors[2] = new Vector3f(0, 1, 1);
+			colors[3] = new Vector3f(0, .5f, 1);
+			colors[4] = new Vector3f(0, 0, 1);
+		}
+	}
+	
+	public Vector3f getCurrentColor() {
+		return currentColor;
+	}
+	
+	public Vector3f getNextColor() {
+		return nextColor;
 	}
 
 	public float getDistance() {
@@ -60,6 +95,10 @@ public class Particle {
 
 	public float getBlend() {
 		return blend;
+	}
+	
+	public float getColorBlend() {
+		return colorBlend;
 	}
 
 	public ParticleTexture getTexture() {
@@ -105,6 +144,8 @@ public class Particle {
 		
 		updateTextureCoordInfo();
 		
+		updateColor();
+		
 		return elapsedTime > lifeLength;
 	}
 	
@@ -125,6 +166,30 @@ public class Particle {
 		row =  index/ texture.getNumberOfRows();
 		offset.x = (float)column / texture.getNumberOfRows();
 		offset.y = (float)row / texture.getNumberOfRows();
+	}
+	
+	private void updateColor() {
+		int maxColor = (colors.length);
+		
+		float progression = lifeFactor * maxColor;
+		
+	    int colorIndex = (int) Math.floor(progression);
+	   
+	    colorBlend = progression % 1;
+	
+	    if(colorIndex > maxColor-1) {
+	    	colorIndex = maxColor-1;
+	    }
+	    int colorIndex2 = colorIndex < maxColor - 1 ? colorIndex + 1 : colorIndex;
+	    
+		currentColor.x = colors[colorIndex].x;
+		currentColor.y = colors[colorIndex].y;
+		currentColor.z = colors[colorIndex].z;
+		
+		nextColor.x = colors[colorIndex2].x;
+		nextColor.y = colors[colorIndex2].y;
+		nextColor.z = colors[colorIndex2].z;
+		
 	}
 	
 }
