@@ -85,16 +85,13 @@ public class MasterRenderer {
 		return projectionMatrix;
 	}
 	
-	public void renderScene(Entity player, List<Entity> entities, Terrain[][] terrains, List<Light> lights, 
+	public void renderScene(Entity player, List<Entity> entities, Terrain terrain, List<Light> lights, 
 			Camera camera, Vector4f clipPlane) {
 		
 		processEntity(player);
 		
-		for(int i = 0; i < terrains.length; i++) {
-			for(int j = 0; j < terrains[i].length; j++) {
-				processTerrain(terrains[j][i]);
-			}
-		}
+		processTerrain(terrain);
+		
 		for(Entity e : entities) {
 			processEntity(e);
 		}
@@ -103,17 +100,14 @@ public class MasterRenderer {
 		
 	}
 	
-	public void renderEntities(List<Entity> entities, Terrain[][] terrains, Entity player, Camera camera) { 
+	public void renderSelection(List<Entity> entities, Terrain terrain, Entity player, Camera camera) { 
 		
 		for(Entity e : entities) {
 			processEntity(e);
 		}
 		
-		for(int i = 0; i < terrains.length; i++) {
-			for(int j = 0; j < terrains[i].length; j++) {
-				processTerrain(terrains[j][i]);
-			}
-		}
+		
+		processTerrain(terrain);
 		
 		processEntity(player);
 		

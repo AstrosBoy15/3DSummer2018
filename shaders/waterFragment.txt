@@ -23,7 +23,7 @@ const float waveStrength = 0.04;
 const float shineDamper = 20.0;
 const float reflectivity = 0.5;
 
-const vec4 murkyWaterColor = vec4(5, 1, 10, 1);
+const vec4 murkyWaterColor = vec4(.2f, .8f, .1f, 1);
 
 void main(void) {
 
