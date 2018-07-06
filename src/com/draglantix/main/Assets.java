@@ -119,7 +119,7 @@ public class Assets {
 		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
 		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 1f, 7, 20, new Vector3f(0, 50, 15)));
 		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
-		guis.add(new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(.5f, .5f), .5f));
+		//guis.add(new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(.5f, .5f), .5f));
 		
 		water = new WaterTile(400, 400, 0);
 		waters.add(water);
@@ -217,7 +217,7 @@ public class Assets {
 		entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), 0, 0, 0, 1));
 		entities.add(LampEntity);
 		
-		sun = new Light(new Vector3f(0, 10000000, -70000000), new Vector3f(0.4f, 0.4f, 0.4f));
+		sun = new Light(new Vector3f(1000000, 1500000, -1000000), new Vector3f(1, 1, 1));
 		lights.add(sun);
 		
 		light = new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.002f));
