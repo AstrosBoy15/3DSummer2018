@@ -6,6 +6,7 @@ import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.entities.Player;
@@ -85,6 +86,8 @@ public class Assets {
 	
 	public World world;
 	
+	public Camera camera;
+	
 	public Assets() {
 		
 		System.out.println("Loading...");
@@ -94,8 +97,16 @@ public class Assets {
 		waterBuffers = new WaterFrameBuffers();
 		selectionBuffers = new SelectionBuffers();
 		entitySelector = new EntitySelector(selectionBuffers);
-	
-		renderer = new MasterRenderer(loader, waterBuffers);
+
+		snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
+		snowmanModel = loader.loadToVAO(
+				snowmanData.getVertices(), snowmanData.getTextureCoords(),
+				snowmanData.getNormals(), snowmanData.getIndices());
+		snowman = new TexturedModel(snowmanModel, new ModelTexture(loader.loadTexture("model/texture/snowmanTexture")));		
+		player = new Player(snowman, new Vector3f(400, 70, 400), 0, 180, 0, 3);
+		camera = new Camera(player);
+		
+		renderer = new MasterRenderer(loader, waterBuffers, camera);
 		guiRenderer = new GuiRenderer(loader);
 		fontRenderer = new FontRenderer(loader);
 		
@@ -108,6 +119,7 @@ public class Assets {
 		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
 		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 1f, 7, 20, new Vector3f(0, 50, 15)));
 		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
+		guis.add(new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(.5f, .5f), .5f));
 		
 		water = new WaterTile(400, 400, 0);
 		waters.add(water);
@@ -135,7 +147,6 @@ public class Assets {
 		snowRock2Data = OBJFileLoader.loadOBJ("model/obj/snowRock2");
 		snowRock3Data = OBJFileLoader.loadOBJ("model/obj/snowRock3");
 		snowPineTreeData = OBJFileLoader.loadOBJ("model/obj/snowPineTree");
-		snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
 		lampData = OBJFileLoader.loadOBJ("model/obj/lamp");
 		
 		treeModel = loader.loadToVAO(
@@ -177,9 +188,6 @@ public class Assets {
 		snowPineTreeModel = loader.loadToVAO(
 				snowPineTreeData.getVertices(), snowPineTreeData.getTextureCoords(),
 				snowPineTreeData.getNormals(), snowPineTreeData.getIndices());
-		snowmanModel = loader.loadToVAO(
-				snowmanData.getVertices(), snowmanData.getTextureCoords(),
-				snowmanData.getNormals(), snowmanData.getIndices());
 		lampModel = loader.loadToVAO(
 				lampData.getVertices(), lampData.getTextureCoords(),
 				lampData.getNormals(), lampData.getIndices());
@@ -202,7 +210,6 @@ public class Assets {
 		snowRock2 = new TexturedModel(snowRock2Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
 		snowRock3 = new TexturedModel(snowRock3Model, new ModelTexture(loader.loadTexture("model/texture/rockTexture")));
 		snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("model/texture/snowPineTreeTexture")));
-		snowman = new TexturedModel(snowmanModel, new ModelTexture(loader.loadTexture("model/texture/snowmanTexture")));		
 		lamp = new TexturedModel(lampModel, lampModelTex);
 		
 		LampEntity = new Entity(lamp, new Vector3f(185, -4.7f, -293), 0, 0, 0, 1);
@@ -210,15 +217,13 @@ public class Assets {
 		entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), 0, 0, 0, 1));
 		entities.add(LampEntity);
 		
-		sun = new Light(new Vector3f(0, 1000, -7000), new Vector3f(0.4f, 0.4f, 0.4f));
+		sun = new Light(new Vector3f(0, 10000000, -70000000), new Vector3f(0.4f, 0.4f, 0.4f));
 		lights.add(sun);
 		
 		light = new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.002f));
 		lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2, 2), new Vector3f(1, 0.1f, 0.002f)));
 		lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.1f, 0.002f)));
 		lights.add(light);
-		
-		player = new Player(snowman, new Vector3f(400, 70, 400), 0, 180, 0, 3);
 		
 		particleMaster = new ParticleMaster();
 		particleMaster.init(loader, renderer.getProjectionMatrix());

@@ -12,12 +12,14 @@ import org.lwjgl.opengl.GL11;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
+import com.draglantix.entities.Player;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.particles.ParticleRenderer;
 import com.draglantix.shaders.SelectionShader;
 import com.draglantix.shaders.StaticShader;
 import com.draglantix.shaders.TerrainShader;
 import com.draglantix.shaders.WaterShader;
+import com.draglantix.shadows.ShadowMapMasterRenderer;
 import com.draglantix.skybox.SkyboxRenderer;
 import com.draglantix.terrains.Terrain;
 import com.draglantix.water.WaterFrameBuffers;
@@ -25,9 +27,9 @@ import com.draglantix.water.WaterTile;
 
 public class MasterRenderer {
 	
-	private static final float FOV = 70;
-	private static final float NEAR_PLANE = 0.1f;
-	private static final float FAR_PLANE = 1000;
+	public static final float FOV = 70;
+	public static final float NEAR_PLANE = 0.1f;
+	public static final float FAR_PLANE = 1000;
 	
 	private static final float RED = 0.5444f;
 	private static final float GREEN = 0.62f;
@@ -51,7 +53,9 @@ public class MasterRenderer {
 	
 	private SkyboxRenderer skyboxRenderer;
 	
-	public MasterRenderer(Loader loader, WaterFrameBuffers fbos) {
+	private ShadowMapMasterRenderer shadowMapRenderer;
+	
+	public MasterRenderer(Loader loader, WaterFrameBuffers fbos, Camera camera) {
 		enableCulling();
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
@@ -59,7 +63,7 @@ public class MasterRenderer {
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
 		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, fbos);
-		
+		shadowMapRenderer = new ShadowMapMasterRenderer(camera);
 	}
 	
 	public void updateProjectionMatrix() {
@@ -165,11 +169,25 @@ public class MasterRenderer {
 		}
 	}
 	
+	public void renderShadowMap(List<Entity> entityList, Player player, Light sun) {
+		for(Entity entity : entityList) {
+			processEntity(entity);
+		}
+		processEntity(player);
+		shadowMapRenderer.render(entities, sun);
+		entities.clear();
+	}
+	
+	public int getShadowMapTexture() {
+		return shadowMapRenderer.getShadowMap();
+	}
+	
 	public void cleanUp(){
 		selectionShader.cleanUp();
 		shader.cleanUp();
 		terrainShader.cleanUp();
 		waterShader.cleanUp();
+		shadowMapRenderer.cleanUp();
 	}
 	
 	public void prepare() {
@@ -178,19 +196,19 @@ public class MasterRenderer {
 		GL11.glClearColor(0, 0, 0, 1);
 	}
 	
-	private void createProjectionMatrix() {
+	private void createProjectionMatrix(){
+    	projectionMatrix = new Matrix4f();
 		float aspectRatio = (float) Window.getWidth() / (float) Window.getHeight();
-		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
+		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))));
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = FAR_PLANE - NEAR_PLANE;
-		
-		projectionMatrix = new Matrix4f();
-		projectionMatrix._m00(x_scale);
-		projectionMatrix._m11(y_scale);
-		projectionMatrix._m22(-((FAR_PLANE + NEAR_PLANE) / frustum_length));
-		projectionMatrix._m23(-1);
-		projectionMatrix._m32(-((2 * NEAR_PLANE * FAR_PLANE) / frustum_length));
-		projectionMatrix._m33(0);
-	}
+
+		projectionMatrix.m00(x_scale);
+		projectionMatrix.m11(y_scale);
+		projectionMatrix.m22(-((FAR_PLANE + NEAR_PLANE) / frustum_length));
+		projectionMatrix.m23(-1);
+		projectionMatrix.m32(-((2 * NEAR_PLANE * FAR_PLANE) / frustum_length));
+		projectionMatrix.m33(0);
+    }
 	
 }

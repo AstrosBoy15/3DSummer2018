@@ -82,7 +82,7 @@ public class Main {
 		
 		world = assets.world;
 		
-		camera = new Camera(assets.player);
+		camera = assets.camera;
 	}
 	
 	public void tick() {
@@ -132,6 +132,8 @@ public class Main {
 	
 	public void render() {
 
+		assets.renderer.renderShadowMap(assets.entities, assets.player, assets.sun);
+		
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		
 		assets.waterBuffers.bindReflectionFrameBuffer();
