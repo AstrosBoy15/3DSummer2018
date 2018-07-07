@@ -101,8 +101,8 @@ public class Main {
 			GLFW.glfwSetWindowShouldClose(Window.getWindow(), true);
 		}
 		
-		assets.particleSystem.generateParticles(assets.player.getPosition());
-		assets.particleSystem2.generateParticles(new Vector3f(400, 40, 300));
+		//assets.particleSystem.generateParticles(assets.player.getPosition());
+		//assets.particleSystem2.generateParticles(new Vector3f(400, 40, 300));
 		
 		assets.particleMaster.update(camera);
 		
@@ -132,7 +132,7 @@ public class Main {
 	
 	public void render() {
 
-		assets.renderer.renderShadowMap(assets.entities, assets.player, assets.sun);
+		assets.renderer.renderShadowMap(assets.entities, world.terrains, assets.player, assets.sun);
 		
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		
@@ -152,7 +152,7 @@ public class Main {
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
 		assets.renderer.renderWater(assets.waters, camera, assets.sun);
 		
-		assets.particleMaster.renderParticles(camera);
+		//assets.particleMaster.renderParticles(camera);
 		
 		assets.guiRenderer.render(assets.guis);
 		assets.fontRenderer.render(assets.fonts);

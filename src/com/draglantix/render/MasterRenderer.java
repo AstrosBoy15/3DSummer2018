@@ -131,7 +131,7 @@ public class MasterRenderer {
 		shader.loadSkyColor(RED, GREEN, BLUE);
 		shader.loadLights(lights);
 		shader.loadViewMatrix(camera);
-		renderer.render(entities);
+		renderer.render(entities, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		shader.stop();
 		terrainShader.start();
 		terrainShader.loadClipPlane(clipPlane);
@@ -170,12 +170,12 @@ public class MasterRenderer {
 		}
 	}
 	
-	public void renderShadowMap(List<Entity> entityList, Player player, Light sun) {
+	public void renderShadowMap(List<Entity> entityList, List<Terrain> terrains, Player player, Light sun) {
 		for(Entity entity : entityList) {
 			processEntity(entity);
 		}
 		processEntity(player);
-		shadowMapRenderer.render(entities, sun);
+		shadowMapRenderer.render(entities, terrains, sun);
 		entities.clear();
 	}
 	

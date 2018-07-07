@@ -1,5 +1,6 @@
 package com.draglantix.main;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -16,9 +17,12 @@ public class World {
 	
 	public Terrain terrain;
 	
+	public List<Terrain> terrains = new ArrayList<Terrain>();
+	
 	public World(Assets assets) {
 		this.assets = assets;
 		terrain = new Terrain(0, 0, assets.loader, assets.texturePackGrass, assets.blendMap);
+		terrains.add(terrain);
 	}
 	
 	public void spawnEntities() {
