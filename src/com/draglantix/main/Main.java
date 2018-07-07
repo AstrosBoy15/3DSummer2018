@@ -5,6 +5,7 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
 
 import com.draglantix.entities.Camera;
@@ -83,6 +84,8 @@ public class Main {
 		world = assets.world;
 		
 		camera = assets.camera;
+		
+		GL11.glEnable(GL13.GL_MULTISAMPLE);
 	}
 	
 	public void tick() {

@@ -12,11 +12,15 @@ import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 
 import org.joml.Vector2f;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 import com.draglantix.tools.Input;
 
@@ -61,7 +65,6 @@ public class Window {
 	}
 	
 	public void createWindow(String title){
-		
 		window = glfwCreateWindow(
 				width,
 				height,
@@ -71,6 +74,8 @@ public class Window {
 		
 		if(window == 0)
 			throw new IllegalStateException("Failed to create window!");
+		glfwWindowHint(GLFW.GLFW_SAMPLES, 8);
+		glfwWindowHint(GLFW.GLFW_DEPTH_BITS, 24);
 		
 		if(!fullscreen) {
 			GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
