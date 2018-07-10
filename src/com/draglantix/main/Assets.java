@@ -21,8 +21,11 @@ import com.draglantix.objConverter.OBJFileLoader;
 import com.draglantix.particles.ParticleMaster;
 import com.draglantix.particles.ParticleSystem;
 import com.draglantix.particles.ParticleTexture;
+import com.draglantix.postProcessing.PostProcessing;
+import com.draglantix.postProcessing.ProcessingFrameBuffers;
 import com.draglantix.render.Loader;
 import com.draglantix.render.MasterRenderer;
+import com.draglantix.render.Window;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.textures.TerrainTexture;
 import com.draglantix.textures.TerrainTexturePack;
@@ -42,6 +45,7 @@ public class Assets {
 	public WaterFrameBuffers waterBuffers;
 	public SelectionBuffers selectionBuffers;
 	public EntitySelector entitySelector;
+	public ProcessingFrameBuffers processingBuffer;
 
 	public Entity currentSelection = null;
 	
@@ -94,9 +98,13 @@ public class Assets {
 		
 		loader = new Loader();
 	
+		PostProcessing.init(loader);
+		
 		waterBuffers = new WaterFrameBuffers();
 		selectionBuffers = new SelectionBuffers();
 		entitySelector = new EntitySelector(selectionBuffers);
+		processingBuffer = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
+				ProcessingFrameBuffers.DEPTH_RENDER_BUFFER);
 
 		snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
 		snowmanModel = loader.loadToVAO(
@@ -235,5 +243,10 @@ public class Assets {
 		
 		world = new World(this);
 		world.spawnEntities();
+	}
+	
+	public void updateProcessingFBO() {
+		processingBuffer = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
+				ProcessingFrameBuffers.DEPTH_RENDER_BUFFER);
 	}
 }

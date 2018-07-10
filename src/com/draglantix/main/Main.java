@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL30;
 
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
+import com.draglantix.postProcessing.PostProcessing;
 import com.draglantix.render.Loader;
 import com.draglantix.render.Window;
 import com.draglantix.tools.Timer;
@@ -94,6 +95,8 @@ public class Main {
 		if(Window.hasResized()){
 			GL11.glViewport(0, 0, Window.getWidth(), Window.getHeight());
 			assets.renderer.updateProjectionMatrix();
+			assets.updateProcessingFBO();
+			PostProcessing.updateDimensions(Window.getWidth(), Window.getHeight());
 		}
 		
 		if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_P)) {
@@ -151,11 +154,15 @@ public class Main {
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, assets.water.getHeight()+1f));
 		
 		assets.waterBuffers.unbindCurrentFrameBuffer();
-		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
-		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
-		assets.renderer.renderWater(assets.waters, camera, assets.sun);
 		
-		//assets.particleMaster.renderParticles(camera);
+		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+		
+		assets.processingBuffer.bindFrameBuffer();		
+		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
+		assets.renderer.renderWater(assets.waters, camera, assets.sun);		
+		//assets.particleMaster.renderParticles(camera);		
+		assets.processingBuffer.unbindFrameBuffer();
+		PostProcessing.doPostProcessing(assets.processingBuffer.getColourTexture());
 		
 		assets.guiRenderer.render(assets.guis);
 		assets.fontRenderer.render(assets.fonts);
@@ -180,12 +187,14 @@ public class Main {
 	}
 	
 	public void cleanUp() {
+		PostProcessing.cleanUp();
 		loader.cleanUp();
 		assets.renderer.cleanUp();
 		assets.guiRenderer.cleanUp();
 		assets.fontRenderer.cleanUp();
 		assets.selectionBuffers.cleanUp();
 		assets.waterBuffers.cleanUp();
+		assets.processingBuffer.cleanUp();
 		assets.particleMaster.cleanUp();
 		GLFW.glfwTerminate();
 	}
