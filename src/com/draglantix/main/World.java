@@ -34,14 +34,14 @@ public class World {
 //			assets.entities.add(new Entity(assets.snowPineTree, generateEntityPos(terrain), 0, 0, 0, 5));
 //			assets.entities.add(new Entity(assets.snowman, generateEntityPos(terrain), 0, 0, 0, 3));
 //			
-			assets.entities.add(new Entity(assets.tree, generateEntityPos(terrain), 0, 0, 0, 5));
-			assets.entities.add(new Entity(assets.mushroomTest, rand.nextInt(4), generateEntityPos(terrain), 0, 0, 0, .5f));
-			assets.entities.add(new Entity(assets.rock1, generateEntityPos(terrain), 0, 0, 0, 1));
-			assets.entities.add(new Entity(assets.rock2, generateEntityPos(terrain), 0, 0, 0, 2));
-			assets.entities.add(new Entity(assets.rock3, generateEntityPos(terrain), 0, 0, 0, 3));
-			assets.entities.add(new Entity(assets.grass, generateEntityPos(terrain), 0, 0, 0, 5));
-			assets.entities.add(new Entity(assets.pineTree, generateEntityPos(terrain), 0, 0, 0, 5));
-			assets.entities.add(new Entity(assets.fallTree, generateEntityPos(terrain), 0, 0, 0, 5));
+			assets.entities.add(new Entity(assets.tree, generateEntityPos(terrain), generateEntityRot(), 5));
+			assets.entities.add(new Entity(assets.mushroomTest, rand.nextInt(4), generateEntityPos(terrain), generateEntityRot(), .5f));
+			assets.entities.add(new Entity(assets.rock1, generateEntityPos(terrain), generateEntityRot(), 1));
+			assets.entities.add(new Entity(assets.rock2, generateEntityPos(terrain), generateEntityRot(), 2));
+			assets.entities.add(new Entity(assets.rock3, generateEntityPos(terrain), generateEntityRot(), 3));
+			assets.entities.add(new Entity(assets.grass, generateEntityPos(terrain), generateEntityRot(), 5));
+			assets.entities.add(new Entity(assets.pineTree, generateEntityPos(terrain), generateEntityRot(), 5));
+			assets.entities.add(new Entity(assets.fallTree, generateEntityPos(terrain), generateEntityRot(), 5));
 		}
 		createEntityIDSystem(assets.entities, assets.player);
 	}
@@ -50,6 +50,13 @@ public class World {
 		float x = (rand.nextFloat() * Terrain.SIZE) + terrain.getX();
 		float z = (rand.nextFloat() * Terrain.SIZE) + terrain.getZ();
 		float y = terrain.getHeightOfTerrain(x, z);
+		return new Vector3f(x, y, z);
+	}
+	
+	private Vector3f generateEntityRot(){
+		float x = 0;
+		float y = (rand.nextFloat() * 360);
+		float z = 0;
 		return new Vector3f(x, y, z);
 	}
 	

@@ -29,7 +29,7 @@ public class Camera {
 		this.player = player;
 	}
 	
-	public void move() {
+	public void update() {
 		calculateZoom();
 		calculatePitch();
 		calculateAngleAroundPlayer();
@@ -63,7 +63,7 @@ public class Camera {
 	}
 	
 	private void calculateCameraPosition(float horizontalDistance, float verticalDistance) {
-		theta = player.getRotY() + angleAroundPlayer;
+		theta = player.getRotation().y + angleAroundPlayer;
 		float offsetX = (float) (horizontalDistance * Math.sin(Math.toRadians(theta)));
 		float offsetZ = (float) (horizontalDistance * Math.cos(Math.toRadians(theta)));
 		position.x = player.getPosition().x - offsetX;

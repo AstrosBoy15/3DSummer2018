@@ -60,7 +60,7 @@ public class SelectionRenderer {
 	
 	private void loadModelMatrix(Terrain terrain){
 		Matrix4f transformationMatrix = Maths.createTransformationMatrix(
-				new Vector3f(terrain.getX(), 0, terrain.getZ()), 0, 0, 0, 1);
+				new Vector3f(terrain.getX(), 0, terrain.getZ()), new Vector3f(0, 0, 0), 1);
 		shader.loadModelMatrix(transformationMatrix);
 		shader.loadEntityID(new Vector3f(0, 0, 0));
 	}
@@ -97,7 +97,7 @@ public class SelectionRenderer {
 	
 	private void prepareInstance(Entity entity){
 		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), 
-				entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
+				entity.getRotation(), entity.getScale());
 		shader.loadModelMatrix(transformationMatrix);
 		shader.loadEntityID(entity.getID());
 	}

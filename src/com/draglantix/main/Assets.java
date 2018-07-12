@@ -111,7 +111,7 @@ public class Assets {
 				snowmanData.getVertices(), snowmanData.getTextureCoords(),
 				snowmanData.getNormals(), snowmanData.getIndices());
 		snowman = new TexturedModel(snowmanModel, new ModelTexture(loader.loadTexture("model/texture/snowmanTexture")));		
-		player = new Player(snowman, new Vector3f(400, 70, 400), 0, 180, 0, 3);
+		player = new Player(snowman, new Vector3f(400, 70, 400), new Vector3f(0, 180, 0), 3);
 		camera = new Camera(player);
 		
 		renderer = new MasterRenderer(loader, waterBuffers, camera);
@@ -220,9 +220,9 @@ public class Assets {
 		snowPineTree = new TexturedModel(snowPineTreeModel, new ModelTexture(loader.loadTexture("model/texture/snowPineTreeTexture")));
 		lamp = new TexturedModel(lampModel, lampModelTex);
 		
-		LampEntity = new Entity(lamp, new Vector3f(185, -4.7f, -293), 0, 0, 0, 1);
-		entities.add(new Entity(lamp, new Vector3f(370, 4.2f, -300), 0, 0, 0, 1));
-		entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), 0, 0, 0, 1));
+		LampEntity = new Entity(lamp, new Vector3f(185, -4.7f, -293), new Vector3f(0, 0, 0), 1);
+		entities.add(new Entity(lamp, new Vector3f(370, 4.2f, -300), new Vector3f(0, 0, 0), 1));
+		entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), new Vector3f(0, 0, 0), 1));
 		entities.add(LampEntity);
 		
 		sun = new Light(new Vector3f(1000000, 1500000, -1000000), new Vector3f(1, 1, 1));

@@ -71,7 +71,7 @@ public class ShadowMapTerrainRenderer {
 	 */
 	private void prepareInstance(Terrain terrain) {
 		Matrix4f modelMatrix = Maths.createTransformationMatrix(
-				new Vector3f(terrain.getX(), 0, terrain.getZ()), 0, 0, 0, 1);
+				new Vector3f(terrain.getX(), 0, terrain.getZ()), new Vector3f(0, 0, 0), 1);
 		Matrix4f mvpMatrix = new Matrix4f();
 		projectionViewMatrix.mul(modelMatrix, mvpMatrix);
 		shader.loadMvpMatrix(mvpMatrix);

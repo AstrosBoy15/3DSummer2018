@@ -7,33 +7,35 @@ import com.draglantix.models.TexturedModel;
 public class Entity {
 
 	private TexturedModel model;
-	private Vector3f position;
-	private float rotX, rotY, rotZ;
+	protected Vector3f position;
+	private Vector3f rotation;
+	private Vector3f nextPos, nextRot;
 	private float scale;
 	
 	private int textureIndex = 0;
 	
 	private Vector3f ID;
 	
-	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, 
-			float scale) {
+	public Entity(TexturedModel model, Vector3f position, Vector3f rotation, float scale) {
 		this.model = model;
 		this.position = position;
-		this.rotX = rotX;
-		this.rotY = rotY;
-		this.rotZ = rotZ;
+		this.rotation = rotation;
 		this.scale = scale;
+		updateNextVectors();
 	}
 	
-	public Entity(TexturedModel model, int index, Vector3f position, float rotX, float rotY, float rotZ, 
-			float scale) {
+	public Entity(TexturedModel model, int index, Vector3f position, Vector3f rotation, float scale) {
 		this.textureIndex = index;
 		this.model = model;
 		this.position = position;
-		this.rotX = rotX;
-		this.rotY = rotY;
-		this.rotZ = rotZ;
+		this.rotation = rotation;
 		this.scale = scale;
+		updateNextVectors();
+	}
+	
+	public void updateNextVectors() {
+		nextPos = new Vector3f(position);
+		nextRot = new Vector3f(rotation);
 	}
 	
 	public float getTextureXOffset(){
@@ -46,16 +48,16 @@ public class Entity {
 		return (float)row/(float)model.getTexture().getNumberOfRows();
 	}
 	
-	public void increasePosition(float dx, float dy, float dz) {
-		this.position.x+=dx;
-		this.position.y+=dy;
-		this.position.z+=dz;
+	public void increasePosition(Vector3f delta) {
+		nextPos.add(delta);
+		
+		position.lerp(nextPos, 0.07f);
 	}
 	
-	public void increaseRotation(float dx, float dy, float dz) {
-		this.rotX+=dx;
-		this.rotY+=dy;
-		this.rotZ+=dz;
+	public void increaseRotation(Vector3f delta) {
+		nextRot.add(delta);
+		
+		rotation.lerp(nextRot, 0.07f);
 	}
 
 	public TexturedModel getModel() {
@@ -74,28 +76,12 @@ public class Entity {
 		this.position = position;
 	}
 
-	public float getRotX() {
-		return rotX;
+	public Vector3f getRotation() {
+		return rotation;
 	}
-
-	public void setRotX(float rotX) {
-		this.rotX = rotX;
-	}
-
-	public float getRotY() {
-		return rotY;
-	}
-
-	public void setRotY(float rotY) {
-		this.rotY = rotY;
-	}
-
-	public float getRotZ() {
-		return rotZ;
-	}
-
-	public void setRotZ(float rotZ) {
-		this.rotZ = rotZ;
+	
+	public void setRotation(Vector3f rotation) {
+		this.rotation = rotation;
 	}
 
 	public float getScale() {

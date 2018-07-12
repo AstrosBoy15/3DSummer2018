@@ -3,11 +3,14 @@ package com.draglantix.main;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.AL11;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
 
+import com.draglantix.audio.AudioMaster;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.postProcessing.PostProcessing;
@@ -78,6 +81,9 @@ public class Main {
 		
 		GL.createCapabilities();
 		
+		AudioMaster.init();
+		AL10.alDistanceModel(AL11.AL_EXPONENT_DISTANCE);
+		
 		assets = new Assets();
 		
 		loader = assets.loader;
@@ -106,15 +112,15 @@ public class Main {
 		if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
 			GLFW.glfwSetWindowShouldClose(Window.getWindow(), true);
 		}
-		
-		//assets.particleSystem.generateParticles(assets.player.getPosition());
-		//assets.particleSystem2.generateParticles(new Vector3f(400, 40, 300));
-		
-		assets.particleMaster.update(camera);
-		
+	
 		if(!pause) {
-			assets.player.move(world.terrain);
-			camera.move();
+			//assets.particleSystem.generateParticles(assets.player.getPosition());
+			//assets.particleSystem2.generateParticles(new Vector3f(400, 40, 300));
+			
+			//assets.particleMaster.update(camera);
+			
+			assets.player.update(world.terrain);
+			camera.update();
 		
 			Vector3f ID = assets.entitySelector.getEntityAtMousePos();
 			Entity selected = world.getEntityWithID(ID, assets.entities);
@@ -130,7 +136,7 @@ public class Main {
 			}
 				
 			if(assets.currentSelection!=null) {
-				assets.currentSelection.increaseRotation(0, 1, 0);
+				assets.currentSelection.increaseRotation(new Vector3f(0, 1, 0));
 			}
 		}
 	
@@ -157,12 +163,12 @@ public class Main {
 		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		
-		assets.processingBuffer.bindFrameBuffer();		
+		//assets.processingBuffer.bindFrameBuffer();		
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
 		assets.renderer.renderWater(assets.waters, camera, assets.sun);		
 		//assets.particleMaster.renderParticles(camera);		
-		assets.processingBuffer.unbindFrameBuffer();
-		PostProcessing.doPostProcessing(assets.processingBuffer.getColourTexture());
+		//assets.processingBuffer.unbindFrameBuffer();
+		//PostProcessing.doPostProcessing(assets.processingBuffer.getColourTexture());
 		
 		assets.guiRenderer.render(assets.guis);
 		assets.fontRenderer.render(assets.fonts);
@@ -189,6 +195,7 @@ public class Main {
 	public void cleanUp() {
 		PostProcessing.cleanUp();
 		loader.cleanUp();
+		AudioMaster.cleanUp();
 		assets.renderer.cleanUp();
 		assets.guiRenderer.cleanUp();
 		assets.fontRenderer.cleanUp();

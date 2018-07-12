@@ -177,7 +177,7 @@ public class ParticleRenderer {
 		position.z = p.getPosition().z;
 		
 		transformationMatrix = Maths.createTransformationMatrix(position, 
-				p.getRotation().x, p.getRotation().y, p.getRotation().z, p.getScale());
+				new Vector3f(p.getRotation().x, p.getRotation().y, p.getRotation().z), p.getScale());
 		
 		transformationMatrix.rotateX(angle);
 		

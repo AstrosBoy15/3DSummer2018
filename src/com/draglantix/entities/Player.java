@@ -3,6 +3,7 @@ package com.draglantix.entities;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
+import com.draglantix.audio.AudioMaster;
 import com.draglantix.main.Main;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.render.Window;
@@ -21,34 +22,43 @@ public class Player extends Entity {
 	
 	private boolean isInAir = false;
 	
-	private Vector3f ID;
+	private Vector3f position = new Vector3f(), rotation = new Vector3f(), ID;
 	
 	private Timer timer;
 	
-	public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
-		super(model, position, rotX, rotY, rotZ, scale);
+	public Player(TexturedModel model, Vector3f position, Vector3f rotation, float scale) {
+		super(model, position, rotation, scale);
+		AudioMaster.setListenerData(super.position.x, super.position.y, 0);
 		timer = new Timer();
 	}
 	
-	public void move(Terrain terrain) {
+	public void update(Terrain terrain) {
 		
 		double passed = timer.getDelta();
 		
 		checkInputs();
 		
-		super.increaseRotation(0, currentTurnSpeed * (float) passed, 0);
+		rotation.y = currentTurnSpeed * (float) passed;
+		
+		super.increaseRotation(rotation);
 		float distance = currentSpeed;
-		float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotY())));
-		float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotY())));
-		super.increasePosition(dx * (float) passed, 0, dz * (float) passed);
+		float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotation().y)));
+		float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotation().y)));
 		upwardsSpeed += Main.GRAVITY * (float) passed;
-		super.increasePosition(0, upwardsSpeed * (float) passed, 0);
+		
+		position.x = dx * (float) passed;
+		position.y = upwardsSpeed * (float) passed;
+		position.z = dz * (float) passed;
+		
+		super.increasePosition(position);
 		float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
 		if(super.getPosition().y<terrainHeight) {
 			upwardsSpeed = 0;
 			isInAir = false;
 			super.getPosition().y = terrainHeight;
 		}
+		
+		AudioMaster.setListenerData(super.position.x, super.position.y, 0);
 	}
 	
 	private void jump() {
