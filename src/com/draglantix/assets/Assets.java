@@ -1,4 +1,4 @@
-package com.draglantix.main;
+package com.draglantix.assets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import com.draglantix.font.FontRenderer;
 import com.draglantix.font.FontTexture;
 import com.draglantix.guis.GuiRenderer;
 import com.draglantix.guis.GuiTexture;
+import com.draglantix.main.World;
 import com.draglantix.models.RawModel;
 import com.draglantix.models.TexturedModel;
 import com.draglantix.objConverter.ModelData;
@@ -37,6 +38,8 @@ import com.draglantix.water.WaterTile;
 public class Assets {
 
 	public Loader loader = new Loader();
+	
+	public MusicAssets musicAssets;
 	
 	public MasterRenderer renderer;
 	public GuiRenderer guiRenderer;
@@ -97,6 +100,8 @@ public class Assets {
 		System.out.println("Loading...");
 		
 		loader = new Loader();
+		
+		musicAssets = new MusicAssets();
 	
 		PostProcessing.init(loader);
 		

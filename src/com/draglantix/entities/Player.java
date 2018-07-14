@@ -14,7 +14,7 @@ public class Player extends Entity {
 	
 	private static final float RUN_SPEED = 100;
 	private static final float TURN_SPEED = 160;
-	private static final float JUMP_POWER = 30;
+	private static final float JUMP_POWER = 40;
 	
 	private float currentSpeed = 0;
 	private float currentTurnSpeed = 0;
@@ -25,10 +25,10 @@ public class Player extends Entity {
 	private Vector3f position = new Vector3f(), rotation = new Vector3f(), ID;
 	
 	private Timer timer;
-	
+
 	public Player(TexturedModel model, Vector3f position, Vector3f rotation, float scale) {
 		super(model, position, rotation, scale);
-		AudioMaster.setListenerData(super.position.x, super.position.y, 0);
+		AudioMaster.setListenerData(position, rotation.y);
 		timer = new Timer();
 	}
 	
@@ -40,7 +40,7 @@ public class Player extends Entity {
 		
 		rotation.y = currentTurnSpeed * (float) passed;
 		
-		super.increaseRotation(rotation);
+		super.increaseRotation(rotation, false);
 		float distance = currentSpeed;
 		float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotation().y)));
 		float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotation().y)));
@@ -50,7 +50,7 @@ public class Player extends Entity {
 		position.y = upwardsSpeed * (float) passed;
 		position.z = dz * (float) passed;
 		
-		super.increasePosition(position);
+		super.increasePosition(position, false);
 		float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
 		if(super.getPosition().y<terrainHeight) {
 			upwardsSpeed = 0;
@@ -58,7 +58,7 @@ public class Player extends Entity {
 			super.getPosition().y = terrainHeight;
 		}
 		
-		AudioMaster.setListenerData(super.position.x, super.position.y, 0);
+		AudioMaster.setListenerData(super.getPosition(), super.getRotation().y);
 	}
 	
 	private void jump() {

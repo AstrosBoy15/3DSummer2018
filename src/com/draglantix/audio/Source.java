@@ -1,7 +1,6 @@
 package com.draglantix.audio;
 
 import org.lwjgl.openal.AL10;
-import org.lwjgl.openal.AL11;
 
 public class Source {
 	
@@ -10,17 +9,14 @@ public class Source {
 	public Source() {
 		sourceId = AL10.alGenSources();
 		AL10.alSourcef(sourceId, AL10.AL_ROLLOFF_FACTOR, 1.5f);
+		AL10.alSourcef(sourceId, AL10.AL_REFERENCE_DISTANCE, 15f);
+		//AL10.alSourcef(sourceId, AL10.AL_MAX_DISTANCE, 6f);
 	}
 	
 	public void play(int buffer) {
 		stop();
 		AL10.alSourcei(sourceId, AL10.AL_BUFFER, buffer);
 		continuePlaying();
-	}
-	
-	public void setStuff() {
-		AL10.alDistanceModel(AL11.AL_EXPONENT_DISTANCE_CLAMPED);
-		AL10.alSourcef(sourceId, AL10.AL_REFERENCE_DISTANCE, 1000);
 	}
 	
 	public void pause() {

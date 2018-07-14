@@ -162,12 +162,7 @@ public class ParticleRenderer {
 	
 	private void update(Particle p, Camera camera, float[] vboData){
 		theta = camera.getTheta()-180;
-		if(theta>360) {
-			theta-=360;
-		}else if(theta<-360) {
-			theta+=360;
-		}
-
+	
 		angle = -camera.getPitch()/60;
 		
 		p.setRotation(new Vector3f(0, theta, 0));

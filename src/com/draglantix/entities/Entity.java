@@ -48,16 +48,47 @@ public class Entity {
 		return (float)row/(float)model.getTexture().getNumberOfRows();
 	}
 	
-	public void increasePosition(Vector3f delta) {
-		nextPos.add(delta);
-		
-		position.lerp(nextPos, 0.07f);
+	public void increasePosition(Vector3f delta, boolean lerp) {
+		if(lerp) {
+			nextPos.add(delta);
+			position.lerp(nextPos, 0.07f);
+		}else {
+			position.add(delta);
+		}
 	}
 	
-	public void increaseRotation(Vector3f delta) {
-		nextRot.add(delta);
+	public void increaseRotation(Vector3f delta, boolean lerp) {
+		if(lerp) {
+			nextRot.add(delta);	
+			rotation.lerp(nextRot, 0.07f);
+		}else {
+			rotation.add(delta);
+		}
 		
-		rotation.lerp(nextRot, 0.07f);
+		checkRotation();
+	}
+	
+	public void checkRotation() {
+		if(rotation.x>360) {
+			rotation.x-=360;
+		}
+		if(rotation.y<-360){
+			rotation.y+=360;
+		}
+		
+		if(rotation.y>360) {
+			rotation.y-=360;
+		}
+		if(rotation.y<-360){
+			rotation.y+=360;
+		}
+		
+		if(rotation.z>360) {
+			rotation.z-=360;
+		}
+		if(rotation.z<-360){
+			rotation.z+=360;
+		}
 	}
 
 	public TexturedModel getModel() {

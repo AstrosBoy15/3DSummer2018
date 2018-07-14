@@ -1,15 +1,14 @@
 package com.draglantix.audio;
 
-import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
- 
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
- 
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
  
@@ -60,15 +59,9 @@ public class WaveData {
  
  
     public static WaveData create(String file){
-        InputStream stream = Class.class.getResourceAsStream("/res/"+file);
-        if(stream==null){
-            System.err.println("Couldn't find file: "+file);
-            return null;
-        }
-        InputStream bufferedInput = new BufferedInputStream(stream);
         AudioInputStream audioStream = null;
         try {
-            audioStream = AudioSystem.getAudioInputStream(bufferedInput);
+            audioStream = AudioSystem.getAudioInputStream(new File("res/"+file).getAbsoluteFile());
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {

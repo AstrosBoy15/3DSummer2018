@@ -64,6 +64,13 @@ public class Camera {
 	
 	private void calculateCameraPosition(float horizontalDistance, float verticalDistance) {
 		theta = player.getRotation().y + angleAroundPlayer;
+		
+		if(theta>360) {
+			theta-=360;
+		}else if(theta<-360) {
+			theta+=360;
+		}
+	
 		float offsetX = (float) (horizontalDistance * Math.sin(Math.toRadians(theta)));
 		float offsetZ = (float) (horizontalDistance * Math.cos(Math.toRadians(theta)));
 		position.x = player.getPosition().x - offsetX;
@@ -109,6 +116,12 @@ public class Camera {
 			angleAroundPlayer -= angleChange;
 		}
 		lastMousePos.x = Window.getInput().getMousePos().x;
+		
+		if(angleAroundPlayer>360) {
+			angleAroundPlayer-=360;
+		}else if(angleAroundPlayer<-360) {
+			angleAroundPlayer+=360;
+		}
 	}
 
 }

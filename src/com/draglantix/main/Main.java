@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
 
+import com.draglantix.assets.Assets;
 import com.draglantix.audio.AudioMaster;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
@@ -20,7 +21,7 @@ import com.draglantix.tools.Timer;
 
 public class Main {
 
-	private float version = 0.14f;
+	private float version = 0.15f;
 	
 	private boolean pause = false;
 	
@@ -82,7 +83,7 @@ public class Main {
 		GL.createCapabilities();
 		
 		AudioMaster.init();
-		AL10.alDistanceModel(AL11.AL_EXPONENT_DISTANCE);
+		AL10.alDistanceModel(AL11.AL_EXPONENT_DISTANCE_CLAMPED);
 		
 		assets = new Assets();
 		
@@ -136,7 +137,7 @@ public class Main {
 			}
 				
 			if(assets.currentSelection!=null) {
-				assets.currentSelection.increaseRotation(new Vector3f(0, 1, 0));
+				assets.currentSelection.increaseRotation(new Vector3f(0, 1, 0), false);
 			}
 		}
 	

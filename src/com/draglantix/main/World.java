@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.joml.Vector3f;
 
+import com.draglantix.assets.Assets;
+import com.draglantix.audio.Source;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Player;
 import com.draglantix.terrains.Terrain;
@@ -26,6 +28,7 @@ public class World {
 	}
 	
 	public void spawnEntities() {
+		
 		for(int w=0; w < 50; w++) {
 //			assets.entities.add(new Entity(assets.snowTree, generateEntityPos(terrain), 0, 0, 0, 5));
 //			assets.entities.add(new Entity(assets.snowRock1, generateEntityPos(terrain), 0, 0, 0, 1));
@@ -41,7 +44,16 @@ public class World {
 			assets.entities.add(new Entity(assets.rock3, generateEntityPos(terrain), generateEntityRot(), 3));
 			assets.entities.add(new Entity(assets.grass, generateEntityPos(terrain), generateEntityRot(), 5));
 			assets.entities.add(new Entity(assets.pineTree, generateEntityPos(terrain), generateEntityRot(), 5));
-			assets.entities.add(new Entity(assets.fallTree, generateEntityPos(terrain), generateEntityRot(), 5));
+			Entity fallTree = new Entity(assets.fallTree, generateEntityPos(terrain), generateEntityRot(), 5);
+			
+			assets.entities.add(fallTree);
+			
+			Source musicSource = new Source();
+			musicSource.setPosition(fallTree.getPosition().x, fallTree.getPosition().y, fallTree.getPosition().z);
+			musicSource.setLooping(true);
+			musicSource.setVolume(1f);
+			musicSource.play(assets.musicAssets.insanityMusic);
+			
 		}
 		createEntityIDSystem(assets.entities, assets.player);
 	}
