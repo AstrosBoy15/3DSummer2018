@@ -164,12 +164,12 @@ public class Main {
 		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		
-		//assets.processingBuffer.bindFrameBuffer();		
+		assets.processingBuffer.bindFrameBuffer();		
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
 		assets.renderer.renderWater(assets.waters, camera, assets.sun);		
 		//assets.particleMaster.renderParticles(camera);		
-		//assets.processingBuffer.unbindFrameBuffer();
-		//PostProcessing.doPostProcessing(assets.processingBuffer.getColourTexture());
+		assets.processingBuffer.unbindFrameBuffer();
+		PostProcessing.doPostProcessing(assets.processingBuffer.getColourTexture());
 		
 		assets.guiRenderer.render(assets.guis);
 		assets.fontRenderer.render(assets.fonts);
