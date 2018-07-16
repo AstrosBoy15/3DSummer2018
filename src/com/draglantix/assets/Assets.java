@@ -48,7 +48,7 @@ public class Assets {
 	public WaterFrameBuffers waterBuffers;
 	public SelectionBuffers selectionBuffers;
 	public EntitySelector entitySelector;
-	public ProcessingFrameBuffers processingBuffer;
+	public ProcessingFrameBuffers multisampleFbo, outputFbo, outputFbo2;
 
 	public Entity currentSelection = null;
 	
@@ -108,8 +108,11 @@ public class Assets {
 		waterBuffers = new WaterFrameBuffers();
 		selectionBuffers = new SelectionBuffers();
 		entitySelector = new EntitySelector(selectionBuffers);
-		processingBuffer = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
-				ProcessingFrameBuffers.DEPTH_RENDER_BUFFER);
+		multisampleFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight());
+		outputFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
+				ProcessingFrameBuffers.DEPTH_TEXTURE);
+		outputFbo2 = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
+				ProcessingFrameBuffers.DEPTH_TEXTURE);
 
 		snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
 		snowmanModel = loader.loadToVAO(
@@ -251,7 +254,8 @@ public class Assets {
 	}
 	
 	public void updateProcessingFBO() {
-		processingBuffer = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
-				ProcessingFrameBuffers.DEPTH_RENDER_BUFFER);
+		multisampleFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight());
+		outputFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
+				ProcessingFrameBuffers.DEPTH_TEXTURE);
 	}
 }

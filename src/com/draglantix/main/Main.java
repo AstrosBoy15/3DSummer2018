@@ -144,7 +144,7 @@ public class Main {
 	}
 	
 	public void render() {
-
+		
 		assets.renderer.renderShadowMap(assets.entities, world.terrains, assets.player, assets.sun);
 		
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
@@ -164,12 +164,14 @@ public class Main {
 		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		
-		assets.processingBuffer.bindFrameBuffer();		
+		assets.multisampleFbo.bindFrameBuffer();		
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, 1000000));
 		assets.renderer.renderWater(assets.waters, camera, assets.sun);		
 		//assets.particleMaster.renderParticles(camera);		
-		assets.processingBuffer.unbindFrameBuffer();
-		PostProcessing.doPostProcessing(assets.processingBuffer.getColourTexture());
+		assets.multisampleFbo.unbindFrameBuffer();
+		assets.multisampleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT0, assets.outputFbo); //TODO Add this feature to AA the reflection texture of the water.
+		assets.multisampleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, assets.outputFbo2);
+		PostProcessing.doPostProcessing(assets.outputFbo.getColourTexture(), assets.outputFbo2.getColourTexture());
 		
 		assets.guiRenderer.render(assets.guis);
 		assets.fontRenderer.render(assets.fonts);
@@ -202,7 +204,9 @@ public class Main {
 		assets.fontRenderer.cleanUp();
 		assets.selectionBuffers.cleanUp();
 		assets.waterBuffers.cleanUp();
-		assets.processingBuffer.cleanUp();
+		assets.multisampleFbo.cleanUp();
+		assets.outputFbo.cleanUp();
+		assets.outputFbo2.cleanUp();
 		assets.particleMaster.cleanUp();
 		GLFW.glfwTerminate();
 	}

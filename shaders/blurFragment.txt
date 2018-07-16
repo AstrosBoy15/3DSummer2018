@@ -2,7 +2,7 @@
 
 out vec4 out_colour;
 
-in vec2 blurTextureCoords[23];
+in vec2 blurTextureCoords[11];
 
 uniform sampler2D originalTexture;
 

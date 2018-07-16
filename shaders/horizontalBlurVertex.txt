@@ -2,7 +2,7 @@
 
 in vec2 position;
 
-out vec2 blurTextureCoords[23];
+out vec2 blurTextureCoords[11];
 
 uniform float targetWidth;
 

@@ -3,17 +3,32 @@ package com.draglantix.textures;
 public class ModelTexture {
 
 	private int textureID;
+	private int specularMap;
 	
 	private float shineDamper = 1;
 	private float reflectivity = 0;
 	
 	private boolean hasTransparancy = false;
 	private boolean useFakeLighting = false;
+	private boolean hasSpecularMap = false;
 	
 	private int numberOfRows = 1;
 	
 	public ModelTexture(int id) {
 		this.textureID = id;
+	}
+	
+	public void setSpecularMap(int specMap) {
+		this.specularMap = specMap;
+		this.hasSpecularMap = true;
+	}
+	
+	public boolean hasSpecularMap() {
+		return hasSpecularMap;
+	}
+	
+	public int getSpecularMap() {
+		return specularMap;
 	}
 	
 	public int getNumberOfRows() {

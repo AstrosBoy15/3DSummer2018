@@ -72,7 +72,6 @@ public class Window {
 		
 		if(window == 0)
 			throw new IllegalStateException("Failed to create window!");
-		glfwWindowHint(GLFW.GLFW_SAMPLES, 8);
 		glfwWindowHint(GLFW.GLFW_DEPTH_BITS, 24);
 		
 		if(!fullscreen) {
