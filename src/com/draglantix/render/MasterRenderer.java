@@ -64,7 +64,7 @@ public class MasterRenderer {
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
 		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, fbos);
-		shadowMapRenderer = new ShadowMapMasterRenderer(camera);
+		//shadowMapRenderer = new ShadowMapMasterRenderer(camera);
 	}
 	
 	public void updateProjectionMatrix() {
@@ -131,14 +131,14 @@ public class MasterRenderer {
 		shader.loadSkyColor(RED, GREEN, BLUE);
 		shader.loadLights(lights);
 		shader.loadViewMatrix(camera);
-		renderer.render(entities, shadowMapRenderer.getToShadowMapSpaceMatrix());
+		renderer.render(entities/*, shadowMapRenderer.getToShadowMapSpaceMatrix()*/);
 		shader.stop();
 		terrainShader.start();
 		terrainShader.loadClipPlane(clipPlane);
 		terrainShader.loadSkyColor(RED, GREEN, BLUE);
 		terrainShader.loadLights(lights);
 		terrainShader.loadViewMatrix(camera);
-		terrainRenderer.renderer(terrains, shadowMapRenderer.getToShadowMapSpaceMatrix());
+		terrainRenderer.renderer(terrains /*, shadowMapRenderer.getToShadowMapSpaceMatrix()*/);
 		terrainShader.stop();
 		skyboxRenderer.render(camera, RED, GREEN, BLUE);
 		terrains.clear();
@@ -179,16 +179,16 @@ public class MasterRenderer {
 		entities.clear();
 	}
 	
-	public int getShadowMapTexture() {
-		return shadowMapRenderer.getShadowMap();
-	}
+	//public int getShadowMapTexture() {
+	//	return shadowMapRenderer.getShadowMap();
+	//}
 	
 	public void cleanUp(){
 		selectionShader.cleanUp();
 		shader.cleanUp();
 		terrainShader.cleanUp();
 		waterShader.cleanUp();
-		shadowMapRenderer.cleanUp();
+		//shadowMapRenderer.cleanUp();
 	}
 	
 	public void prepare() {
@@ -196,7 +196,7 @@ public class MasterRenderer {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(0, 0, 0, 1);
 		GL13.glActiveTexture(GL13.GL_TEXTURE5);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, getShadowMapTexture());
+		//GL11.glBindTexture(GL11.GL_TEXTURE_2D, getShadowMapTexture());
 	}
 	
 	private void createProjectionMatrix(){
