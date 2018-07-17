@@ -5,6 +5,7 @@ import java.util.Random;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import com.draglantix.render.ParticleRenderer;
 import com.draglantix.tools.Timer;
 
 public class ParticleSystem {

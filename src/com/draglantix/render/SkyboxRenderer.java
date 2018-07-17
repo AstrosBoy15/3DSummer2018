@@ -1,4 +1,4 @@
-package com.draglantix.skybox;
+package com.draglantix.render;
 
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
@@ -8,8 +8,8 @@ import org.lwjgl.opengl.GL30;
 
 import com.draglantix.entities.Camera;
 import com.draglantix.models.RawModel;
-import com.draglantix.render.Loader;
 import com.draglantix.shaders.SkyboxShader;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.Timer;
 
 public class SkyboxRenderer {

@@ -1,13 +1,11 @@
-package com.draglantix.particles;
+package com.draglantix.shaders;
 
 import org.joml.Matrix4f;
 
-import com.draglantix.shaders.ShaderProgram;
-
 public class ParticleShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "shaders/particleVShader.txt";
-	private static final String FRAGMENT_FILE = "shaders/particleFShader.txt";
+	private static final String VERTEX_FILE = "shaders/particleVertex.glsl";
+	private static final String FRAGMENT_FILE = "shaders/particleFragment.glsl";
 
 	private int location_numberOfRows;
 	private int location_projectionMatrix;

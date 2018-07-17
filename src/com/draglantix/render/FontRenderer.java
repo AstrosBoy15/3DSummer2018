@@ -1,4 +1,4 @@
-package com.draglantix.font;
+package com.draglantix.render;
 
 import java.util.List;
 
@@ -10,10 +10,12 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import com.draglantix.font.FontTexture;
 import com.draglantix.models.RawModel;
-import com.draglantix.render.Loader;
-import com.draglantix.render.Window;
+import com.draglantix.shaders.FontShader;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.Maths;
+import com.draglantix.tools.Window;
 
 public class FontRenderer {
 	

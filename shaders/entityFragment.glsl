@@ -5,7 +5,6 @@ in vec3 surfaceNormal;
 in vec3 toLightVector[4];
 in vec3 toCameraVector;
 in float visibility;
-in vec4 shadowCoords;
 
 layout (location = 0) out vec4 out_Color;
 layout (location = 1) out vec4 out_Brightness;
@@ -19,24 +18,8 @@ uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 skyColor;
 
-uniform sampler2D shadowMap;
-
 void main(void) {
 
-	vec2 moments = texture2D(shadowMap, shadowCoords.xy).xy;
-	
-	float p = step(shadowCoords.z, moments.x);
-	float variance = max(moments.y - moments.x * moments.x, 0.00002);
-	
-	float d = shadowCoords.z - moments.x;
-	float pMax = clamp(variance / (variance + d*d), 0.2, 1.0) - 0.2;
-	
-	float lightFactor = min(max(p, pMax), 1.0);
-	
-	if(shadowCoords.z < moments.x + 0.005) {
-		lightFactor = 1.0;
-	}
-	
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitVectorToCamera = normalize(toCameraVector);
 	
@@ -58,7 +41,7 @@ void main(void) {
 		totalSpecular = totalSpecular + (dampedFactor * reflectivity * lightColor[i])/attFactor;
 	}
 	
-	totalDiffuse = max(totalDiffuse * lightFactor, 0.4);
+	totalDiffuse = max(totalDiffuse, 0.4);
 	
 	vec4 textureColor = texture(textureSampler, pass_textureCoords);
 	if(textureColor.a<0.5){

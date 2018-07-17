@@ -15,9 +15,9 @@ import com.draglantix.audio.AudioMaster;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.postProcessing.PostProcessing;
-import com.draglantix.render.Loader;
-import com.draglantix.render.Window;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.Timer;
+import com.draglantix.tools.Window;
 
 public class Main {
 
@@ -149,18 +149,20 @@ public class Main {
 		
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		
-		assets.waterBuffers.bindReflectionFrameBuffer();
+		assets.waterReflection.bindFrameBuffer();
 		float distance = 2 * (camera.getPosition().y - assets.water.getHeight());
 		camera.getPosition().y -= distance;
 		camera.invertPitch();
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, 1, 0, -assets.water.getHeight()+1f));
 		camera.getPosition().y += distance;
 		camera.invertPitch();
+		assets.waterReflection.unbindFrameBuffer();
 		
-		assets.waterBuffers.bindRefractionFrameBuffer();
+		assets.waterRefractionBuffer.bindFrameBuffer();
+		assets.waterRefractionDepth.bindFrameBuffer();
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, assets.water.getHeight()+1f));
-		
-		assets.waterBuffers.unbindCurrentFrameBuffer();
+		assets.waterRefractionBuffer.unbindFrameBuffer();
+		assets.waterRefractionDepth.unbindFrameBuffer(); 
 		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		
@@ -171,8 +173,8 @@ public class Main {
 		//assets.multisampleFbo.unbindFrameBuffer();
 		//assets.multisampleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT0, assets.outputFbo); //TODO Add this feature to AA the reflection texture of the water.
 		//assets.multisampleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, assets.outputFbo2);
-		//PostProcessing.doPostProcessing(assets.outputFbo.getColourTexture(), assets.outputFbo2.getColourTexture());
-		
+		//PostProcessing.doPostProcessing(assets.outputFbo.getFBO(0), assets.outputFbo2.getFBO(0));
+
 		assets.guiRenderer.render(assets.guis);
 		assets.fontRenderer.render(assets.fonts);
 		
@@ -203,7 +205,9 @@ public class Main {
 		assets.guiRenderer.cleanUp();
 		assets.fontRenderer.cleanUp();
 		assets.selectionBuffers.cleanUp();
-		assets.waterBuffers.cleanUp();
+		assets.waterReflection.cleanUp();
+		assets.waterRefractionDepth.cleanUp();
+		assets.waterRefractionBuffer.cleanUp();
 		assets.multisampleFbo.cleanUp();
 		assets.outputFbo.cleanUp();
 		assets.outputFbo2.cleanUp();

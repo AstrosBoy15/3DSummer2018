@@ -1,11 +1,9 @@
-package com.draglantix.postProcessing;
-
-import com.draglantix.shaders.ShaderProgram;
+package com.draglantix.shaders;
 
 public class ContrastShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "shaders/contrastVertex.txt";
-	private static final String FRAGMENT_FILE = "shaders/contrastFragment.txt";
+	private static final String VERTEX_FILE = "shaders/filter_contrastVertex.glsl";
+	private static final String FRAGMENT_FILE = "shaders/filter_contrastFragment.glsl";
 	
 	public ContrastShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);

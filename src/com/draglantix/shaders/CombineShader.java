@@ -1,16 +1,14 @@
-package com.draglantix.bloom;
-
-import com.draglantix.shaders.ShaderProgram;
+package com.draglantix.shaders;
 
 public class CombineShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "shaders/simpleVertex.txt";
-	private static final String FRAGMENT_FILE = "shaders/combineFragment.txt";
+	private static final String VERTEX_FILE = "shaders/filter_simpleVertex.glsl";
+	private static final String FRAGMENT_FILE = "shaders/filter_combineFragment.glsl";
 	
 	private int location_colourTexture;
 	private int location_highlightTexture;
 	
-	protected CombineShader() {
+	public CombineShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
 	
@@ -20,7 +18,7 @@ public class CombineShader extends ShaderProgram {
 		location_highlightTexture = super.getUniformLocation("highlightTexture");
 	}
 	
-	protected void connectTextureUnits(){
+	public void connectTextureUnits(){
 		super.loadInt(location_colourTexture, 0);
 		super.loadInt(location_highlightTexture, 1);
 	}

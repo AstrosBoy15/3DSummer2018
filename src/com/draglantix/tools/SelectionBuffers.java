@@ -6,8 +6,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 
-import com.draglantix.render.Window;
-
 public class SelectionBuffers {
 
 	 	public static final int RES_WIDTH = 260;

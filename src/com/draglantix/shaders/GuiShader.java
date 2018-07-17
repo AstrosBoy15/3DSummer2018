@@ -1,13 +1,11 @@
-package com.draglantix.guis;
+package com.draglantix.shaders;
 
 import org.joml.Matrix4f;
-
-import com.draglantix.shaders.ShaderProgram;
  
 public class GuiShader extends ShaderProgram{
      
-    private static final String VERTEX_FILE = "shaders/guiVertexShader.txt";
-    private static final String FRAGMENT_FILE = "shaders/guiFragmentShader.txt";
+    private static final String VERTEX_FILE = "shaders/guiVertex.glsl";
+    private static final String FRAGMENT_FILE = "shaders/guiFragment.glsl";
      
     private int location_transformationMatrix;
  

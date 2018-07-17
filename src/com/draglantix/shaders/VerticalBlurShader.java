@@ -1,19 +1,17 @@
-package com.draglantix.gaussianBlur;
-
-import com.draglantix.shaders.ShaderProgram;
+package com.draglantix.shaders;
 
 public class VerticalBlurShader extends ShaderProgram{
 
-	private static final String VERTEX_FILE = "shaders/verticalBlurVertex.txt";
-	private static final String FRAGMENT_FILE = "shaders/blurFragment.txt";
+	private static final String VERTEX_FILE = "shaders/filter_blurVerticalVertex.glsl";
+	private static final String FRAGMENT_FILE = "shaders/filter_blurFragment.glsl";
 	
 	private int location_targetHeight;
 	
-	protected VerticalBlurShader() {
+	public VerticalBlurShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
 	
-	protected void loadTargetHeight(float height){
+	public void loadTargetHeight(float height){
 		super.loadFloat(location_targetHeight, height);
 	}
 

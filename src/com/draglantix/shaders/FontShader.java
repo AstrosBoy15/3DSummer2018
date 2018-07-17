@@ -1,15 +1,13 @@
-package com.draglantix.font;
+package com.draglantix.shaders;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-
-import com.draglantix.shaders.ShaderProgram;
  
 public class FontShader extends ShaderProgram{
      
-    private static final String VERTEX_FILE = "shaders/fontVertexShader.txt";
-    private static final String FRAGMENT_FILE = "shaders/fontFragmentShader.txt";
+    private static final String VERTEX_FILE = "shaders/fontVertex.glsl";
+    private static final String FRAGMENT_FILE = "shaders/fontFragment.glsl";
      
     private int location_transformationMatrix;
 	private int location_numberOfRows;

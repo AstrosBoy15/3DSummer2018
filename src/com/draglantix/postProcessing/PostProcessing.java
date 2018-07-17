@@ -4,31 +4,32 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import com.draglantix.bloom.BrightFilter;
-import com.draglantix.bloom.CombineFilter;
-import com.draglantix.gaussianBlur.HorizontalBlur;
-import com.draglantix.gaussianBlur.VerticalBlur;
+import com.draglantix.filters.Contrast;
+import com.draglantix.filters.Bright;
+import com.draglantix.filters.Combine;
+import com.draglantix.filters.BlurHorizontal;
+import com.draglantix.filters.Blur;
 import com.draglantix.models.RawModel;
-import com.draglantix.render.Loader;
-import com.draglantix.render.Window;
+import com.draglantix.tools.Loader;
+import com.draglantix.tools.Window;
 
 public class PostProcessing {
 	
 	private static final float[] POSITIONS = { -1, 1, -1, -1, 1, 1, 1, -1 };	
 	private static RawModel quad;
-	private static ContrastChanger contrastChanger;
-	private static HorizontalBlur hBlur;
-	private static VerticalBlur vBlur;
-	private static BrightFilter brightFilter;
-	private static CombineFilter combineFilter;
+	private static Contrast contrastChanger;
+	private static BlurHorizontal hBlur;
+	private static Blur vBlur;
+	private static Bright brightFilter;
+	private static Combine combineFilter;
 
 	public static void init(Loader loader){
 		quad = loader.loadToVAO(POSITIONS, 2);
-		contrastChanger = new ContrastChanger();
-		hBlur = new HorizontalBlur(Window.getWidth(), Window.getHeight());
-		vBlur = new VerticalBlur(Window.getWidth(), Window.getHeight());
-		brightFilter = new BrightFilter(Window.getWidth(), Window.getHeight());
-		combineFilter = new CombineFilter();
+		contrastChanger = new Contrast();
+		hBlur = new BlurHorizontal(Window.getWidth(), Window.getHeight());
+		vBlur = new Blur(Window.getWidth(), Window.getHeight());
+		brightFilter = new Bright(Window.getWidth(), Window.getHeight());
+		combineFilter = new Combine();
 	}
 	
 	public static void doPostProcessing(int colourTexture, int brightTexture){

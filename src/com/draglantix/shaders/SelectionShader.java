@@ -8,8 +8,8 @@ import com.draglantix.tools.Maths;
 
 public class SelectionShader extends ShaderProgram {
 
-	private final static String VERTEX_FILE = "shaders/selectionVertexShader.txt";
-	private final static String FRAGMENT_FILE = "shaders/selectionFragmentShader.txt";
+	private final static String VERTEX_FILE = "shaders/selectionVertex.glsl";
+	private final static String FRAGMENT_FILE = "shaders/selectionFragment.glsl";
 
 	private int location_modelMatrix;
 	private int location_viewMatrix;

@@ -6,9 +6,9 @@ import org.lwjgl.glfw.GLFW;
 import com.draglantix.audio.AudioMaster;
 import com.draglantix.main.Main;
 import com.draglantix.models.TexturedModel;
-import com.draglantix.render.Window;
 import com.draglantix.terrains.Terrain;
 import com.draglantix.tools.Timer;
+import com.draglantix.tools.Window;
 
 public class Player extends Entity {
 	

@@ -8,8 +8,6 @@ import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import com.draglantix.render.Window;
-
 public class EntitySelector {
 
 	SelectionBuffers selectionBuffers;

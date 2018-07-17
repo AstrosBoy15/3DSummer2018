@@ -7,7 +7,9 @@ import java.util.List;
 import org.joml.Matrix4f;
 
 import com.draglantix.entities.Camera;
-import com.draglantix.render.Loader;
+import com.draglantix.render.ParticleRenderer;
+import com.draglantix.shaders.ParticleShader;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.Sorter;
 
 public class ParticleMaster {

@@ -1,16 +1,17 @@
-package com.draglantix.bloom;
+package com.draglantix.filters;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import com.draglantix.postProcessing.ImageRenderer;
+import com.draglantix.render.ImageRenderer;
+import com.draglantix.shaders.CombineShader;
 
-public class CombineFilter {
+public class Combine {
 	
 	private ImageRenderer renderer;
 	private CombineShader shader;
 	
-	public CombineFilter(){
+	public Combine(){
 		shader = new CombineShader();
 		shader.start();
 		shader.connectTextureUnits();

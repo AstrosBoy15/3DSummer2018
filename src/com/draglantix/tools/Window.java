@@ -1,4 +1,4 @@
-package com.draglantix.render;
+package com.draglantix.tools;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
@@ -19,8 +19,6 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
-
-import com.draglantix.tools.Input;
 
 public class Window {
 	

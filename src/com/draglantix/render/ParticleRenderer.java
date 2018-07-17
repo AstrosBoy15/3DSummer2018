@@ -1,4 +1,4 @@
-package com.draglantix.particles;
+package com.draglantix.render;
 
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -14,7 +14,10 @@ import org.lwjgl.opengl.GL31;
 
 import com.draglantix.entities.Camera;
 import com.draglantix.models.RawModel;
-import com.draglantix.render.Loader;
+import com.draglantix.particles.Particle;
+import com.draglantix.particles.ParticleTexture;
+import com.draglantix.shaders.ParticleShader;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.Maths;
 
 public class ParticleRenderer {
@@ -36,7 +39,7 @@ public class ParticleRenderer {
 	private Matrix4f transformationMatrix, viewMatrix;		
 	private Vector3f position = new Vector3f();
 	
-	protected ParticleRenderer(Loader loader, ParticleShader shader, Matrix4f projectionMatrix){
+	public ParticleRenderer(Loader loader, ParticleShader shader, Matrix4f projectionMatrix){
 		this.loader = loader;
 		this.vbo = loader.createEmptyVbo(INSTANCE_DATA_LENGTH * MAX_INSTANCES);
 		quad = loader.loadToVAO(VERTICES, 2);

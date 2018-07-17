@@ -1,16 +1,17 @@
-package com.draglantix.bloom;
+package com.draglantix.filters;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import com.draglantix.postProcessing.ImageRenderer;
+import com.draglantix.render.ImageRenderer;
+import com.draglantix.shaders.BrightFilterShader;
 
-public class BrightFilter {
+public class Bright {
 
 	private ImageRenderer renderer;
 	private BrightFilterShader shader;
 	
-	public BrightFilter(int width, int height){
+	public Bright(int width, int height){
 		shader = new BrightFilterShader();
 		renderer = new ImageRenderer(width, height);
 	}

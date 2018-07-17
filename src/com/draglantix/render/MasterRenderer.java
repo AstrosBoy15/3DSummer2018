@@ -13,17 +13,15 @@ import org.lwjgl.opengl.GL13;
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
-import com.draglantix.entities.Player;
 import com.draglantix.models.TexturedModel;
-import com.draglantix.particles.ParticleRenderer;
 import com.draglantix.shaders.SelectionShader;
 import com.draglantix.shaders.StaticShader;
 import com.draglantix.shaders.TerrainShader;
 import com.draglantix.shaders.WaterShader;
-import com.draglantix.shadows.ShadowMapMasterRenderer;
-import com.draglantix.skybox.SkyboxRenderer;
 import com.draglantix.terrains.Terrain;
-import com.draglantix.water.WaterFrameBuffers;
+import com.draglantix.tools.Fbo;
+import com.draglantix.tools.Loader;
+import com.draglantix.tools.Window;
 import com.draglantix.water.WaterTile;
 
 public class MasterRenderer {
@@ -54,17 +52,14 @@ public class MasterRenderer {
 	
 	private SkyboxRenderer skyboxRenderer;
 	
-	private ShadowMapMasterRenderer shadowMapRenderer;
-	
-	public MasterRenderer(Loader loader, WaterFrameBuffers fbos, Camera camera) {
+	public MasterRenderer(Loader loader, Fbo waterReflection, Fbo waterRefractionDepth, Fbo waterRefactionBuffer, Camera camera) {
 		enableCulling();
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		selectionRenderer = new SelectionRenderer(selectionShader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
-		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, fbos);
-		//shadowMapRenderer = new ShadowMapMasterRenderer(camera);
+		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, waterReflection, waterRefractionDepth, waterRefactionBuffer);
 	}
 	
 	public void updateProjectionMatrix() {
@@ -131,14 +126,14 @@ public class MasterRenderer {
 		shader.loadSkyColor(RED, GREEN, BLUE);
 		shader.loadLights(lights);
 		shader.loadViewMatrix(camera);
-		renderer.render(entities/*, shadowMapRenderer.getToShadowMapSpaceMatrix()*/);
+		renderer.render(entities);
 		shader.stop();
 		terrainShader.start();
 		terrainShader.loadClipPlane(clipPlane);
 		terrainShader.loadSkyColor(RED, GREEN, BLUE);
 		terrainShader.loadLights(lights);
 		terrainShader.loadViewMatrix(camera);
-		terrainRenderer.renderer(terrains /*, shadowMapRenderer.getToShadowMapSpaceMatrix()*/);
+		terrainRenderer.renderer(terrains);
 		terrainShader.stop();
 		skyboxRenderer.render(camera, RED, GREEN, BLUE);
 		terrains.clear();
@@ -169,19 +164,6 @@ public class MasterRenderer {
 			entities.put(entityModel, newBatch);
 		}
 	}
-	
-	public void renderShadowMap(List<Entity> entityList, List<Terrain> terrains, Player player, Light sun) {
-		for(Entity entity : entityList) {
-			processEntity(entity);
-		}
-		processEntity(player);
-		shadowMapRenderer.render(entities, terrains, sun);
-		entities.clear();
-	}
-	
-	//public int getShadowMapTexture() {
-	//	return shadowMapRenderer.getShadowMap();
-	//}
 	
 	public void cleanUp(){
 		selectionShader.cleanUp();

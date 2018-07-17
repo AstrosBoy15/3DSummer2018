@@ -6,7 +6,6 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import com.draglantix.entities.Camera;
-import com.draglantix.render.Window;
 import com.draglantix.terrains.Terrain;
 
 public class MousePicker {

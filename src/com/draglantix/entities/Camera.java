@@ -6,7 +6,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWScrollCallbackI;
 
-import com.draglantix.render.Window;
+import com.draglantix.tools.Window;
 
 public class Camera {
 	

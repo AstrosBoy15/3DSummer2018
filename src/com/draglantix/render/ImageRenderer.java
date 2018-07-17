@@ -1,6 +1,8 @@
-package com.draglantix.postProcessing;
+package com.draglantix.render;
 
 import org.lwjgl.opengl.GL11;
+
+import com.draglantix.postProcessing.ProcessingFrameBuffers;
 
 public class ImageRenderer {
 

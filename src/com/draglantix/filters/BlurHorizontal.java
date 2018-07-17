@@ -1,16 +1,17 @@
-package com.draglantix.gaussianBlur;
+package com.draglantix.filters;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import com.draglantix.postProcessing.ImageRenderer;
+import com.draglantix.render.ImageRenderer;
+import com.draglantix.shaders.HorizontalBlurShader;
 
-public class HorizontalBlur {
+public class BlurHorizontal {
 	
 	private ImageRenderer renderer;
 	private HorizontalBlurShader shader;
 	
-	public HorizontalBlur(int targetFboWidth, int targetFboHeight){
+	public BlurHorizontal(int targetFboWidth, int targetFboHeight){
 		shader = new HorizontalBlurShader();
 		shader.start();
 		shader.loadTargetWidth(targetFboWidth);

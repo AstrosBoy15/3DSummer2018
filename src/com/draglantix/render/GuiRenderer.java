@@ -1,4 +1,4 @@
-package com.draglantix.guis;
+package com.draglantix.render;
 
 import java.util.List;
 
@@ -8,8 +8,10 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import com.draglantix.guis.GuiTexture;
 import com.draglantix.models.RawModel;
-import com.draglantix.render.Loader;
+import com.draglantix.shaders.GuiShader;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.Maths;
 
 public class GuiRenderer {

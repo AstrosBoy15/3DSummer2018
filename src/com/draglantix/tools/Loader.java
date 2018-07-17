@@ -1,4 +1,4 @@
-package com.draglantix.render;
+package com.draglantix.tools;
 
 import java.io.FileInputStream;
 import java.nio.ByteBuffer;

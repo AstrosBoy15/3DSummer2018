@@ -4,9 +4,9 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import com.draglantix.models.RawModel;
-import com.draglantix.render.Loader;
 import com.draglantix.textures.TerrainTexture;
 import com.draglantix.textures.TerrainTexturePack;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.Maths;
 
 public class Terrain {

@@ -8,8 +8,8 @@ import com.draglantix.tools.Maths;
  
 public class SkyboxShader extends ShaderProgram{
  
-    private static final String VERTEX_FILE = "shaders/skyboxVertexShader.txt";
-    private static final String FRAGMENT_FILE = "shaders/skyboxFragmentShader.txt";
+    private static final String VERTEX_FILE = "shaders/skyboxVertex.glsl";
+    private static final String FRAGMENT_FILE = "shaders/skyboxFragment.glsl";
     
     private static final float ROTATE_SPEED = 5f;
     

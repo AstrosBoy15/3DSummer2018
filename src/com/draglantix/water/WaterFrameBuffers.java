@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 
-import com.draglantix.render.Window;
+import com.draglantix.tools.Window;
  
 public class WaterFrameBuffers {
  
@@ -19,7 +19,6 @@ public class WaterFrameBuffers {
  
     private int reflectionFrameBuffer;
     private int reflectionTexture;
-    private int reflectionDepthBuffer;
      
     private int refractionFrameBuffer;
     private int refractionTexture;
@@ -33,7 +32,6 @@ public class WaterFrameBuffers {
     public void cleanUp() {//call when closing the game
         GL30.glDeleteFramebuffers(reflectionFrameBuffer);
         GL11.glDeleteTextures(reflectionTexture);
-        GL30.glDeleteRenderbuffers(reflectionDepthBuffer);
         GL30.glDeleteFramebuffers(refractionFrameBuffer);
         GL11.glDeleteTextures(refractionTexture);
         GL11.glDeleteTextures(refractionDepthTexture);
@@ -67,7 +65,6 @@ public class WaterFrameBuffers {
     private void initialiseReflectionFrameBuffer() {
         reflectionFrameBuffer = createFrameBuffer();
         reflectionTexture = createTextureAttachment(REFLECTION_WIDTH,REFLECTION_HEIGHT);
-        reflectionDepthBuffer = createDepthBufferAttachment(REFLECTION_WIDTH,REFLECTION_HEIGHT);
         unbindCurrentFrameBuffer();
     }
      

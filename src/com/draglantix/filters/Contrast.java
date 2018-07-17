@@ -1,14 +1,17 @@
-package com.draglantix.postProcessing;
+package com.draglantix.filters;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-public class ContrastChanger {
+import com.draglantix.render.ImageRenderer;
+import com.draglantix.shaders.ContrastShader;
+
+public class Contrast {
 	
 	private ImageRenderer renderer;
 	private ContrastShader shader;
 	
-	public ContrastChanger() {
+	public Contrast() {
 		shader = new ContrastShader();
 		renderer = new ImageRenderer();
 	}

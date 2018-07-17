@@ -10,9 +10,7 @@ import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
 import com.draglantix.entities.Light;
 import com.draglantix.entities.Player;
-import com.draglantix.font.FontRenderer;
 import com.draglantix.font.FontTexture;
-import com.draglantix.guis.GuiRenderer;
 import com.draglantix.guis.GuiTexture;
 import com.draglantix.main.World;
 import com.draglantix.models.RawModel;
@@ -24,14 +22,17 @@ import com.draglantix.particles.ParticleSystem;
 import com.draglantix.particles.ParticleTexture;
 import com.draglantix.postProcessing.PostProcessing;
 import com.draglantix.postProcessing.ProcessingFrameBuffers;
-import com.draglantix.render.Loader;
+import com.draglantix.render.FontRenderer;
+import com.draglantix.render.GuiRenderer;
 import com.draglantix.render.MasterRenderer;
-import com.draglantix.render.Window;
 import com.draglantix.textures.ModelTexture;
 import com.draglantix.textures.TerrainTexture;
 import com.draglantix.textures.TerrainTexturePack;
 import com.draglantix.tools.EntitySelector;
+import com.draglantix.tools.Fbo;
+import com.draglantix.tools.Loader;
 import com.draglantix.tools.SelectionBuffers;
+import com.draglantix.tools.Window;
 import com.draglantix.water.WaterFrameBuffers;
 import com.draglantix.water.WaterTile;
 
@@ -45,10 +46,10 @@ public class Assets {
 	public GuiRenderer guiRenderer;
 	public FontRenderer fontRenderer;
 	
-	public WaterFrameBuffers waterBuffers;
+	public Fbo waterReflection, waterRefractionDepth, waterRefractionBuffer;
 	public SelectionBuffers selectionBuffers;
 	public EntitySelector entitySelector;
-	public ProcessingFrameBuffers multisampleFbo, outputFbo, outputFbo2;
+	public Fbo multisampleFbo, outputFbo, outputFbo2;
 
 	public Entity currentSelection = null;
 	
@@ -105,14 +106,16 @@ public class Assets {
 	
 		PostProcessing.init(loader);
 		
-		waterBuffers = new WaterFrameBuffers();
+		waterReflection = new Fbo(320, 180, Fbo.DEPTH_TEXTURE);
+		waterRefractionDepth = new Fbo(1280, 720, Fbo.DEPTH_TEXTURE);
+		waterRefractionBuffer = new Fbo(1280, 720, Fbo.DEPTH_RENDER_BUFFER);
 		selectionBuffers = new SelectionBuffers();
 		entitySelector = new EntitySelector(selectionBuffers);
-		multisampleFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight());
-		outputFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
-				ProcessingFrameBuffers.DEPTH_TEXTURE);
-		outputFbo2 = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
-				ProcessingFrameBuffers.DEPTH_TEXTURE);
+		multisampleFbo = new Fbo(Window.getWidth(), Window.getHeight(), Fbo.MULTISAMPLE);
+		outputFbo = new Fbo(Window.getWidth(), Window.getHeight(), 
+				Fbo.DEPTH_TEXTURE);
+		outputFbo2 = new Fbo(Window.getWidth(), Window.getHeight(), 
+				Fbo.DEPTH_TEXTURE);
 
 		snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
 		snowmanModel = loader.loadToVAO(
@@ -122,7 +125,7 @@ public class Assets {
 		player = new Player(snowman, new Vector3f(400, 70, 400), new Vector3f(0, 180, 0), 3);
 		camera = new Camera(player);
 		
-		renderer = new MasterRenderer(loader, waterBuffers, camera);
+		renderer = new MasterRenderer(loader, waterReflection, waterRefractionDepth, waterRefractionBuffer, camera);
 		guiRenderer = new GuiRenderer(loader);
 		fontRenderer = new FontRenderer(loader);
 		
@@ -254,8 +257,10 @@ public class Assets {
 	}
 	
 	public void updateProcessingFBO() {
-		multisampleFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight());
-		outputFbo = new ProcessingFrameBuffers(Window.getWidth(), Window.getHeight(), 
-				ProcessingFrameBuffers.DEPTH_TEXTURE);
+		multisampleFbo = new Fbo(Window.getWidth(), Window.getHeight(), Fbo.MULTISAMPLE);
+		outputFbo = new Fbo(Window.getWidth(), Window.getHeight(), 
+				Fbo.DEPTH_TEXTURE);
+		outputFbo2 = new Fbo(Window.getWidth(), Window.getHeight(), 
+				Fbo.DEPTH_TEXTURE);
 	}
 }
