@@ -8,7 +8,6 @@ import java.util.Map;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 
 import com.draglantix.entities.Camera;
 import com.draglantix.entities.Entity;
@@ -52,14 +51,14 @@ public class MasterRenderer {
 	
 	private SkyboxRenderer skyboxRenderer;
 	
-	public MasterRenderer(Loader loader, Fbo waterReflection, Fbo waterRefractionDepth, Fbo waterRefactionBuffer, Camera camera) {
+	public MasterRenderer(Loader loader, Fbo waterReflection, Fbo waterRefraction, Camera camera) {
 		enableCulling();
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		selectionRenderer = new SelectionRenderer(selectionShader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
-		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, waterReflection, waterRefractionDepth, waterRefactionBuffer);
+		waterRenderer = new WaterRenderer(loader, waterShader, projectionMatrix, waterReflection, waterRefraction);
 	}
 	
 	public void updateProjectionMatrix() {
@@ -177,8 +176,6 @@ public class MasterRenderer {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(0, 0, 0, 1);
-		GL13.glActiveTexture(GL13.GL_TEXTURE5);
-		//GL11.glBindTexture(GL11.GL_TEXTURE_2D, getShadowMapTexture());
 	}
 	
 	private void createProjectionMatrix(){

@@ -21,7 +21,6 @@ import com.draglantix.particles.ParticleMaster;
 import com.draglantix.particles.ParticleSystem;
 import com.draglantix.particles.ParticleTexture;
 import com.draglantix.postProcessing.PostProcessing;
-import com.draglantix.postProcessing.ProcessingFrameBuffers;
 import com.draglantix.render.FontRenderer;
 import com.draglantix.render.GuiRenderer;
 import com.draglantix.render.MasterRenderer;
@@ -31,9 +30,7 @@ import com.draglantix.textures.TerrainTexturePack;
 import com.draglantix.tools.EntitySelector;
 import com.draglantix.tools.Fbo;
 import com.draglantix.tools.Loader;
-import com.draglantix.tools.SelectionBuffers;
 import com.draglantix.tools.Window;
-import com.draglantix.water.WaterFrameBuffers;
 import com.draglantix.water.WaterTile;
 
 public class Assets {
@@ -46,8 +43,8 @@ public class Assets {
 	public GuiRenderer guiRenderer;
 	public FontRenderer fontRenderer;
 	
-	public Fbo waterReflection, waterRefractionDepth, waterRefractionBuffer;
-	public SelectionBuffers selectionBuffers;
+	public Fbo waterReflection, waterRefraction;
+	public Fbo selectionBuffers;
 	public EntitySelector entitySelector;
 	public Fbo multisampleFbo, outputFbo, outputFbo2;
 
@@ -92,6 +89,8 @@ public class Assets {
 	public ParticleTexture particleTexture;
 	public ParticleSystem particleSystem, particleSystem2;
 	
+	public PostProcessing processing;
+	
 	public World world;
 	
 	public Camera camera;
@@ -104,18 +103,17 @@ public class Assets {
 		
 		musicAssets = new MusicAssets();
 	
-		PostProcessing.init(loader);
+		processing = new PostProcessing(loader, true);
 		
-		waterReflection = new Fbo(320, 180, Fbo.DEPTH_TEXTURE);
-		waterRefractionDepth = new Fbo(1280, 720, Fbo.DEPTH_TEXTURE);
-		waterRefractionBuffer = new Fbo(1280, 720, Fbo.DEPTH_RENDER_BUFFER);
-		selectionBuffers = new SelectionBuffers();
+		waterReflection = new Fbo(320, 180, Fbo.DEPTH_TEXTURE, false);
+		waterRefraction = new Fbo(1280, 720, Fbo.DEPTH_TEXTURE, false);
+		selectionBuffers = new Fbo(260, 200, Fbo.DEPTH_TEXTURE, false);
 		entitySelector = new EntitySelector(selectionBuffers);
-		multisampleFbo = new Fbo(Window.getWidth(), Window.getHeight(), Fbo.MULTISAMPLE);
+		multisampleFbo = new Fbo(Window.getWidth(), Window.getHeight(), true);
 		outputFbo = new Fbo(Window.getWidth(), Window.getHeight(), 
-				Fbo.DEPTH_TEXTURE);
+				Fbo.DEPTH_TEXTURE, true);
 		outputFbo2 = new Fbo(Window.getWidth(), Window.getHeight(), 
-				Fbo.DEPTH_TEXTURE);
+				Fbo.DEPTH_TEXTURE, true);
 
 		snowmanData = OBJFileLoader.loadOBJ("model/obj/snowman");
 		snowmanModel = loader.loadToVAO(
@@ -125,7 +123,7 @@ public class Assets {
 		player = new Player(snowman, new Vector3f(400, 70, 400), new Vector3f(0, 180, 0), 3);
 		camera = new Camera(player);
 		
-		renderer = new MasterRenderer(loader, waterReflection, waterRefractionDepth, waterRefractionBuffer, camera);
+		renderer = new MasterRenderer(loader, waterReflection, waterRefraction, camera);
 		guiRenderer = new GuiRenderer(loader);
 		fontRenderer = new FontRenderer(loader);
 		
@@ -138,7 +136,7 @@ public class Assets {
 		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "Created by Draglantix. LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, .9f), 0.5f, 7, 20, new Vector3f(255, 0, 0)));
 		//fonts.add(new FontTexture(loader.loadTexture("font/glyphSheet"), "res/font/fnt.txt", "3D Game!!!! LineTest: 12334567 23423414 5342345 45352 23452542 25254 2545", new Vector2f(-.9f, 0), 1f, 7, 20, new Vector3f(0, 50, 15)));
 		//guis.add(new GuiTexture(loader.loadTexture("dragon"), new Vector2f(.5f, .5f), 0.3f));
-		//guis.add(new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(.5f, .5f), .5f));
+		//guis.add(new GuiTexture(waterBuffer.getRefractionDepthTexture(), new Vector2f(.5f, .5f), .5f));
 		
 		water = new WaterTile(400, 400, 0);
 		waters.add(water);
@@ -257,10 +255,10 @@ public class Assets {
 	}
 	
 	public void updateProcessingFBO() {
-		multisampleFbo = new Fbo(Window.getWidth(), Window.getHeight(), Fbo.MULTISAMPLE);
+		multisampleFbo = new Fbo(Window.getWidth(), Window.getHeight(), true);
 		outputFbo = new Fbo(Window.getWidth(), Window.getHeight(), 
-				Fbo.DEPTH_TEXTURE);
+				Fbo.DEPTH_TEXTURE, true);
 		outputFbo2 = new Fbo(Window.getWidth(), Window.getHeight(), 
-				Fbo.DEPTH_TEXTURE);
+				Fbo.DEPTH_TEXTURE, true);
 	}
 }

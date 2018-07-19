@@ -2,14 +2,14 @@ package com.draglantix.render;
 
 import org.lwjgl.opengl.GL11;
 
-import com.draglantix.postProcessing.ProcessingFrameBuffers;
+import com.draglantix.tools.Fbo;
 
 public class ImageRenderer {
 
-	private ProcessingFrameBuffers fbo;
+	private Fbo fbo;
 
-	public ImageRenderer(int width, int height) {
-		this.fbo = new ProcessingFrameBuffers(width, height, ProcessingFrameBuffers.NONE);
+	public ImageRenderer(int width, int height, boolean usesAlpha) {
+		this.fbo = new Fbo(width, height, Fbo.NONE, usesAlpha);
 	}
 
 	public ImageRenderer() {}

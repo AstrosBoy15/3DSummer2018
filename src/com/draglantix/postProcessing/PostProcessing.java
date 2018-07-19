@@ -15,24 +15,27 @@ import com.draglantix.tools.Window;
 
 public class PostProcessing {
 	
-	private static final float[] POSITIONS = { -1, 1, -1, -1, 1, 1, 1, -1 };	
-	private static RawModel quad;
-	private static Contrast contrastChanger;
-	private static BlurHorizontal hBlur;
-	private static Blur vBlur;
-	private static Bright brightFilter;
-	private static Combine combineFilter;
+	private final float[] POSITIONS = { -1, 1, -1, -1, 1, 1, 1, -1 };	
+	private RawModel quad;
+	private Contrast contrastChanger;
+	private BlurHorizontal hBlur;
+	private Blur vBlur;
+	private Bright brightFilter;
+	private Combine combineFilter;
+	
+	private boolean usesAlpha = false;
 
-	public static void init(Loader loader){
+	public PostProcessing(Loader loader, boolean usesAlpha){
 		quad = loader.loadToVAO(POSITIONS, 2);
+		this.usesAlpha = usesAlpha;
 		contrastChanger = new Contrast();
-		hBlur = new BlurHorizontal(Window.getWidth(), Window.getHeight());
-		vBlur = new Blur(Window.getWidth(), Window.getHeight());
-		brightFilter = new Bright(Window.getWidth(), Window.getHeight());
+		hBlur = new BlurHorizontal(Window.getWidth(), Window.getHeight(), usesAlpha);
+		vBlur = new Blur(Window.getWidth(), Window.getHeight(), usesAlpha);
+		brightFilter = new Bright(Window.getWidth(), Window.getHeight(), usesAlpha);
 		combineFilter = new Combine();
 	}
 	
-	public static void doPostProcessing(int colourTexture, int brightTexture){
+	public void doPostProcessing(int colourTexture, int brightTexture){
 		start();
 		//brightFilter.render(colourTexture);
 		hBlur.render(brightTexture);
@@ -41,13 +44,13 @@ public class PostProcessing {
 		end();
 	}
 	
-	public static void updateDimensions(int width, int height) {
+	public void updateDimensions(int width, int height) {
 		hBlur.updateDimensions(width, height);
 		vBlur.updateDimensions(width, height);
 		brightFilter.updateDimensions(width, height);
 	}
 	
-	public static void cleanUp(){
+	public void cleanUp(){
 		contrastChanger.cleanUp();
 		hBlur.cleanUp();
 		vBlur.cleanUp();
@@ -55,13 +58,13 @@ public class PostProcessing {
 		combineFilter.cleanUp();
 	}
 	
-	private static void start(){
+	private void start(){
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 	
-	private static void end(){
+	private void end(){
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);

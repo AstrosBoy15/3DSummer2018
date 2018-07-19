@@ -11,9 +11,12 @@ public class Blur {
 	private ImageRenderer renderer;
 	private VerticalBlurShader shader;
 	
-	public Blur(int targetFboWidth, int targetFboHeight){
+	private boolean usesAlpha = false;
+	
+	public Blur(int targetFboWidth, int targetFboHeight, boolean usesAlpha){
 		shader = new VerticalBlurShader();
-		renderer = new ImageRenderer(targetFboWidth, targetFboHeight);
+		renderer = new ImageRenderer(targetFboWidth, targetFboHeight, usesAlpha);
+		this.usesAlpha = usesAlpha;
 		shader.start();
 		shader.loadTargetHeight(targetFboHeight);
 		shader.stop();
@@ -29,7 +32,7 @@ public class Blur {
 	}
 	
 	public void updateDimensions(int targetFboWidth, int targetFboHeight) {
-		renderer = new ImageRenderer(targetFboWidth, targetFboHeight);
+		renderer = new ImageRenderer(targetFboWidth, targetFboHeight, usesAlpha);
 		shader.start();
 		shader.loadTargetHeight(targetFboHeight);
 		shader.stop();

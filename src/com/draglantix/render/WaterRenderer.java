@@ -17,7 +17,6 @@ import com.draglantix.tools.Fbo;
 import com.draglantix.tools.Loader;
 import com.draglantix.tools.Maths;
 import com.draglantix.tools.Timer;
-import com.draglantix.water.WaterFrameBuffers;
 import com.draglantix.water.WaterTile;
 
 public class WaterRenderer {
@@ -28,7 +27,7 @@ public class WaterRenderer {
 	
 	private RawModel quad;
 	private WaterShader shader;
-	private Fbo waterReflection, waterRefractionDepth, waterRefactionBuffer;
+	private Fbo waterReflection, waterRefraction;
 	
 	private float moveFactor = 0;
 	
@@ -37,11 +36,10 @@ public class WaterRenderer {
 
 	private Timer timer;
 	
-	public WaterRenderer(Loader loader, WaterShader shader, Matrix4f projectionMatrix, Fbo waterReflection, Fbo waterRefractionDepth, Fbo waterRefactionBuffer) {
+	public WaterRenderer(Loader loader, WaterShader shader, Matrix4f projectionMatrix, Fbo waterReflection, Fbo waterRefraction) {
 		this.shader = shader;
 		this.waterReflection = waterReflection;
-		this.waterRefractionDepth = waterRefractionDepth;
-		this.waterRefactionBuffer = waterRefactionBuffer;
+		this.waterRefraction = waterRefraction;
 		dudvTexture = loader.loadTexture(DUDV_MAP);
 		normalMap = loader.loadTexture(NORMAL_MAP);
 		shader.start();
@@ -84,15 +82,15 @@ public class WaterRenderer {
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterReflection.getFBO(0));
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterReflection.getColourTexture());
 		GL13.glActiveTexture(GL13.GL_TEXTURE1);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterRefactionBuffer.getFBO(0)); //TODO Fix
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterRefraction.getColourTexture());
 		GL13.glActiveTexture(GL13.GL_TEXTURE2);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, dudvTexture);
 		GL13.glActiveTexture(GL13.GL_TEXTURE3);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, normalMap);
 		GL13.glActiveTexture(GL13.GL_TEXTURE4);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterRefractionDepth.getFBO(0)); //TODO Fix
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, waterRefraction.getDepthTexture());
 		
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

@@ -11,12 +11,15 @@ public class BlurHorizontal {
 	private ImageRenderer renderer;
 	private HorizontalBlurShader shader;
 	
-	public BlurHorizontal(int targetFboWidth, int targetFboHeight){
+	private boolean usesAlpha = false;
+	
+	public BlurHorizontal(int targetFboWidth, int targetFboHeight, boolean usesAlpha){
 		shader = new HorizontalBlurShader();
+		this.usesAlpha = usesAlpha;
 		shader.start();
 		shader.loadTargetWidth(targetFboWidth);
 		shader.stop();
-		renderer = new ImageRenderer(targetFboWidth, targetFboHeight);
+		renderer = new ImageRenderer(targetFboWidth, targetFboHeight, usesAlpha);
 	}
 	
 	public void render(int texture){
@@ -35,7 +38,7 @@ public class BlurHorizontal {
 		shader.start();
 		shader.loadTargetWidth(targetFboWidth);
 		shader.stop();
-		renderer = new ImageRenderer(targetFboWidth, targetFboHeight);
+		renderer = new ImageRenderer(targetFboWidth, targetFboHeight, usesAlpha);
 	}
 	
 	public void cleanUp(){

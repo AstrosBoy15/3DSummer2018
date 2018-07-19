@@ -10,15 +10,15 @@ import org.lwjgl.opengl.GL11;
 
 public class EntitySelector {
 
-	SelectionBuffers selectionBuffers;
+	Fbo selectionBuffers;
 	
-	public EntitySelector(SelectionBuffers selectionBuffers) {
+	public EntitySelector(Fbo selectionBuffers) {
 		this.selectionBuffers = selectionBuffers;
 	}
 	
 	public Vector3f getEntityAtMousePos() {
 	
-		int texture = selectionBuffers.getSelectionTexture();
+		int texture = selectionBuffers.getColourTexture();
 		
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
 		
@@ -30,7 +30,7 @@ public class EntitySelector {
 		double scaleY = (double) (height)/Window.getHeight();
 		
 		double mouseX = (Window.getMousePos().x * scaleX);
-		double mouseY = -(Window.getMousePos().y * scaleY) + SelectionBuffers.RES_HEIGHT;
+		double mouseY = -(Window.getMousePos().y * scaleY) + selectionBuffers.getHeight();
 		
 		if(mouseX > width) {
 			mouseX = width;

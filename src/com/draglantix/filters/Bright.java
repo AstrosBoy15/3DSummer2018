@@ -11,9 +11,12 @@ public class Bright {
 	private ImageRenderer renderer;
 	private BrightFilterShader shader;
 	
-	public Bright(int width, int height){
+	private boolean usesAlpha = false;
+	
+	public Bright(int width, int height, boolean usesAlpha){
 		shader = new BrightFilterShader();
-		renderer = new ImageRenderer(width, height);
+		this.usesAlpha = usesAlpha;
+		renderer = new ImageRenderer(width, height, usesAlpha);
 	}
 	
 	public void render(int texture){
@@ -29,7 +32,7 @@ public class Bright {
 	}
 	
 	public void updateDimensions(int width, int height) {
-		renderer = new ImageRenderer(width, height);
+		renderer = new ImageRenderer(width, height, usesAlpha);
 	}
 	
 	public void cleanUp(){

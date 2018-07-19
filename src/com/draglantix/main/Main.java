@@ -103,7 +103,7 @@ public class Main {
 			GL11.glViewport(0, 0, Window.getWidth(), Window.getHeight());
 			assets.renderer.updateProjectionMatrix();
 			assets.updateProcessingFBO();
-			PostProcessing.updateDimensions(Window.getWidth(), Window.getHeight());
+			assets.processing.updateDimensions(Window.getWidth(), Window.getHeight());
 		}
 		
 		if(Window.getInput().isKeyPressed(GLFW.GLFW_KEY_P)) {
@@ -145,8 +145,6 @@ public class Main {
 	
 	public void render() {
 		
-		//assets.renderer.renderShadowMap(assets.entities, world.terrains, assets.player, assets.sun);
-		
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		
 		assets.waterReflection.bindFrameBuffer();
@@ -158,11 +156,9 @@ public class Main {
 		camera.invertPitch();
 		assets.waterReflection.unbindFrameBuffer();
 		
-		assets.waterRefractionBuffer.bindFrameBuffer();
-		assets.waterRefractionDepth.bindFrameBuffer();
+		assets.waterRefraction.bindFrameBuffer();
 		assets.renderer.renderScene(assets.player, assets.entities, world.terrain, assets.lights, camera, new Vector4f(0, -1, 0, assets.water.getHeight()+1f));
-		assets.waterRefractionBuffer.unbindFrameBuffer();
-		assets.waterRefractionDepth.unbindFrameBuffer(); 
+		assets.waterRefraction.unbindFrameBuffer();
 		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		
@@ -173,13 +169,14 @@ public class Main {
 		//assets.multisampleFbo.unbindFrameBuffer();
 		//assets.multisampleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT0, assets.outputFbo); //TODO Add this feature to AA the reflection texture of the water.
 		//assets.multisampleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, assets.outputFbo2);
-		//PostProcessing.doPostProcessing(assets.outputFbo.getFBO(0), assets.outputFbo2.getFBO(0));
+		//assets.processing.doPostProcessing(assets.outputFbo.getColourTexture(), assets.outputFbo2.getColourTexture());
 
 		assets.guiRenderer.render(assets.guis);
 		assets.fontRenderer.render(assets.fonts);
 		
-		assets.selectionBuffers.bindSelectionBuffer();
+		assets.selectionBuffers.bindFrameBuffer();
 		assets.renderer.renderSelection(assets.entities, world.terrain, assets.player, camera);
+		assets.selectionBuffers.unbindFrameBuffer();
 		
 		window.swapBuffers();
 	}
@@ -198,7 +195,7 @@ public class Main {
 	}
 	
 	public void cleanUp() {
-		PostProcessing.cleanUp();
+		assets.processing.cleanUp();
 		loader.cleanUp();
 		AudioMaster.cleanUp();
 		assets.renderer.cleanUp();
@@ -206,8 +203,7 @@ public class Main {
 		assets.fontRenderer.cleanUp();
 		assets.selectionBuffers.cleanUp();
 		assets.waterReflection.cleanUp();
-		assets.waterRefractionDepth.cleanUp();
-		assets.waterRefractionBuffer.cleanUp();
+		assets.waterRefraction.cleanUp();
 		assets.multisampleFbo.cleanUp();
 		assets.outputFbo.cleanUp();
 		assets.outputFbo2.cleanUp();
